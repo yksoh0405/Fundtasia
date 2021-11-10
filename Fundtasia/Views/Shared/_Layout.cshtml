@@ -3,38 +3,130 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Fundtasia</title>
+
+    <link rel="icon" href="~/Images/Logos/logo-icon.png">
+
+    <!-- CSS -->
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/font-awesome.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/animate.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/magnific-popup.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/owl.carousel.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/isotop.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/xsIcon.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/style.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/responsive.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <!-- Header start -->
+    <header id="header" class="header">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <!-- logo-->
+                <a class="navbar-brand" href="index.html">
+                    <img src="~/Images/Logos/logo-black.png" alt="fundtasia" height="80px">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"><i class="icon icon-menu"></i></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                </ul>
-            </div>
-        </div>
-    </div>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="dropdown nav-item active">
+                            <a href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="donation.html">Donation</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="event.html">Event</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="#"> Account <i class="fa fa-angle-down"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="register.html">Sign Up</a></li>
+                                <li><a href="login.html">Log In</a></li>
+                                <li><a href="forgot-password">Forgot Password</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div><!-- container end-->
+    </header>
+    <!--/ Header end -->
 
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
     </div>
 
+    <!-- ts footer area start-->
+    <div class="footer-area">
+        <!-- footer start-->
+        <footer class="ts-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <div class="book-seat-content text-center mb-100">
+                            <img src="~/Images/Logos/logo-white.png" alt="logo" height="100px">
+                            <p style="color: white;">Fundtasia is an United Nations development, and advocacy organisation dedicated to working with children, families and their communities to overcome poverty and injustice. We server all people regardless of religion, race, ethnicity or gender.</p>
+                        </div><!-- book seat end-->
+                    </div><!-- col end-->
+                </div><!-- row end-->
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <div class="ts-footer-social text-center mb-30">
+                            <ul>
+                                <li>
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-google-plus"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-linkedin"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-instagram"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- footer social end-->
+                        <div class="footer-menu text-center mb-25">
+                            <ul>
+                                <li><a href="donation.html">Donation</a></li>
+                                <li><a href="event.html">Event</a></li>
+                            </ul>
+                        </div><!-- footer menu end-->
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- footer end-->
+        <div class="BackTo">
+            <a href="#" class="fa fa-angle-up" aria-hidden="true"></a>
+        </div>
+
+    </div>
+    <!-- ts footer area end-->
+
+    <!-- Script -->
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>
+    <script src="~/Scripts/jquery.appear.min.js"></script>
+    <script src="~/Scripts/jquery.jCounter.js"></script>
+    <script src="~/Scripts/jquery.magnific-popup.min.js"></script>
+    <script src="~/Scripts/owl.carousel.min.js"></script>
+    <script src="~/Scripts/wow.min.js"></script>
+    <script src="~/Scripts/isotope.pkgd.min.js"></script>
+    <script src="~/Scripts/main.js"></script>
 </body>
 </html>
