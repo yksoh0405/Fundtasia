@@ -27,7 +27,7 @@
             <nav class="navbar navbar-expand-lg navbar-light">
                 <!-- logo-->
                 <a class="navbar-brand" href="index.html">
-                    <img src="~/Images/Logos/logo-black.png" alt="fundtasia" height="80px">
+                    <img src="~/Images/Logos/logo-black.png" alt="fundtasia" height="80">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                         aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,20 +36,20 @@
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav ml-auto">
                         <li class="dropdown nav-item active">
-                            <a href="index.html">Home</a>
+                            @Html.ActionLink("Home", "Index", "Home")
                         </li>
                         <li class="nav-item">
-                            <a href="donation.html">Donation</a>
+                            @Html.ActionLink("Donation", "Donation", "Home")
                         </li>
                         <li class="nav-item">
-                            <a href="event.html">Event</a>
+                            @Html.ActionLink("Event", "Event", "Home")
                         </li>
                         <li class="nav-item dropdown">
                             <a href="#"> Account <i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="register.html">Sign Up</a></li>
-                                <li><a href="login.html">Log In</a></li>
-                                <li><a href="forgot-password">Forgot Password</a></li>
+                                <li>@Html.ActionLink("Sign Up", "SignUp", "Home")</li>
+                                <li>@Html.ActionLink("Log In", "LogIn", "Home")</li>
+                                <li>@Html.ActionLink("Forgot Password", "ForgotPassword", "Home")</li>
                             </ul>
                         </li>
                     </ul>
@@ -71,7 +71,7 @@
                 <div class="row">
                     <div class="col-lg-8 mx-auto">
                         <div class="book-seat-content text-center mb-100">
-                            <img src="~/Images/Logos/logo-white.png" alt="logo" height="100px">
+                            <img src="~/Images/Logos/logo-white.png" alt="logo" height="100">
                             <p style="color: white;">Fundtasia is an United Nations development, and advocacy organisation dedicated to working with children, families and their communities to overcome poverty and injustice. We server all people regardless of religion, race, ethnicity or gender.</p>
                         </div><!-- book seat end-->
                     </div><!-- col end-->
@@ -81,27 +81,25 @@
                         <div class="ts-footer-social text-center mb-30">
                             <ul>
                                 <li>
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    
+                                    <a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="https://twitter.com/"><i class="fa fa-twitter"></i></a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="fa fa-google-plus"></i></a>
+                                    <a href="https://www.linkedin.com/"><i class="fa fa-linkedin"></i></a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="fa fa-linkedin"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
+                                    <a href="https://www.instagram.com/"><i class="fa fa-instagram"></i></a>
                                 </li>
                             </ul>
                         </div>
                         <!-- footer social end-->
                         <div class="footer-menu text-center mb-25">
                             <ul>
-                                <li><a href="donation.html">Donation</a></li>
-                                <li><a href="event.html">Event</a></li>
+                                <li>@Html.ActionLink("Donation", "Donation", "Home")</li>
+                                <li>@Html.ActionLink("Event", "Event", "Home")</li>
                             </ul>
                         </div><!-- footer menu end-->
                     </div>
