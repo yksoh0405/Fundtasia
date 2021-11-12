@@ -16,103 +16,120 @@
     <link href="~/Content/owl.carousel.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/isotop.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/xsIcon.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/style.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/responsive.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/style.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
 </head>
 <body>
-    <!-- Header start -->
-    <header id="header" class="header">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <!-- logo-->
-                <a class="navbar-brand" href="index.html">
-                    <img src="~/Images/Logos/logo-black.png" alt="fundtasia" height="80">
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-                        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"><i class="icon icon-menu"></i></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="dropdown nav-item active">
-                            @Html.ActionLink("Home", "Index", "Home")
-                        </li>
-                        <li class="nav-item">
-                            @Html.ActionLink("Donation", "Donation", "Home")
-                        </li>
-                        <li class="nav-item">
-                            @Html.ActionLink("Event", "Event", "Home")
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a href="#"> Account <i class="fa fa-angle-down"></i></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>@Html.ActionLink("Sign Up", "SignUp", "Home")</li>
-                                <li>@Html.ActionLink("Log In", "LogIn", "Home")</li>
-                                <li>@Html.ActionLink("Forgot Password", "ForgotPassword", "Home")</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </div><!-- container end-->
-    </header>
-    <!--/ Header end -->
-
-    <div class="container body-content">
-        @RenderBody()
-    </div>
-
-    <!-- ts footer area start-->
-    <div class="footer-area">
-        <!-- footer start-->
-        <footer class="ts-footer">
+    <div class="body-inner">
+        <!-- Header start -->
+        <header id="header" class="header">
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 mx-auto">
-                        <div class="book-seat-content text-center mb-100">
-                            <img src="~/Images/Logos/logo-white.png" alt="logo" height="100">
-                            <p style="color: white;">Fundtasia is an United Nations development, and advocacy organisation dedicated to working with children, families and their communities to overcome poverty and injustice. We server all people regardless of religion, race, ethnicity or gender.</p>
-                        </div><!-- book seat end-->
-                    </div><!-- col end-->
-                </div><!-- row end-->
-                <div class="row">
-                    <div class="col-lg-8 mx-auto">
-                        <div class="ts-footer-social text-center mb-30">
-                            <ul>
-                                <li>
-
-                                    <a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a>
-                                </li>
-                                <li>
-                                    <a href="https://twitter.com/"><i class="fa fa-twitter"></i></a>
-                                </li>
-                                <li>
-                                    <a href="https://www.linkedin.com/"><i class="fa fa-linkedin"></i></a>
-                                </li>
-                                <li>
-                                    <a href="https://www.instagram.com/"><i class="fa fa-instagram"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- footer social end-->
-                        <div class="footer-menu text-center mb-25">
-                            <ul>
-                                <li>@Html.ActionLink("Donation", "Donation", "Home")</li>
-                                <li>@Html.ActionLink("Event", "Event", "Home")</li>
-                            </ul>
-                        </div><!-- footer menu end-->
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <!-- logo-->
+                    <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+                        <img src="@Url.Content("~/Images/Logos/logo-black.png")" alt="fundtasia" height="80">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"><i class="fa fa-bars"></i></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="dropdown nav-item active">
+                                @Html.ActionLink("Home", "Index", "Home")
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Donation", "Donation", "Home")
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Event", "Event", "Home")
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#"> Account <i class="fa fa-angle-down"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>@Html.ActionLink("Sign Up", "SignUp", "Home")</li>
+                                    <li>@Html.ActionLink("Log In", "LogIn", "Home")</li>
+                                    <li>@Html.ActionLink("Forgot Password", "ForgotPassword", "Home")</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div><!-- container end-->
+        </header>
+        <!--/ Header end -->
+        @if (String.Compare(ViewBag.Title, "Home") != 0)
+        {
+            <div id="page-banner-area" class="page-banner-area" style="background-image: url('/Images/Background/background.png');">
+                <div class="page-banner-title">
+                    <div class="text-center">
+                        <h2>@ViewBag.Title</h2>
+                        <ol class="breadcrumb">
+                            <li>@Html.ActionLink("Home", "Index", "Home")/&nbsp;</li>
+                            <li>@ViewBag.Title</li>
+                        </ol>
                     </div>
                 </div>
             </div>
-        </footer>
-        <!-- footer end-->
-        <div class="BackTo">
-            <a href="#" class="fa fa-angle-up" aria-hidden="true"></a>
+        }
+        <div class="container body-content my-5">
+            @RenderBody()
         </div>
 
+        <!-- ts footer area start-->
+        <div class="footer-area">
+            <!-- footer start-->
+            <footer class="ts-footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="book-seat-content text-center mb-100">
+                                <img src="~/Images/Logos/logo-white.png" alt="logo" height="100">
+                                <p style="color: white;">Fundtasia is an United Nations development, and advocacy organisation dedicated to working with children, families and their communities to overcome poverty and injustice. We server all people regardless of religion, race, ethnicity or gender.</p>
+                            </div><!-- book seat end-->
+                        </div><!-- col end-->
+                    </div><!-- row end-->
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="ts-footer-social text-center mb-30">
+                                <ul>
+                                    <li>
+
+                                        <a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="https://twitter.com/"><i class="fa fa-twitter"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.linkedin.com/"><i class="fa fa-linkedin"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.instagram.com/"><i class="fa fa-instagram"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- footer social end-->
+                            <div class="footer-menu text-center mb-25">
+                                <ul>
+                                    <li>@Html.ActionLink("Donation", "Donation", "Home")</li>
+                                    <li>@Html.ActionLink("Event", "Event", "Home")</li>
+                                </ul>
+                                <h3 class="mt-5">Copyrighted &copy; @DateTime.Now.Year</h3>
+                            </div><!-- footer menu end-->
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- footer end-->
+            <div class="BackTo">
+                <a href="#" class="fa fa-angle-up" aria-hidden="true"></a>
+            </div>
+
+        </div>
+        <!-- ts footer area end-->
     </div>
-    <!-- ts footer area end-->
+    
 
     <script src="~/Scripts/jquery-3.6.0.js"></script>
     <script src="~/Scripts/jquery.validate.js"></script>
@@ -120,9 +137,9 @@
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 
     <!-- Script -->
-    <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/jquery.js"></script>
     <script src="~/Scripts/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/jquery.appear.min.js"></script>
     <script src="~/Scripts/jquery.jCounter.js"></script>
     <script src="~/Scripts/jquery.magnific-popup.min.js"></script>
