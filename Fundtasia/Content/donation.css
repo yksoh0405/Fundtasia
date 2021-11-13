@@ -1,0 +1,67 @@
+﻿body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+}
+
+.space {
+    margin-top: 1.5cm;
+    margin-bottom: 1cm;
+}
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+    .centered p {
+        text-align: justify;
+        color: black;
+        font-size: 18px;
+    }
+
+.banner-item {
+    min-height: 400px;
+}
+
+p {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 1cm;
+    color: black;
+    font-size: 45px;
+}
+
+.card {
+    margin: 0 auto;
+    float: none;
+    margin-bottom: 10px;
+}
+
+.button {
+    background-color: #ddd;
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 16px;
+}
+
+    .button hover {
+        background-color: #f1f1f1;
+    }
+
+.center {
+    display: flex;
+    justify-content: right;
+    align-items: right;
+    height: 30px;
+}
