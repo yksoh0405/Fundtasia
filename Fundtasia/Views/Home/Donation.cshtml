@@ -1,0 +1,139 @@
+﻿@{
+    ViewBag.Title = "Donation";
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<style>
+    body {
+        font-family: 'Montserrat', sans-serif;
+        margin: 0;
+    }
+
+    .space {
+        margin-top: 1.5cm;
+        margin-bottom: 1cm;
+    }
+
+    .centered {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .centered p {
+        text-align: justify;
+        color: black;
+        font-size: 18px;
+     }
+
+    .banner-item{
+        min-height:400px;
+    }
+
+    p {
+        text-align: center;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 1cm;
+        color: black;
+        font-size: 45px;
+    }
+
+    .card {
+        margin: 0 auto;
+        float: none;
+        margin-bottom: 10px;
+    }
+
+    .button {
+        background-color: #ddd;
+        border: none;
+        color: black;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 16px;
+    }
+
+    .button hover{
+        background-color: #f1f1f1;
+    }
+
+    .center {
+        display: flex;
+        justify-content: right;
+        align-items: right;
+        height: 30px;
+    }
+
+</style>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Donation</title>
+</head>
+<body>
+    <h1 class="space"><u>@ViewBag.Title</u></h1>
+    <div class="banner-item">
+        <div class="container">
+            <div class="centered">
+                <h2><b>WHY DONATE TO US?</b></h2>
+                <p>
+                    Your donation creates hope and opportunity within our community by empowering us to minister to people’s physical, social and spiritual needs.
+                    When a child is born into an impoverished family, they enter the first phase of a long and challenging cycle that can run for generations. When a
+                    family lives in poverty, they usually have very limited or no access to resources. But you are able to change that by contributing!
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <img src="~/Images/Background/poverty-eradication.jpg" style="display:block; margin-left:auto; margin-right:auto; width:70%;" />
+    <p><i>Image of a child facing poverty in Mumbai, India.</i></p>
+
+    <div class="banner-item">
+        <div class="container">
+            <div class="centered">
+                <h2><b>TAKE PART!</b></h2>
+                <p>
+                    You can help us to decrease poverty issues by donating to our charity that focuses on helping them. Funds that have been raised will 100% go towards
+                    the people that are struggling with poverty and we will provide them with basic needs to help them survive and ease their struggles! You are able to
+                    donate a fixed amount which will be RM1, RM5, RM10, RM20, RM50, RM100, or a custom amount! You may also support us by buying our merchandise and the funds
+                    will also go directly to those in need.
+                </p>
+                <br />
+            </div>
+        </div>
+    </div>
+
+    <h2><b>DONATE</b></h2>
+    <div class="card" style="width: 30rem;">
+        <img src="~/Images/Logos/donate icon.png" class="card-img-top">
+        <div class="card-body">
+            <h5 class="card-title">Select the amount:</h5>
+            <button class="button">RM 1</button>
+            <button class="button">RM 5</button>
+            <button class="button">RM 10</button>
+            <button class="button">RM 20</button>
+            <button class="button">RM 50</button>
+            <button class="button">RM 100</button><br /><br />
+
+            <h5 class="card-title">Enter custom amount (if any):</h5>
+            <input type="number" class="form-control" id="" placeholder="Numbers only" min="1" max="50000"><br />
+
+            <a href="~/Home/Payment" class="center">DONATE</a>
+        </div>
+    </div>
+
+
+
+</body>
+</html>
