@@ -7,6 +7,18 @@
 
     <link rel="icon" href="~/Images/Logos/logo-icon.png">
 
+    @{
+        switch (ViewBag.Title)
+        {
+            case "Sign Up":
+                <link href="~/Content/LoginRegister.css" rel="stylesheet" />
+                break;
+            case "Donation":
+                <link href="~/Content/donation.css" rel="stylesheet" />
+                break;
+        }
+    }
+
     <!-- CSS -->
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
