@@ -101,6 +101,7 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\isotop.css" />
+    <Content Include="Content\LoginRegister.css" />
     <Content Include="Content\magnific-popup.css" />
     <Content Include="Content\owl.carousel.min.css" />
     <Content Include="Content\owl.video.play.html" />
@@ -177,6 +178,8 @@
     <Content Include="Views\Home\Donation.cshtml" />
     <Content Include="Views\Home\Payment.cshtml" />
     <Content Include="Views\Home\Receipt.cshtml" />
+    <Content Include="Views\Home\LogIn.cshtml" />
+    <Content Include="Views\Home\SignUp.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

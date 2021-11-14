@@ -1,0 +1,51 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<link href="~/Content/LoginRegister.css" rel="stylesheet" />
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SignUp</title>
+</head>
+
+<body>
+    <form action="" method="post" id="registerForm">
+        <h2><b>Sign Up</b></h2>
+        <div>
+            <table id="signUpDetails">
+                <tr>
+                    <td class="inputInfo"><label>Email: </label></td>
+                    <td><input type="email" name="registerEmail" value="" id="input" /></td>
+                </tr>
+                <tr>
+                    <td class="inputInfo"><label>Last Name: </label></td>
+                    <td><input type="text" name="lastName" value="" id="input" /></td>
+                </tr>
+                <tr>
+                    <td class="inputInfo"><label>First Name: </label></td>
+                    <td><input type="text" name="firstName" value="" id="input" /></td>
+                </tr>
+                <tr>
+                    <td class="inputInfo"><label>Password: </label></td>
+                    <td><input type="password" name="password" value="" id="input" /></td>
+                </tr>
+                <tr>
+                    <td class="inputInfo"><label>Confirm Password: </label></td>
+                    <td><input type="password" name="confirmPass" value="" id="input" /></td>
+                </tr>
+            </table>
+
+            <br />
+
+            <!-- Submit Button -->
+            <div id="registerBtn">
+                <input type="button" name="registerBtn" value="Register" />
+            </div>
+            <br />
+        </div>
+    </form>
+</body>
+</html>
