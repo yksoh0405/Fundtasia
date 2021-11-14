@@ -112,10 +112,15 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Images\Background\background.png" />
+    <Content Include="Images\Background\poverty-eradication.jpg" />
     <Content Include="Images\Logos\donate icon.png" />
     <Content Include="Images\Logos\logo-black.png" />
     <Content Include="Images\Logos\logo-white.png" />
     <Content Include="Images\Logos\logo-icon.png" />
+    <Content Include="Images\Merchandise\shirt1.jpg" />
+    <Content Include="Images\Merchandise\shirt2.jpg" />
+    <Content Include="Images\Merchandise\shirt3.jpg" />
+    <Content Include="Images\Merchandise\shirt4.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\isotope.pkgd.min.js" />
