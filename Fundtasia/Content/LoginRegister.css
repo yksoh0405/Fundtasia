@@ -1,0 +1,48 @@
+﻿form {
+    font-family: 'Roboto', sans-serif;
+}
+
+#registerForm {
+    width: 45%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid;
+    border-radius: 5px;
+}
+
+form h2 {
+    text-align: center;
+}
+
+#signUpDetails {
+    border: solid 3px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    border-spacing: 10px;
+}
+
+.inputInfo {
+    text-align: right;
+    width: 35%;
+}
+
+#signUpDetails input {
+    width: 90%;
+    text-align: left;
+}
+
+#registerBtn {
+    text-align: center;
+}
+
+input {
+    height: 30px;
+    border: solid 1px; 
+    border-radius: 5px; 
+    border-color: grey;
+}
+
+#input {
+    padding-left: 10px;
+}
