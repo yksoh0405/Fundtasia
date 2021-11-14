@@ -4,5 +4,48 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-<p>This is a paragraph from Index.cshtml</p>
+<div class="body-inner">
+    <!-- Header start -->
+    <header id="header" class="header">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <!-- logo-->
+                <a class="navbar-brand" href="index.html">
+                    <img src="images/logos/logo2.png" alt="fundtasia" height="80px">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"><i class="icon icon-menu"></i></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="dropdown nav-item active">
+                            <a href="index.html">Home</a>
+                        </li>
+                        <li class="dropdown nav-item">
+                            <a href="about-us.html">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="donation.html">Donation</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="event.html">Event</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a href="#"> Account <i class="fa fa-angle-down"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="register.html">Sign Up</a></li>
+                                <li><a href="login.html">Log In</a></li>
+                                <li><a href="forgot-password">Forgot Password</a></li>
+                            </ul>
+                        </li>
+                        <li class="header-ticket nav-item">
+                            <a class="ticket-btn btn" href="pricing.html">
+                                Buy  Ticket
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
