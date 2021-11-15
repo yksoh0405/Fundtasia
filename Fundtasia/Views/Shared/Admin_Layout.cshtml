@@ -1,11 +1,89 @@
 ﻿<!DOCTYPE html>
 
-<html>
+<html dir="ltr" lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@ViewBag.Title</title>
+
+    <link rel="icon" href="~/Images/Logos/logo-icon.png">
+
+    <!-- CSS -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/font-awesome.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/style-admin.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/d57fff88a0.js" crossorigin="anonymous"></script>
 </head>
 <body>
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full" data-sidebar-position="absolute" data-heade-position="absolute" data-boxed-layout="full">
+        <!-- Topbar header -->
+        <header class="topbar" data-navbarbg="skin5">
+            <nav class="navbar top-navbar" navbar-expand-md navbar-dark>
+                <div class="navbar-header" data-logobg="skin6">
+                    <!-- Logo -->
+                    <a href="@Url.Action("Dashboard", "Admin")" class="navbar-brand">
+                        <b class="logo-icon">
+                            <img src="~/Images/Logos/logo-icon.png" class="img-fluid" />
+                        </b>
+                        <span class="logo-text">
+                            <img src="~/Images/Logos/text-black.png" class="img-fluid" />
+                        </span>
+                    </a>
+                    <a href="javascript:void(0)" class="nav-toggler">
+                        <i class="ti-close ti-menu"></i>
+                    </a>
+                </div>
+
+                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+                    <!-- Right side toggle and nav items -->
+                    <ul class="navbar-nav ms-auto d-flex align-items-center>">
+                        <li>
+                            <span class="text-white font-medium">William</span>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Left sidebar navigation -->
+        <aside class="left-sidebar" data-sidebarbg="skin6">
+            <div class="scroll-sidebar">
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav" class="in">
+                        <li class="sidebar-item tp-2 selected">
+                            <a href="@Url.Action("Dashboard", "Admin")" class="sidebar-link">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <span class="hide-menu">Dashbaord</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item"></li>
+                        <li class="sidebar-item"></li>
+                        <li class="sidebar-item"></li>
+                        <li class="sidebar-item"></li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+    </div>
+
+    <script src="~/Scripts/jquery-3.6.0.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+    <!-- Scripts -->
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/app-style-switcher.js"></script>
+    <script src="~/Scripts/waves.js"></script>
+    <script src="~/Scripts/sidebarmenu.js"></script>
+    <script src="~/Scripts/custom.js"></script>
     <div>
         @RenderBody()
     </div>
