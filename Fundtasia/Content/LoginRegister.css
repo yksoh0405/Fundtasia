@@ -1,48 +1,64 @@
-﻿form {
-    font-family: 'Roboto', sans-serif;
+﻿#registerForm, #loginForm {
+    width: 55%;
+    margin: 0 auto;
+    border: 0;
 }
 
-#registerForm {
-    width: 45%;
-    margin-left: auto;
-    margin-right: auto;
-    border: 2px solid;
-    border-radius: 5px;
+#userName {
+    width: 100%;
 }
 
-form h2 {
-    text-align: center;
+input[type="email"], input[type="text"], input[type="password"] {
+    max-width: 100%;
+    margin-top: -15px;
+    border: 0;
+    border-radius: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #C0C0C0;
 }
 
-#signUpDetails {
-    border: solid 3px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 80%;
-    border-spacing: 10px;
+    input[type="email"]:hover, input[type="text"]:hover, input[type="password"]:hover {
+        cursor: text;
+    }
+
+input#registerBtn, input#loginBtn {
+    display: flex;
+    margin: auto;
+    height: 40px;
+    border-radius: 10px;
+    background-color: white;
+    padding: 0 22px;
+    border: 2px solid #3E3E3E;
 }
 
-.inputInfo {
-    text-align: right;
-    width: 35%;
+    input#registerBtn:hover, input#loginBtn:hover {
+        box-shadow: 0 1px 2px 0 rgba(0,0,0,0.24), 0 3px 4px 0 rgba(0,0,0,0.19);
+        cursor: pointer;
+    }
+
+#userName-container {
+    display: inline-block;
+    width: 100%;
 }
 
-#signUpDetails input {
-    width: 90%;
-    text-align: left;
+#lastName-container {
+    width: 47.5%;
+    float: left;
 }
 
-#registerBtn {
-    text-align: center;
+#firstName-container {
+    width: 47.5%;
+    float: right;
 }
 
-input {
-    height: 30px;
-    border: solid 1px; 
-    border-radius: 5px; 
-    border-color: grey;
+.form-control:focus {
+    box-shadow: none !important;
+    outline: none !important;
+    border-color: black !important;
 }
 
-#input {
-    padding-left: 10px;
+#loginForm>a {
+    font-size: 13px;
+    color: cornflowerblue !important;
 }

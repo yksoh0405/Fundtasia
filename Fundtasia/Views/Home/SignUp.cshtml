@@ -1,40 +1,36 @@
 ﻿@{
-    Layout = "Sign Up";
+    ViewBag.Title = "Sign Up";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <form action="" method="post" id="registerForm" class="form-control">
-    <h2><b>Sign Up</b></h2>
-    <div>
-        <table id="signUpDetails">
-            <tr>
-                <td class="inputInfo"><label>Email: </label></td>
-                <td><input type="email" name="registerEmail" value="" id="input" /></td>
-            </tr>
-            <tr>
-                <td class="inputInfo"><label>Last Name: </label></td>
-                <td><input type="text" name="lastName" value="" id="input" /></td>
-            </tr>
-            <tr>
-                <td class="inputInfo"><label>First Name: </label></td>
-                <td><input type="text" name="firstName" value="" id="input" /></td>
-            </tr>
-            <tr>
-                <td class="inputInfo"><label>Password: </label></td>
-                <td><input type="password" name="password" value="" id="input" /></td>
-            </tr>
-            <tr>
-                <td class="inputInfo"><label>Confirm Password: </label></td>
-                <td><input type="password" name="confirmPass" value="" id="input" /></td>
-            </tr>
-        </table>
-
-        <br />
-
-        <!-- Submit Button -->
-        <div id="registerBtn">
-            <input type="button" name="registerBtn" value="Register" />
-        </div>
-        <br />
+    <div class="form-group">
+        <h5><label>Email Address</label></h5>
+        <input type="email" class="form-control" name="email" value="">
     </div>
+
+    <div class="form-group" id="userName-container">
+        <div id="lastName-container">
+            <h5><label>Last Name</label></h5>
+            <input type="text" class="form-control" name="lastName" value="">
+        </div>
+        <div id="firstName-container">
+            <h5><label>First Name</label></h5>
+            <input type="text" class="form-control" name="firstName" value="">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <h5><label>Password</label></h5>
+        <input type="password" class="form-control" name="newPwd" value="">
+    </div>
+
+    <div class="form-group">
+        <h5><label>Confirm Password</label></h5>
+        <input type="password" class="form-control" name="confirmPwd" value="">
+    </div>
+    <br />
+
+    <!-- Submit Button -->
+    <input type="submit" name="registerBtn" value="Register" id="registerBtn" />
 </form>

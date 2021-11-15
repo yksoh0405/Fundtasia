@@ -1,17 +1,21 @@
-﻿
-@{
-    Layout = null;
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>LogIn</title>
-</head>
-<body>
-    <div> 
+<form action="" method="post" id="loginForm" class="form-control">
+    <div class="form-group">
+        <h5><label>Email Address</label></h5>
+        <input type="email" class="form-control" name="email" value="">
     </div>
-</body>
-</html>
+
+    <div class="form-group">
+        <h5><label>Password</label></h5>
+        <input type="password" class="form-control" name="loginPwd" value="">
+    </div>
+
+    <a href="~/Home/ForgotPassword">Forgot Password...</a>
+
+    <!-- Submit Button -->
+    <input type="submit" name="loginBtn" value="Login" id="loginBtn" />
+</form>
