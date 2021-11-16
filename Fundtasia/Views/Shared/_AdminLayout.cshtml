@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html>
+
+<html dir="ltr" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewBag.Title</title>
+
+    <link rel="icon" href="~/Images/Logos/logo-icon.png">
+
+    <!-- CSS -->
+    <link href="~/Content/style-admin.css" rel="stylesheet" />
+    <link href="~/Content/style.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.css" rel="stylesheet" type="text/css" />
+    <script src="https://kit.fontawesome.com/d57fff88a0.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <!-- Loading Circle -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full" data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+
+        <!-- Top Bar -->
+        <header class="topbar" data-navbarbg="skin5">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <div class="navbar-header" data-logobg="skin6">
+
+                    <a class="navbar-brand" href="@Url.Action("Dashboard", "Admin")">
+                        <!-- Logo icon -->
+                        <b class="logo-icon">
+                            <!-- Dark Logo icon -->
+                            <img src="~/Images/Logos/logo-icon.png" alt="homepage" class="img-fluid" />
+                        </b>
+                        <!--End Logo icon -->
+                        <!-- Logo text -->
+                        <span class="logo-text">
+                            <!-- dark Logo text -->
+                            <img src="~/Images/Logos/text-black.png" alt="homepage" class="img-fluid" />
+                        </span>
+                    </a>
+                    <a class="nav-toggler waves-effect waves-light text-dark d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+                </div>
+                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+                    <ul class="navbar-nav d-none d-md-block d-lg-none">
+                        <li class="nav-item">
+                            <a class="nav-toggler nav-link waves-effect waves-light text-white"
+                               href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav ms-auto d-flex align-items-center">
+                        <li class=" in">
+                            <form role="search" class="app-search d-none d-md-block me-3">
+                                <input type="text" placeholder="Search..." class="form-control mt-0">
+                                <a href="" class="active">
+                                    <i class="fa fa-search"></i>
+                                </a>
+                            </form>
+                        </li>
+                        <li>
+                            <a class="profile-pic" href="#">
+                                <span class="text-white font-medium">Steave</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Left Side -->
+        <aside class="left-sidebar" data-sidebarbg="skin6">
+            <div class="scroll-sidebar">
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li class="sidebar-item pt-2 selected">
+                            <a href="@Url.Action("Dashboard", "Admin")" class="sidebar-link">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <span class="hide-menu">Dashbaord</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("Staff", "Admin")" class="sidebar-link">
+                                <i class="far fa-id-card"></i>
+                                <span class="hide-menu">Staff</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("User", "Admin")" class="sidebar-link">
+                                <i class="fas fa-user"></i>
+                                <span class="hide-menu">User</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("Event", "Admin")" class="sidebar-link">
+                                <i class="fas fa-calendar-week"></i>
+                                <span class="hide-menu">Event</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("Merchandise", "Admin")" class="sidebar-link">
+                                <i class="fas fa-store-alt"></i>
+                                <span class="hide-menu">Merchandise</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("Donation", "Admin")" class="sidebar-link">
+                                <i class="fas fa-hand-holding-usd"></i>
+                                <span class="hide-menu">Donation</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("Report", "Admin")" class="sidebar-link">
+                                <i class="fas fa-file-alt"></i>
+                                <span class="hide-menu">Report</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link modal-dialog modal-dialog-centered" data-bs-toggle="modal" data-bs-target="#signOutModal">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span class="hide-menu">Sign Out</span>
+                            </a>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                Launch static backdrop modal
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Right Side -->
+        <div class="page-wrapper" style="min-height: 250px;">
+            <div class="page-breadcrumb bg-white">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">@ViewBag.Title</h4>
+                    </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                        <div class="d-md-flex">
+                            <ol class="breadcrumb ms-auto">
+                                <li>@Html.ActionLink("Back To Client Page", "Index", "Home", null, new { @class = "text-info" })</li>
+                            </ol>
+                            <a href="#" target="_blank" class="btn btn-info  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white">Create</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Main Content Display Here -->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="white-box">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="footer text-center">
+                @DateTime.Today.Year &copy; Copyrighted by <strong>@Html.ActionLink("Fundtasia", "Index", "Home", null, new { @class = "text-dark" })</strong>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Modal Display -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Understood</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="signOutModal" tabindex="-1" aria-labelledby="signOutModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Scripts/jquery-3.6.0.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+    <!-- Scripts -->
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/app-style-switcher.js"></script>
+    <script src="~/Scripts/waves.js"></script>
+    <script src="~/Scripts/sidebarmenu.js"></script>
+    <script src="~/Scripts/custom.js"></script>
+</body>
+</html>

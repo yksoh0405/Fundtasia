@@ -117,6 +117,7 @@
     <Content Include="Content\solid.min.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\donation.css" />
+    <Content Include="Content\style.min.css" />
     <Content Include="Content\svg-with-js.css" />
     <Content Include="Content\svg-with-js.min.css" />
     <Content Include="Content\v4-shims.css" />
@@ -224,7 +225,7 @@
     <Content Include="Views\Home\LogIn.cshtml" />
     <Content Include="Views\Home\SignUp.cshtml" />
     <Content Include="Views\Admin\Dashboard.cshtml" />
-    <Content Include="Views\Shared\Admin_Layout.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Home\ForgotPassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -1,3 +1,10 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewContext.ViewBag.Title = "Untitled";
+
+    switch (ViewContext.RouteData.Values["controller"].ToString())
+    {
+        case "Home": Layout = "~/Views/Shared/_Layout.cshtml"; break;
+        case "Admin": Layout = "~/Views/Shared/_AdminLayout.cshtml"; break;
+    }
+
 }
