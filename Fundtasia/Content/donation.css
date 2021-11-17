@@ -55,9 +55,9 @@ h2 {
     border-radius: 16px;
 }
 
-.label-select hover {
-    background-color: #f1f1f1;
-}
+    .label-select hover {
+        background-color: #f1f1f1;
+    }
 
 input.donate-submit {
     display: flex;
@@ -69,16 +69,16 @@ input.donate-submit {
     border: 2px solid #3E3E3E;
 }
 
-input.donate-submit:hover{
-    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.24), 0 3px 4px 0 rgba(0,0,0,0.19);
-    cursor: pointer;
-}
+    input.donate-submit:hover {
+        box-shadow: 0 1px 2px 0 rgba(0,0,0,0.24), 0 3px 4px 0 rgba(0,0,0,0.19);
+        cursor: pointer;
+    }
 
 .card-body p {
     float: right;
     font-size: 18px;
 }
 
-.card-body h4{
+.card-body h4 {
     font-size: 16.5px;
 }
