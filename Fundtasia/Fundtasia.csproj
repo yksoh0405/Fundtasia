@@ -126,6 +126,8 @@
     <Content Include="Global.asax" />
     <Content Include="Images\Background\background.png" />
     <Content Include="Images\Background\poverty-eradication.jpg" />
+    <Content Include="Images\Logos\small-logo-icon.png" />
+    <Content Include="Images\Logos\small-text-black.png" />
     <Content Include="Images\Logos\text-white.png" />
     <Content Include="Images\Logos\text-black.png" />
     <Content Include="Images\Logos\donate icon.png" />

@@ -11,7 +11,6 @@
     <!-- CSS -->
     <link href="~/Content/style-admin.css" rel="stylesheet" />
     <link href="~/Content/style.min.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/font-awesome.css" rel="stylesheet" type="text/css" />
     <script src="https://kit.fontawesome.com/d57fff88a0.js" crossorigin="anonymous"></script>
 </head>
@@ -36,22 +35,21 @@
                         <!-- Logo icon -->
                         <b class="logo-icon">
                             <!-- Dark Logo icon -->
-                            <img src="~/Images/Logos/logo-icon.png" alt="homepage" class="img-fluid" />
+                            <img src="~/Images/Logos/small-logo-icon.png" alt="homepage" class="img-fluid" />
                         </b>
                         <!--End Logo icon -->
                         <!-- Logo text -->
                         <span class="logo-text">
                             <!-- dark Logo text -->
-                            <img src="~/Images/Logos/text-black.png" alt="homepage" class="img-fluid" />
+                            <img src="~/Images/Logos/small-text-black.png" alt="homepage" class="img-fluid" />
                         </span>
                     </a>
-                    <a class="nav-toggler waves-effect waves-light text-dark d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+                    <a class="nav-toggler waves-effect waves-light text-dark d-block d-md-none" href="javascript:void(0)"><i class="fas fa-bars"></i></a>
                 </div>
                 <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
                     <ul class="navbar-nav d-none d-md-block d-lg-none">
                         <li class="nav-item">
-                            <a class="nav-toggler nav-link waves-effect waves-light text-white"
-                               href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+                            <a class="nav-toggler nav-link waves-effect waves-light text-white" href="javascript:void(0)"><i class="fas fa-bars fa-times"></i></a>
                         </li>
                     </ul>
 
@@ -66,7 +64,7 @@
                         </li>
                         <li>
                             <a class="profile-pic" href="#">
-                                <span class="text-white font-medium">Steave</span>
+                                <span class="text-white font-medium">William</span>
                             </a>
                         </li>
                     </ul>
@@ -122,13 +120,10 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link modal-dialog modal-dialog-centered" data-bs-toggle="modal" data-bs-target="#signOutModal">
+                            <a href="#" class="sidebar-link">
                                 <i class="fas fa-sign-out-alt"></i>
                                 <span class="hide-menu">Sign Out</span>
                             </a>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                Launch static backdrop modal
-                            </button>
                         </li>
                     </ul>
                 </nav>
@@ -169,40 +164,7 @@
     </div>
 
     <!-- Modal Display -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Understood</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="signOutModal" tabindex="-1" aria-labelledby="signOutModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <script src="~/Scripts/jquery-3.6.0.js"></script>
     <script src="~/Scripts/jquery.validate.js"></script>
