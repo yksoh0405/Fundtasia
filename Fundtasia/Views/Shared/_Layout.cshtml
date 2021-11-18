@@ -78,6 +78,8 @@
             </div><!-- container end-->
         </header>
         <!--/ Header end -->
+
+        <!-- Only Home page display another design-->
         @if (String.Compare(ViewBag.Title, "Home") != 0)
         {
             <div id="page-banner-area" class="page-banner-area" style="background-image: url('/Images/Background/background.png');">
@@ -96,19 +98,22 @@
             @RenderBody()
         </div>
 
-        <!-- ts footer area start-->
+        <!-- Footer area start-->
         <div class="footer-area">
             <!-- footer start-->
             <footer class="ts-footer">
                 <div class="container">
                     <div class="row">
+                        <!-- Fundtasia definition-->
                         <div class="col-lg-8 mx-auto">
                             <div class="book-seat-content text-center mb-100">
                                 <img src="~/Images/Logos/logo-white.png" alt="logo" height="100">
                                 <p style="color: white;">Fundtasia is an United Nations development, and advocacy organisation dedicated to working with children, families and their communities to overcome poverty and injustice. We server all people regardless of religion, race, ethnicity or gender.</p>
-                            </div><!-- book seat end-->
-                        </div><!-- col end-->
-                    </div><!-- row end-->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social media link-->
                     <div class="row">
                         <div class="col-lg-8 mx-auto">
                             <div class="ts-footer-social text-center mb-30">
@@ -140,13 +145,14 @@
                     </div>
                 </div>
             </footer>
-            <!-- footer end-->
+            <!-- Footer end-->
+
+            <!-- Back to top button-->
             <div class="BackTo">
                 <a href="#" class="fa fa-angle-up" aria-hidden="true"></a>
             </div>
 
         </div>
-        <!-- ts footer area end-->
     </div>
     
 

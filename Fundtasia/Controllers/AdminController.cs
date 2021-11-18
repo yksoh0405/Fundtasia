@@ -45,5 +45,10 @@ namespace Fundtasia.Controllers
             return View();
         }
 
+        public ActionResult ReportDetails()
+        {
+            return View();
+        }
+
     }
 }

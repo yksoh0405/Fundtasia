@@ -1,6 +1,7 @@
 ﻿@{
     ViewContext.ViewBag.Title = "Untitled";
 
+    //Check the View is come from which controller then give it apply to that layout
     switch (ViewContext.RouteData.Values["controller"].ToString())
     {
         case "Home": Layout = "~/Views/Shared/_Layout.cshtml"; break;
