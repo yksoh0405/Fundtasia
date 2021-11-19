@@ -244,6 +244,7 @@
     <Content Include="Views\Admin\Donation.cshtml" />
     <Content Include="Views\Admin\Report.cshtml" />
     <Content Include="Views\Admin\ReportDetails.cshtml" />
+    <Content Include="Views\Admin\Event.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
