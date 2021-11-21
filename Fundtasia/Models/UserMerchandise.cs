@@ -14,10 +14,9 @@ namespace Fundtasia.Models
     
     public partial class UserMerchandise
     {
-        public string Id { get; set; }
         public string Email { get; set; }
-        public string MId { get; set; }
-        public string PurchaseTime { get; set; }
+        public string MerchandiseId { get; set; }
+        public byte[] PurchaseTime { get; set; }
         public string Size { get; set; }
         public decimal Price { get; set; }
     

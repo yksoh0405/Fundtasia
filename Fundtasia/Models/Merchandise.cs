@@ -22,8 +22,9 @@ namespace Fundtasia.Models
     
         public string Id { get; set; }
         public string Name { get; set; }
-        public decimal Price { get; set; }
         public string Image { get; set; }
+        public decimal Price { get; set; }
+        public string Status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserMerchandise> UserMerchandises { get; set; }
