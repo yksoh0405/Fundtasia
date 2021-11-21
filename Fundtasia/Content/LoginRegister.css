@@ -32,10 +32,10 @@ input#registerBtn, input#loginBtn {
     border: 2px solid #3E3E3E;
 }
 
-    input#registerBtn:hover, input#loginBtn:hover {
-        box-shadow: 0 1px 2px 0 rgba(0,0,0,0.24), 0 3px 4px 0 rgba(0,0,0,0.19);
-        cursor: pointer;
-    }
+input#registerBtn:hover, input#loginBtn:hover {
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.24), 0 3px 4px 0 rgba(0,0,0,0.19);
+    cursor: pointer;
+}
 
 #userName-container {
     display: inline-block;

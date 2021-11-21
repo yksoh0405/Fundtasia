@@ -1,13 +1,17 @@
-﻿using System;
+﻿using Fundtasia.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace Fundtasia.Controllers
 {
     public class HomeController : Controller
     {
+        DBEntities1 db = new DBEntities1();
+
         // GET: Home
         public ActionResult Index()
         {
@@ -34,8 +38,15 @@ namespace Fundtasia.Controllers
             return View();
         }
 
-        public ActionResult SignUp()
+        public ActionResult EventDetail()
         {
+            return View();
+        }
+
+        public ActionResult SignUp(User user)
+        {
+
+
             return View();
         }
 
@@ -45,6 +56,11 @@ namespace Fundtasia.Controllers
         }
 
         public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        public ActionResult Register()
         {
             return View();
         }

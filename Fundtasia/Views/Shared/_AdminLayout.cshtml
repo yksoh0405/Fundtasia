@@ -14,6 +14,9 @@
     <link href="~/Content/font-awesome.css" rel="stylesheet" type="text/css" />
     <!-- This css code is a type of kit that need user to register the font awesome account to get it -->
     <script src="https://kit.fontawesome.com/d57fff88a0.js" crossorigin="anonymous"></script>
+
+    <!-- Embeded CSS-->
+    @RenderSection("head", false)
 </head>
 <body>
 
@@ -205,5 +208,8 @@
     <script src="~/Scripts/waves.js"></script>
     <script src="~/Scripts/sidebarmenu.js"></script>
     <script src="~/Scripts/custom.js"></script>
+
+    <!-- Embeded JS -->
+    @RenderSection("foot", false)
 </body>
 </html>
