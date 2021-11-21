@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
+using System.Security.Cryptography;
 
 namespace Fundtasia.Controllers
 {
