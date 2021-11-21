@@ -1,0 +1,73 @@
+﻿body {
+}
+
+.card-space {
+    padding: 30px 50px;
+}
+
+.column {
+    float: left;
+    width: 25%;
+    padding: 20px 15px;
+}
+
+.row {
+    margin: 0 -5px;
+}
+
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+@media screen and (max-width: 600px) {
+    .column {
+        width: 100%;
+        display: block;
+        margin-bottom: 20px;
+    }
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+    background-color: #f1f1f1;
+}
+
+.edit-btn {
+    height: 40px;
+    width: 140px;
+    margin-top: 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    background-color: #46E114;
+    border: 2px solid #46E114;
+    font-size: 16px;
+    color: white;
+    transition-duration: 0.4s;
+}
+
+    .edit-btn:hover {
+        background-color: #2FC000;
+        border: 2px solid #2FC000;
+        color: white;
+    }
+
+.delete-btn {
+    height: 40px;
+    width: 140px;
+    border-radius: 15px;
+    cursor: pointer;
+    background-color: #F42A2A;
+    border: 2px solid #F42A2A;
+    font-size: 16px;
+    color: white;
+    transition-duration: 0.4s;
+}
+
+    .delete-btn:hover {
+        background-color: #E80C0C;
+        border: 2px solid #E80C0C;
+        color: white;
+    }

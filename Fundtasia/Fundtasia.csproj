@@ -132,6 +132,8 @@
     <Content Include="Content\style.css" />
     <Content Include="Content\donation.css" />
     <Content Include="Content\style.min.css" />
+    <Content Include="Content\donationAdmin.css" />
+    <Content Include="Content\merchandiseAdmin.css" />
     <Content Include="Content\svg-with-js.css" />
     <Content Include="Content\svg-with-js.min.css" />
     <Content Include="Content\v4-shims.css" />
@@ -304,6 +306,7 @@
     <Content Include="Views\Admin\Donation.cshtml" />
     <Content Include="Views\Admin\Report.cshtml" />
     <Content Include="Views\Admin\ReportDetails.cshtml" />
+    <Content Include="Views\Admin\Event.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
