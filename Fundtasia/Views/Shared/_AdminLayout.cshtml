@@ -187,7 +187,10 @@
                     <button type="button" class="btn d-grid btn-danger text-white" data-bs-dismiss="modal">
                         Close
                     </button>
-                    <button type="button" class="btn waves-effect waves-light btn-rounded btn-light-danger text-danger">Log Out</button>
+                    @using (Html.BeginForm("Logout", "Home", FormMethod.Post, new { id = "logoutForm" }))
+                    {
+                        <button href="javascript:document.getElementById('logoutForm').submit()" class="btn waves-effect waves-light btn-rounded btn-light-danger text-danger">Log Out</button>
+                    }
                 </div>
             </div>
             <!-- /.modal-content -->
