@@ -50,11 +50,38 @@
                                 @Html.ActionLink("Event", "Event", "Home")
                             </li>
                             <li class="nav-item dropdown">
-                                <a href="#"> Account <i class="fa fa-angle-down"></i></a>
+                                <a href="#">
+                                    Account <i class="fa fa-angle-down"></i>
+                                </a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li>@Html.ActionLink("Sign Up", "SignUp", "Home")</li>
-                                    <li>@Html.ActionLink("Log In", "LogIn", "Home")</li>
-                                    <li>@Html.ActionLink("Forgot Password", "ForgotPassword", "Home")</li>
+                                    @if (Session["User"] == null)
+                                    {
+                                        <li>@Html.ActionLink("Sign Up", "SignUp", "Home")</li>
+                                        <li>@Html.ActionLink("Log In", "LogIn", "Home")</li>
+                                        <li>@Html.ActionLink("Forgot Password", "ForgotPassword", "Home")</li>
+                                    }
+                                    else
+                                    {
+                                        //user.role != "User" ? display dashboard link : display view profile link
+                                        if (true)
+                                        {
+
+                                        }
+                                        else
+                                        {
+
+                                        }
+                                        <li>@Html.ActionLink("Dashboard", "Dashboard", "Admin")</li>
+                                        <li>@Html.ActionLink("Profile", "ViewProfile", "Home")</li>
+                                        <li>
+                                            @using (Html.BeginForm("Logout", "Home", FormMethod.Post, new { id = "logoutForm" }))
+                                            {
+                                                <a href="javascript:document.getElementById('logoutForm').submit()">Logut</a>
+                                            }
+
+                                        </li>
+                                    }
+
                                 </ul>
                             </li>
                         </ul>
@@ -64,19 +91,25 @@
         </header>
         <!--/ Header end -->
         <!-- Only Home page display another design-->
-        @if (String.Compare(ViewBag.Title, "Home") != 0)
+        @switch (ViewBag.Title)
         {
-            <div id="page-banner-area" class="page-banner-area" style="background-image: url('/Images/Background/background.png');">
-                <div class="page-banner-title">
-                    <div class="text-center">
-                        <h2>@ViewBag.Title</h2>
-                        <ol class="breadcrumb">
-                            <li>@Html.ActionLink("Home", "Index", "Home")/&nbsp;</li>
-                            <li>@ViewBag.Title</li>
-                        </ol>
+            case "Home":
+            case "View Profile":
+                break;
+
+            default:
+                <div id="page-banner-area" class="page-banner-area" style="background-image: url('/Images/Background/background.png');">
+                    <div class="page-banner-title">
+                        <div class="text-center">
+                            <h2>@ViewBag.Title</h2>
+                            <ol class="breadcrumb">
+                                <li>@Html.ActionLink("Home", "Index", "Home")/&nbsp;</li>
+                                <li>@ViewBag.Title</li>
+                            </ol>
+                        </div>
                     </div>
                 </div>
-            </div>
+                break;
         }
         <div class="container body-content my-5">
             @RenderBody()
