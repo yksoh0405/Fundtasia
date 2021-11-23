@@ -51,10 +51,6 @@ namespace Fundtasia.Controllers
         [HttpGet]
         public ActionResult SignUp()
         {
-            if (Session["User"] != null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
             return View();
         }
 
@@ -118,10 +114,6 @@ namespace Fundtasia.Controllers
         [HttpGet]
         public ActionResult VerifyAccount(string id)
         {
-            if(id == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
             bool Status = false;
             using (db)
             {
@@ -148,10 +140,6 @@ namespace Fundtasia.Controllers
         [HttpGet]
         public ActionResult LogIn()
         {
-            if (Session["User"] != null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
             return View();
         }
 
@@ -181,7 +169,7 @@ namespace Fundtasia.Controllers
                         var ticket = new FormsAuthenticationTicket(login.Email, login.RememberMe, timeout);
                         string encrypted = FormsAuthentication.Encrypt(ticket);
                         var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypted);
-                        Session["User"] = v.Email;
+                        Session["User"] = login;
                         cookie.Expires = DateTime.Now.AddMinutes(timeout);
                         cookie.HttpOnly = true;
                         Response.Cookies.Add(cookie);
@@ -192,7 +180,6 @@ namespace Fundtasia.Controllers
                         }
                         else
                         {
-                            message = "Login successful, welcome" + v.FirstName;
                             return RedirectToAction("Index", "Home");
                         }
                     }
@@ -210,31 +197,13 @@ namespace Fundtasia.Controllers
             return View();
         }
 
-        //Logout
-        [Authorize]
-        [HttpPost]
-        public ActionResult Logout()
-        {
-            FormsAuthentication.SignOut();
-            Session["User"] = null;
-            return RedirectToAction("LogIn", "Home");
-        }
-
         public ActionResult ForgotPassword()
         {
-            //Remember add if session == null that thing to stop the user to enter to this page after they login their acc
-            //This page should sent email to user and click the link provided to them to bring them to a page that allows them to set their new password
-            //When the user click on the submit button the DB should update user table records
-            //After finish setting their new password then bring them back to login page
             return View();
         }
 
-        public ActionResult ViewProfile()
+        public ActionResult Register()
         {
-            //This page is just view the users profile
-            //Design idea
-            //1. Only view the profile without edit anything, but you will need to add one more edit page to update user's data
-            //2. The value of the data is put at the <input value="@u.data"> and with one more save button to update the user table records 
             return View();
         }
 
