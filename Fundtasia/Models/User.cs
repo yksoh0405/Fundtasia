@@ -28,6 +28,8 @@ namespace Fundtasia.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PasswordHash { get; set; }
+        public bool IsEmailVerified { get; set; }
+        public System.Guid ActivationCode { get; set; }
         public string Status { get; set; }
         public byte[] LastLoginTime { get; set; }
         public string LastLoginIP { get; set; }

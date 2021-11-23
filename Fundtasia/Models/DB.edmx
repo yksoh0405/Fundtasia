@@ -64,9 +64,11 @@ warning 6002: The table/view 'C:\USERS\WLM01\SOURCE\REPOS\FUNDTASIA\FUNDTASIA\AP
           <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="PasswordHash" Type="varchar(max)" Nullable="false" />
+          <Property Name="IsEmailVerified" Type="bit" Nullable="false" />
+          <Property Name="ActivationCode" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="LastLoginTime" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
-          <Property Name="LastLoginIP" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastLoginTime" Type="timestamp" StoreGeneratedPattern="Computed" />
+          <Property Name="LastLoginIP" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'C:\USERS\WLM01\SOURCE\REPOS\FUNDTASIA\FUNDTASIA\APP_DATA\DB.MDF.dbo.UserEvent' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -329,9 +331,11 @@ warning 6002: The table/view 'C:\USERS\WLM01\SOURCE\REPOS\FUNDTASIA\FUNDTASIA\AP
           <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PasswordHash" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsEmailVerified" Type="Boolean" Nullable="false" />
+          <Property Name="ActivationCode" Type="Guid" Nullable="false" />
           <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LastLoginTime" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="LastLoginIP" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastLoginTime" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="LastLoginIP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Donations" Relationship="DBModel.FK_Donation_User" FromRole="User" ToRole="Donation" />
           <NavigationProperty Name="Reports" Relationship="DBModel.FK_Report_User" FromRole="User" ToRole="Report" />
           <NavigationProperty Name="UserEvents" Relationship="DBModel.FK_UserEvent_User" FromRole="User" ToRole="UserEvent" />
@@ -513,6 +517,8 @@ warning 6002: The table/view 'C:\USERS\WLM01\SOURCE\REPOS\FUNDTASIA\FUNDTASIA\AP
                 <ScalarProperty Name="LastLoginIP" ColumnName="LastLoginIP" />
                 <ScalarProperty Name="LastLoginTime" ColumnName="LastLoginTime" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ActivationCode" ColumnName="ActivationCode" />
+                <ScalarProperty Name="IsEmailVerified" ColumnName="IsEmailVerified" />
                 <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
