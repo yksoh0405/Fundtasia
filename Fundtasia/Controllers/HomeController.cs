@@ -51,6 +51,10 @@ namespace Fundtasia.Controllers
         [HttpGet]
         public ActionResult SignUp()
         {
+            if(Session["User"] != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -140,6 +144,10 @@ namespace Fundtasia.Controllers
         [HttpGet]
         public ActionResult LogIn()
         {
+            if (Session["User"] != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -197,13 +205,23 @@ namespace Fundtasia.Controllers
             return View();
         }
 
-        public ActionResult ForgotPassword()
+        //Logout
+        [Authorize]
+        [HttpPost]
+        public ActionResult Logout()
         {
-            return View();
+            //Clear the session
+            FormsAuthentication.SignOut();
+            Session["User"] = null;
+            return RedirectToAction("LogIn", "Home");
         }
 
-        public ActionResult Register()
+        public ActionResult ForgotPassword()
         {
+            if (Session["User"] != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 

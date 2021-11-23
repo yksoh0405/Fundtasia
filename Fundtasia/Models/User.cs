@@ -31,7 +31,7 @@ namespace Fundtasia.Models
         public bool IsEmailVerified { get; set; }
         public System.Guid ActivationCode { get; set; }
         public string Status { get; set; }
-        public byte[] LastLoginTime { get; set; }
+        public Nullable<System.DateTime> LastLoginTime { get; set; }
         public string LastLoginIP { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

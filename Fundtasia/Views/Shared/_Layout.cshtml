@@ -52,9 +52,24 @@
                             <li class="nav-item dropdown">
                                 <a href="#"> Account <i class="fa fa-angle-down"></i></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li>@Html.ActionLink("Sign Up", "SignUp", "Home")</li>
-                                    <li>@Html.ActionLink("Log In", "LogIn", "Home")</li>
-                                    <li>@Html.ActionLink("Forgot Password", "ForgotPassword", "Home")</li>
+                                    @if (Session["User"] == null)
+                                    {
+                                        <li>@Html.ActionLink("Sign Up", "SignUp", "Home")</li>
+                                        <li>@Html.ActionLink("Log In", "LogIn", "Home")</li>
+                                        <li>@Html.ActionLink("Forgot Password", "ForgotPassword", "Home")</li>
+                                    }
+                                    else
+                                    {
+                                        <li>@Html.ActionLink("Profile", "ViewProfile", "Home")</li>
+                                        <li>@Html.ActionLink("Dashboard", "Dashboard", "Admin")</li>
+                                        <li>
+                                            @using (Html.BeginForm("Logout","Home", FormMethod.Post, new { id="logoutForm"}))
+                                            {
+                                               <a href="javascript:document.getElementById('logoutForm').submit()">Log Out</a>
+                                            }
+                                        </li>
+                                    }
+
                                 </ul>
                             </li>
                         </ul>
