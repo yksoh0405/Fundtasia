@@ -1,5 +1,11 @@
-﻿#registerForm, #loginForm {
+﻿#registerForm {
     width: 55%;
+    margin: 0 auto;
+    border: 0;
+}
+
+#loginForm {
+    width: 82%;
     margin: 0 auto;
     border: 0;
 }
