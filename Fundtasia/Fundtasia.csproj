@@ -133,7 +133,6 @@
     <Content Include="Content\style.css" />
     <Content Include="Content\donation.css" />
     <Content Include="Content\style.min.css" />
-    <Content Include="Content\donationAdmin.css" />
     <Content Include="Content\merchandiseAdmin.css" />
     <Content Include="Content\svg-with-js.css" />
     <Content Include="Content\svg-with-js.min.css" />
