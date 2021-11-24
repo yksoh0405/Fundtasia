@@ -55,5 +55,13 @@ namespace Fundtasia.Controllers
             return View();
         }
 
+        public JsonResult GetEvents()
+        {
+            using (DBEntities1 dc = new DBEntities1())
+            {
+                var events = dc.Events.ToList();
+                return new JsonResult { Data = events, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
     }
 }
