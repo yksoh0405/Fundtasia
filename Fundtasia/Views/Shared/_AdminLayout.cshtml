@@ -59,18 +59,24 @@
                     <!-- This bar will be hidden if width > 766px -->
                     <ul class="navbar-nav ms-auto d-flex align-items-center">
                         <!-- Search bar -->
-                        <li class=" in">
-                            <form role="search" class="app-search d-none d-md-block me-3">
-                                <input type="text" placeholder="Search..." class="form-control mt-0">
-                                <a href="" class="active">
-                                    <i class="fa fa-search"></i>
-                                </a>
-                            </form>
-                        </li>
+                        @* Only display this for AList controller *@
+                        @if (ViewContext.RouteData.Values["controller"].ToString() == "AList")
+                        {
+                            <li class=" in">
+                                <form role="search" class="app-search d-none d-md-block me-3">
+                                    <input type="text" placeholder="Search..." class="form-control mt-0">
+                                    <a href="" class="active">
+                                        <i class="fa fa-search"></i>
+                                    </a>
+                                </form>
+                            </li>
+                        }
+
                         <!-- Display staff / admin name -->
                         <li>
+
                             <a class="profile-pic" href="#">
-                                <span class="text-white font-medium">William</span>
+                                <span class="text-white font-medium">Profile</span>
                             </a>
                         </li>
                     </ul>
@@ -90,38 +96,44 @@
                                 <span class="hide-menu">Dashbaord</span>
                             </a>
                         </li>
+                        <li class="sidebar-item pt-2 selected">
+                            <a href="@Url.Action("Profile", "Admin")" class="sidebar-link">
+                                <i class="fas fa-user"></i>
+                                <span class="hide-menu">Profile</span>
+                            </a>
+                        </li>
                         <li class="sidebar-item">
-                            <a href="@Url.Action("Staff", "Admin")" class="sidebar-link">
+                            <a href="@Url.Action("Staff", "AList")" class="sidebar-link">
                                 <i class="far fa-id-card"></i>
                                 <span class="hide-menu">Staff</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="@Url.Action("ClientUser", "Admin")" class="sidebar-link">
+                            <a href="@Url.Action("ClientUser", "AList")" class="sidebar-link">
                                 <i class="fas fa-user"></i>
                                 <span class="hide-menu">User</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="@Url.Action("Event", "Admin")" class="sidebar-link">
+                            <a href="@Url.Action("Event", "AList")" class="sidebar-link">
                                 <i class="fas fa-calendar-week"></i>
                                 <span class="hide-menu">Event</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="@Url.Action("Merchandise", "Admin")" class="sidebar-link">
+                            <a href="@Url.Action("Merchandise", "AList")" class="sidebar-link">
                                 <i class="fas fa-store-alt"></i>
                                 <span class="hide-menu">Merchandise</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="@Url.Action("Donation", "Admin")" class="sidebar-link">
+                            <a href="@Url.Action("Donation", "AList")" class="sidebar-link">
                                 <i class="fas fa-hand-holding-usd"></i>
                                 <span class="hide-menu">Donation</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="@Url.Action("Report", "Admin")" class="sidebar-link">
+                            <a href="@Url.Action("Report", "AList")" class="sidebar-link">
                                 <i class="fas fa-file-alt"></i>
                                 <span class="hide-menu">Report</span>
                             </a>
@@ -149,7 +161,11 @@
                             <ol class="breadcrumb ms-auto">
                                 <li>@Html.ActionLink("Back To Client Page", "Index", "Home", null, new { @class = "text-info" })</li>
                             </ol>
-                            <a href="#" class="btn btn-info  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white">Create</a>
+                            @* Only display this for AList controller (Except Donation, because we dun create record for donation) *@
+                            @if (ViewContext.RouteData.Values["controller"].ToString() == "AList" && ViewContext.RouteData.Values["action"].ToString() != "Donation")
+                            {
+                                @Html.ActionLink("Create", "Create" + ViewContext.RouteData.Values["action"].ToString(), "ACreate", null, new { @class = "btn btn-info  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white" })
+                            }
                         </div>
                     </div>
                 </div>
@@ -187,7 +203,7 @@
                     <button type="button" class="btn d-grid btn-danger text-white" data-bs-dismiss="modal">
                         Close
                     </button>
-                    @using (Html.BeginForm("Logout", "Home", FormMethod.Post, new { id = "logoutForm" }))
+                    @using (Html.BeginForm("Logout", "UserAuth", FormMethod.Post, new { id = "logoutForm" }))
                     {
                         <button href="javascript:document.getElementById('logoutForm').submit()" class="btn waves-effect waves-light btn-rounded btn-light-danger text-danger">Log Out</button>
                     }
@@ -211,6 +227,7 @@
     <script src="~/Scripts/waves.js"></script>
     <script src="~/Scripts/sidebarmenu.js"></script>
     <script src="~/Scripts/custom.js"></script>
+    <script src="~/Scripts/app.js"></script>
 
     <!-- Embeded JS -->
     @RenderSection("foot", false)

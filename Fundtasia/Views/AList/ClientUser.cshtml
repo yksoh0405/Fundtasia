@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Fundtasia.Models.User>
+
+@{
+    ViewBag.Title = "ClientUser";
+}
+
+<table class="table">
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Verified</th>
+        <th>Status</th>
+        <th>Last Login Time</th>
+        <th>Last Login IP</th>
+        <th></th>
+    </tr>
+    @foreach (var clientUser in Model)
+    {
+        if (clientUser.Role == "User")
+        {
+            var verified = clientUser.IsEmailVerified.ToString() == "True" ? "True" : "False";
+            var lastLoginTime = clientUser.LastLoginTime == null ? "-" : clientUser.LastLoginTime.ToString();
+            var lastLoginIP = clientUser.LastLoginIP == null ? "-" : clientUser.LastLoginIP.ToString();
+            
+            <tr>
+                <td>@Html.DisplayFor(modelItem => clientUser.FirstName)</td>
+                <td>@Html.DisplayFor(modelItem => clientUser.LastName)</td>
+                <td>@verified</td>
+                <td>@Html.DisplayFor(modelItem => clientUser.Status)</td>
+                <td>@lastLoginTime</td>
+                <td>@lastLoginIP</td>
+                <td><button data-get="/Admin/EditProfile">Edit</button></td>
+            </tr>
+        }
+    }
+</table>

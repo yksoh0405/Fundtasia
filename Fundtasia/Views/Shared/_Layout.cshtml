@@ -52,20 +52,20 @@
                             <li class="nav-item dropdown">
                                 <a href="#"> Account <i class="fa fa-angle-down"></i></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    @if (Session["User"] == null)
+                                    @if (!Request.IsAuthenticated)
                                     {
-                                        <li>@Html.ActionLink("Sign Up", "SignUp", "Home")</li>
-                                        <li>@Html.ActionLink("Log In", "LogIn", "Home")</li>
-                                        <li>@Html.ActionLink("Forgot Password", "ForgotPassword", "Home")</li>
+                                        <li>@Html.ActionLink("Sign Up", "SignUp", "UserAuth")</li>
+                                        <li>@Html.ActionLink("Log In", "LogIn", "UserAuth")</li>
+                                        <li>@Html.ActionLink("Forgot Password", "ForgotPassword", "UserAuth")</li>
                                     }
                                     else
                                     {
-                                        <li>@Html.ActionLink("Profile", "ViewProfile", "Home")</li>
+                                        <li>@Html.ActionLink(HttpContext.Current.User.Identity.Name, "ViewProfile", "UserAuth")</li>
                                         <li>@Html.ActionLink("Dashboard", "Dashboard", "Admin")</li>
                                         <li>
-                                            @using (Html.BeginForm("Logout","Home", FormMethod.Post, new { id="logoutForm"}))
+                                            @using (Html.BeginForm("Logout", "UserAuth", FormMethod.Post, new { id = "logoutForm" }))
                                             {
-                                               <a href="javascript:document.getElementById('logoutForm').submit()">Log Out</a>
+                                                <a href="javascript:document.getElementById('logoutForm').submit()">Log Out</a>
                                             }
                                         </li>
                                     }
@@ -170,6 +170,7 @@
     <script src="~/Scripts/wow.min.js"></script>
     <script src="~/Scripts/isotope.pkgd.min.js"></script>
     <script src="~/Scripts/main.js"></script>
+    <script src="~/Scripts/app.js"></script>
 
     <!-- Embeded JS -->
     @RenderSection("foot", false)

@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Admin Donation";
+}
+
+<!DOCTYPE html>
+<link href="~/Content/donationAdmin.css" rel="stylesheet" />
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Donation</title>
+</head>
+<body>
+    <h3 class="box-title">@ViewBag.Title Table</h3>
+    <div class="table-responsive">
+        <table class="table text-nowrap">
+            <thead>
+                <tr>
+                    <th class="border-top-0">ID</th>
+                    <th class="border-top-0">Title</th>
+                    <th class="border-top-0">Created Time</th>
+                    <th class="border-top-0">Created By</th>
+                    <th class="border-top-0">View Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Deshmukh</td>
+                    <td>Prohaska</td>
+                    <td>Genelia</td>
+                    <td>
+                        <a href="#" class="btn waves-effect waves-light btn-rounded btn-light-info text-info" data-bs-toggle="tooltip" data-bs-placement="right" title="View"><i class="fas fa-eye"></i> View</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+﻿@model Fundtasia.Models.UserLogin
+@{
+    ViewBag.Title = "Login";
+}
+
+@section head{
+    <link href="~/Content/LoginRegister.css" rel="stylesheet" />
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="form-group">
+            <h5>@Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "" })</h5>
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", required = "", autofocus = "" } })
+        </div>
+    </div>
+    <div class="col-lg-8 mx-auto">
+        <div class="form-group">
+            <h5>@Html.LabelFor(model => model.PasswordHash, htmlAttributes: new { @class = "" })</h5>
+            @Html.EditorFor(model => model.PasswordHash, new { htmlAttributes = new { @class = "form-control", required = "", autofocus = "" } })
+        </div>
+    </div>
+    <div class="col-lg-8 mx-auto mt-3">
+        <div class="row">
+            <div class="col-lg-6">
+                @Html.EditorFor(model => model.RememberMe)
+                @Html.LabelFor(model => model.RememberMe, htmlAttributes: new { @class = "" })
+            </div>
+            <div class="col-lg-6 text-right">
+                @Html.ActionLink("Forgot Password...", "ForgotPassword", "Home")
+            </div>
+            <div class="col-12 mt-3">
+                <input type="submit" name="loginBtn" value="Login" id="loginBtn" />
+            </div>
+        </div>
+        
+
+        
+    </div>
+    <div class="col-lg-8 mx-auto">
+        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(model => model.PasswordHash, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+}
