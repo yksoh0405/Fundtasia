@@ -16,7 +16,7 @@
     </tr>
     @foreach (var clientUser in Model)
     {
-        if (clientUser.Role == "Staff")
+        if (clientUser.Role == "Staff" || clientUser.Role == "Admin")
         {
             <tr>
                 <td>@Html.DisplayFor(modelItem => clientUser.FirstName)</td>
