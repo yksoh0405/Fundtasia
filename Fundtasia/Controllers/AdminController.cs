@@ -19,14 +19,14 @@ namespace Fundtasia.Controllers
 
         public ActionResult Staff()
         {
-            var model = db.Users;
+            var model = db.Users.ToList();
             return View(model);
         }
 
         //Actually this is the user page, but because of we use the "User" word to become the method it will have the conflict with the Controller.User
         public ActionResult ClientUser()
         {
-            var model = db.Users;
+            var model = db.Users.ToList();
             return View(model);
         }
 

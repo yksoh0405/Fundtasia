@@ -16,14 +16,17 @@
     </tr>
     @foreach (var clientUser in Model)
     {
-        <tr>
-            <td>@Html.DisplayFor(modelItem => clientUser.FirstName)</td>
-            <td>@Html.DisplayFor(modelItem => clientUser.LastName)</td>
-            <td>@Html.DisplayFor(modelItem => clientUser.IsEmailVerified)</td>
-            <td>@Html.DisplayFor(modelItem => clientUser.Status)</td>
-            <td>@Html.DisplayFor(modelItem => clientUser.LastLoginTime)</td>
-            <td>@Html.DisplayFor(modelItem => clientUser.Role)</td>
-            <td><button data-get="/Admin/EditProfile">Edit</button></td>
-        </tr>
+        if (clientUser.Role == "Staff")
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => clientUser.FirstName)</td>
+                <td>@Html.DisplayFor(modelItem => clientUser.LastName)</td>
+                <td>@Html.DisplayFor(modelItem => clientUser.IsEmailVerified)</td>
+                <td>@Html.DisplayFor(modelItem => clientUser.Status)</td>
+                <td>@Html.DisplayFor(modelItem => clientUser.LastLoginTime)</td>
+                <td>@Html.DisplayFor(modelItem => clientUser.Role)</td>
+                <td><button data-get="/Admin/EditProfile">Edit</button></td>
+            </tr>
+        }
     }
 </table>
