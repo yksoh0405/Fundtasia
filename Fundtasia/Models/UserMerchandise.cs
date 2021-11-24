@@ -16,9 +16,14 @@ namespace Fundtasia.Models
     {
         public string Email { get; set; }
         public string MerchandiseId { get; set; }
-        public byte[] PurchaseTime { get; set; }
+        public System.DateTime PurchaseTime { get; set; }
         public string Size { get; set; }
         public decimal Price { get; set; }
+        public string Billingname { get; set; }
+        public string StreetAddress { get; set; }
+        public string State { get; set; }
+        public string City { get; set; }
+        public string PostalCode { get; set; }
     
         public virtual Merchandise Merchandise { get; set; }
         public virtual User User { get; set; }
