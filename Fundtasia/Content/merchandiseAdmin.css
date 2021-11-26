@@ -15,7 +15,28 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     text-align: center;
     background-color: #f1f1f1;
+    min-height: 500px;
 }
+
+.create-btn {
+    height: 40px;
+    width: 200px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    background-color: #00CAD3;
+    border: 2px solid #00CAD3;
+    font-size: 16px;
+    color: white;
+    transition-duration: 0.4s;
+}
+
+    .create-btn:hover {
+        background-color: #0A9399;
+        border: 2px solid #0A9399;
+        color: white;
+    }
 
 .edit-btn {
     height: 40px;

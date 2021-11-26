@@ -35,7 +35,8 @@ namespace Fundtasia.Controllers
 
         public ActionResult Merchandise()
         {
-            return View();
+            var model = db.Merchandises;
+            return View(model);
         }
 
         public ActionResult Donation()
