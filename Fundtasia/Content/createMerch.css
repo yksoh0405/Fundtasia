@@ -1,0 +1,42 @@
+﻿.card {
+    padding-right: 1000px;
+}
+
+.create-btn {
+    float: right;
+    height: 40px;
+    width: 100px;
+    border-radius: 15px;
+    cursor: pointer;
+    background-color: #00CAD3;
+    border: 2px solid #00CAD3;
+    font-size: 16px;
+    color: white;
+    transition-duration: 0.4s;
+    margin-right: 10px;
+}
+
+    .create-btn:hover {
+        background-color: #0A9399;
+        border: 2px solid #0A9399;
+        color: white;
+    }
+
+.edit-btn {
+    float: right;
+    height: 40px;
+    width: 100px;
+    border-radius: 15px;
+    cursor: pointer;
+    background-color: #46E114;
+    border: 2px solid #46E114;
+    font-size: 16px;
+    color: white;
+    transition-duration: 0.4s;
+}
+
+    .edit-btn:hover {
+        background-color: #2FC000;
+        border: 2px solid #2FC000;
+        color: white;
+    }

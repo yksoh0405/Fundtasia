@@ -9,6 +9,7 @@ namespace Fundtasia.Controllers
 {
     public class ACreateController : Controller
     {
+        DBEntities1 db = new DBEntities1();
 
         //This controller is used to handle the Create request from View to Model
         public ActionResult CreateStaff()
@@ -29,6 +30,12 @@ namespace Fundtasia.Controllers
         public ActionResult CreateMerchandise()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateMerchandise(Merchandise model)
+        {
+            return View(model);
         }
 
         public ActionResult CreateReport()

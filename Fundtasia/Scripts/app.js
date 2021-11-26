@@ -9,3 +9,9 @@ $('[data-get]').click(e => {
     let url = $(e.target).data('get');
     location = url || location;
 });
+
+// Reset form
+$('type=reset').click(e => {
+    e.preventDefault();
+    location = location;
+})

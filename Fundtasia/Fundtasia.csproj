@@ -133,6 +133,7 @@
     <Content Include="Content\donation.css" />
     <Content Include="Content\style.min.css" />
     <Content Include="Content\merchandiseAdmin.css" />
+    <Content Include="Content\createMerch.css" />
     <Content Include="Content\svg-with-js.css" />
     <Content Include="Content\svg-with-js.min.css" />
     <Content Include="Content\v4-shims.css" />
@@ -242,6 +243,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ACreateController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AEditController.cs" />
     <Compile Include="Controllers\AListController.cs" />
     <Compile Include="Controllers\UserAuthController.cs" />
     <Compile Include="Crypto.cs" />
@@ -320,6 +322,8 @@
     <Content Include="Views\AList\ClientUser.cshtml" />
     <Content Include="Views\AList\Staff.cshtml" />
     <Content Include="Views\ACreate\CreateEvent.cshtml" />
+    <Content Include="Views\ACreate\CreateMerchandise.cshtml" />
+    <Content Include="Views\AEdit\EditMerchandise.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
