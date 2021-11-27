@@ -1,0 +1,67 @@
+﻿@model Merchandise
+
+@{
+    ViewBag.Title = "Add Merchandise";
+}
+
+<!DOCTYPE html>
+<link href="~/Content/createMerch.css" rel="stylesheet" />
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CreateMerchandise</title>
+</head>
+<body>
+    <div class="card">
+        <div class="card-body">
+            <form action="" method="post">
+                <div class="form-group">
+                    <label>ID:</label>
+                    @Html.TextBoxFor(m => m.Id, new { maxlength = "4", data_upper = "", autofocus = "" })
+                    @*<input class="form-control" id="id" placeholder="Enter ID Here">*@
+                </div>
+
+                <div class="form-group">
+                    <label>Name:</label>
+                    @Html.TextBoxFor(m => m.Name, new { maxlength = "50" })
+                    @*<input class="form-control" id="name" placeholder="Enter Name Here">*@
+                </div>
+
+                <div class="form-group">
+                    <label>Price:</label>
+                    @Html.TextBoxFor(m => m.Price)
+                    @*<input class="form-control" id="price" placeholder="0.00">*@
+                </div>
+
+                <div class="form-group">
+                    <label>Status:</label>
+                    <div>
+                        <label>@Html.RadioButtonFor(m => m.Status, "Available") Available </label>
+                    </div>
+                    <div>
+                        <label>@Html.RadioButtonFor(m => m.Status, "Unavailable") Unavailable </label>
+                    </div>
+                </div>
+                 
+                <div class="form-group">
+                    <label>Image:</label>
+                    @Html.TextBoxFor(m => m.Image)
+                    @*<input class="form-control" id="image" placeholder="shirt1.jpg">*@
+                </div>
+
+                @*<div class="form-group">
+                <label for="formFile" class="form-label">Image:</label>
+                <input class="form-control" type="file" id="formFile">
+                </div>*@
+
+                <br />
+                <section>
+                    <button class="edit-btn">Add</button>
+                    <button type="reset" class="create-btn">Reset</button>
+                </section>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
