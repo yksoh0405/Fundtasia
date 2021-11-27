@@ -19,7 +19,7 @@ namespace Fundtasia.Models
         public int Likes { get; set; }
         public System.DateTime CreatedDate { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Title required")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Title required <span class='text-danger'>*</span>")]
         public string Title { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Cover Image required")]
