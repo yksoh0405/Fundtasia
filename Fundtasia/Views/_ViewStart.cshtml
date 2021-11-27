@@ -4,8 +4,13 @@
     //Check the View is come from which controller then give it apply to that layout
     switch (ViewContext.RouteData.Values["controller"].ToString())
     {
-        case "Home": Layout = "~/Views/Shared/_Layout.cshtml"; break;
-        case "Admin": Layout = "~/Views/Shared/_AdminLayout.cshtml"; break;
+        case "Home":
+        case "UserAuth":
+            Layout = "~/Views/Shared/_Layout.cshtml"; break;
+        case "Admin":
+        case "AList":
+        case "ACreate":
+            Layout = "~/Views/Shared/_AdminLayout.cshtml"; break;
     }
 
 }

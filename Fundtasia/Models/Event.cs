@@ -22,12 +22,13 @@ namespace Fundtasia.Models
         }
     
         public string Id { get; set; }
+        public string Title { get; set; }
         public int View { get; set; }
         public int Likes { get; set; }
         public string CoverImage { get; set; }
         public decimal Target { get; set; }
         public string YouTubeLink { get; set; }
-        public byte[] CreatedDate { get; set; }
+        public System.DateTime CreatedDate { get; set; }
         public string ImageArray { get; set; }
         public string Summary { get; set; }
         public string Challenge { get; set; }

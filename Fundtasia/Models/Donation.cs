@@ -16,7 +16,7 @@ namespace Fundtasia.Models
     {
         public string Id { get; set; }
         public string Email { get; set; }
-        public byte[] TimeDonated { get; set; }
+        public System.DateTime TimeDonated { get; set; }
         public decimal Amount { get; set; }
         public string EventId { get; set; }
     

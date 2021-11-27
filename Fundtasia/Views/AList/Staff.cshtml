@@ -1,0 +1,33 @@
+﻿@model IEnumerable<User>
+
+@{
+    ViewBag.Title = "Staff";
+}
+
+<table class="table">
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Verified</th>
+        <th>Status</th>
+        <th>Last Login</th>
+        <th>Role</th>
+        <th></th>
+    </tr>
+    @foreach (var staff in Model)
+    {
+        if (staff.Role != "User")
+        {
+            var verified = staff.IsEmailVerified.ToString() == "True" ? "True" : "False";
+            <tr>
+                <td>@Html.DisplayFor(modelItem => staff.FirstName)</td>
+                <td>@Html.DisplayFor(modelItem => staff.LastName)</td>
+                <td>@verified</td>
+                <td>@Html.DisplayFor(modelItem => staff.Status)</td>
+                <td>@Html.DisplayFor(modelItem => staff.LastLoginTime)</td>
+                <td>@Html.DisplayFor(modelItem => staff.Role)</td>
+                <td><button data-get="/Admin/EditProfile">Edit</button></td>
+            </tr>
+        }
+    }
+</table>

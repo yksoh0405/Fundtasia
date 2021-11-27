@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Event>
+
+@{
+    ViewBag.Title = "Event";
+    var grid = new WebGrid(source: Model, defaultSort: "CreatedDate", canPage: true, canSort: true, rowsPerPage: 10);
+}
+
+<h3 class="box-title">@ViewBag.Title Table</h3>
+<div class="table-responsive">
+@grid.GetHtml(
+    //This param can add class
+    tableStyle: "table text-nowrap",
+    columns: new []
+        {
+            //Grid.Column(model name, display name)
+            grid.Column("CreatedDate", "Created Date"),
+            grid.Column("Title")
+        }
+    )
+</div>
+
+@section foot{
+    <script>
+        let param = new URL(location).searchParams;
+        let sort = param.get('sort');
+        let sortdir = param.get('sortdir');
+        //This symbol ($(``)) can display the value of variable in console
+        $(`th a[href*='sort=${sort}&']`).addClass(sortdir);
+    </script>
+}
