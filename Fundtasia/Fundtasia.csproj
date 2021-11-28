@@ -331,6 +331,7 @@
     <Content Include="Views\ACreate\CreateStaff.cshtml" />
     <Content Include="Views\AEdit\EditStaff.cshtml" />
     <Content Include="Views\AEdit\EditClientUser.cshtml" />
+    <Content Include="Views\AList\_MerchandisePartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
