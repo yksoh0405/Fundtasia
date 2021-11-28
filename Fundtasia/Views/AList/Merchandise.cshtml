@@ -1,5 +1,9 @@
 ﻿@{
     ViewBag.Title = "Admin Merchandise";
+
+    string[] fields = { "Id", "Name", "Price" };
+    string sort = Request.Params["sort"];
+    string sortdir = Request.Params["sortdir"];
 }
 
 <!DOCTYPE html>
@@ -13,36 +17,38 @@
 <body>
     <button type="button" class="create-btn">+ Add New Product</button>
 
-
     <div class="container">
         <div class="row">
 
-            @foreach (var shirt in Model)
+            <button class="donate-submit">
+                @foreach (var f in fields)
+                {
+                    string d = "ASC";
+                    string c = "";
+
+                    if (f == sort)
+                    {
+                        d = sortdir == "DESC" ? "ASC" : "DESC";
+                        c = sortdir;
+                    }
+
+                    <a href="?sort=@f&sortdir=@d" class="@c">@f</a>
+                }
+            </button>
+
+            @foreach (var m in Model)
             {
                 <div class="col-md-3 col-sm-11">
                     <div class="card text-center">
-                        <img src="~/Images/Merchandise/@shirt.Image" />
+                        <img src="~/Images/Merchandise/@m.Image" />
                         <div class="card-body">
-                            <h4>RM @shirt.Price.00</h4>
-                            <h4 class="card-title" style="min-height:50px;">@shirt.Name</h4>
-                            <button type="button" class="edit-btn">Edit</button>
-                            <button type="button" class="delete-btn">Delist</button>
+                            <h4 style="color: #9B0909">RM @m.Price.00</h4>
+                            <h4 class="card-title" style="min-height:50px;">@m.Name</h4>
+                            <button type="button" class="edit-btn" data-get="/AEdit/EditMerchandise/@m.Id">Edit</button>
                         </div>
                     </div>
                 </div>
             }
-
-            <div class="col-md-3 col-sm-11">
-                <div class="card text-center">
-                    <img src="~/Images/Merchandise/shirt1.jpg" />
-                    <div class="card-body">
-                        <h4>RM 50.00</h4>
-                        <h4 class="card-title">Stop Poverty V1 T-Shirt</h4>
-                        <button type="button" class="edit-btn">Edit</button>
-                        <button type="button" class="delete-btn">Delist</button>
-                    </div>
-                </div>
-            </div>
 
         </div>
     </div>

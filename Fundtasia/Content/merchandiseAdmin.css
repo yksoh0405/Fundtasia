@@ -40,7 +40,7 @@
 
 .edit-btn {
     height: 40px;
-    width: 100px;
+    width: 200px;
     margin-top: 20px;
     margin-bottom: 10px;
     border-radius: 15px;
@@ -76,3 +76,13 @@
         border: 2px solid #E80C0C;
         color: white;
     }
+
+input.donate-submit {
+    display: flex;
+    float: right;
+    height: 40px;
+    border-radius: 10px;
+    background-color: white;
+    padding: 0 22px;
+    border: 2px solid #3E3E3E;
+}

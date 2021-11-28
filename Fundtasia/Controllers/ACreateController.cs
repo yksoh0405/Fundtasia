@@ -53,6 +53,15 @@ namespace Fundtasia.Controllers
         [HttpPost]
         public ActionResult CreateMerchandise(Merchandise model)
         {
+            if(ModelState.IsValid)
+            {
+                db.Merchandises.Add(model);
+                db.SaveChanges();
+                TempData["Info"] = "Merchandise added.";
+
+                return RedirectToAction("Merchandise", "AList");
+            }
+            
             return View(model);
         }
 

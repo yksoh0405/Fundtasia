@@ -116,6 +116,7 @@
     <Content Include="Content\brands.css" />
     <Content Include="Content\brands.min.css" />
     <Content Include="Content\candidate-list.css" />
+    <Content Include="Content\flashmsg.css" />
     <Content Include="Content\fontawesome.css" />
     <Content Include="Content\fontawesome.min.css" />
     <Content Include="Content\isotop.css" />
