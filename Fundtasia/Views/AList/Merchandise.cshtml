@@ -1,9 +1,6 @@
 ﻿@{
     ViewBag.Title = "Admin Merchandise";
 
-    string[] fields = { "Id", "Name", "Price" };
-    string sort = Request.Params["sort"];
-    string sortdir = Request.Params["sortdir"];
 }
 
 <!DOCTYPE html>
@@ -15,39 +12,8 @@
     <title>Merchandise</title>
 </head>
 <body>
-    <h4><b>Sort By: </b></h4>
-
-    @foreach (var f in fields)
-    {
-        string d = "ASC";
-        string c = "";
-
-        if (f == sort)
-        {
-            d = sortdir == "DESC" ? "ASC" : "DESC";
-            c = sortdir;
-        }
-
-        <a href="?sort=@f&sortdir=@d" class="@c "><button class="create-btn">@f</button></a>
-    }
-
-    <div class="container">
-        <div class="row">
-            @foreach (var m in Model)
-            {
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card text-center">
-                        <img src="~/Images/Merchandise/@m.Image" />
-                        <div class="card-body">
-                            <h4 style="color: #9B0909">RM @m.Price.00</h4>
-                            <h4 class="card-title" style="min-height:50px;">@m.Name</h4>
-                            <button type="button" class="edit-btn" data-get="/AEdit/EditMerchandise/@m.Id">Edit</button>
-                        </div>
-                    </div>
-                </div>
-            }
-
-        </div>
+    <div class="target">
+        @Html.Partial("_MerchandisePartial");
     </div>
 </body>
 </html>

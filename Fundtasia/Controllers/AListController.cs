@@ -54,6 +54,9 @@ namespace Fundtasia.Controllers
                 db.Merchandises.OrderByDescending(fn) :
                 db.Merchandises.OrderBy(fn);
 
+            if (Request.IsAjaxRequest())
+                return PartialView("_MerchandisePartial", model);
+
             return View(model);
         }
 
