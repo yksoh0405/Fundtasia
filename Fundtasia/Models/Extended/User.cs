@@ -14,6 +14,8 @@ namespace Fundtasia.Models
 
     public class UserMetadata
     {
+        public System.Guid Id { get; set; }
+
         [Display(Name = "Email")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Email is required")]
         [DataType(DataType.EmailAddress)]

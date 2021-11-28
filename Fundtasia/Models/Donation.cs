@@ -14,8 +14,8 @@ namespace Fundtasia.Models
     
     public partial class Donation
     {
-        public string Id { get; set; }
-        public string Email { get; set; }
+        public System.Guid Id { get; set; }
+        public System.Guid UserId { get; set; }
         public System.DateTime TimeDonated { get; set; }
         public decimal Amount { get; set; }
         public string EventId { get; set; }

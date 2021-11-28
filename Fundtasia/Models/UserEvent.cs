@@ -14,7 +14,7 @@ namespace Fundtasia.Models
     
     public partial class UserEvent
     {
-        public string Email { get; set; }
+        public System.Guid UserId { get; set; }
         public string EventId { get; set; }
         public string Like { get; set; }
     
