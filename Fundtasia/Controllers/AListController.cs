@@ -27,9 +27,16 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
-        public ActionResult Event()
+        [HttpGet]
+        public ActionResult Event(string keyword = "")
         {
-            var model = db.Events;
+            keyword = keyword.Trim();
+            var model = db.Events.Where(s => s.Title.Contains(keyword));
+
+            if (Request.IsAjaxRequest())
+            {
+                return View(model);
+            }
             return View(model);
         }
 

@@ -26,5 +26,26 @@
         let sortdir = param.get('sortdir');
         //This symbol ($(``)) can display the value of variable in console
         $(`th a[href*='sort=${sort}&']`).addClass(sortdir);
+
+        let timer = null;
+        $('#keyword').on('input', e => {
+            clearTimeout(timer);
+            timer = setTimeout(() => $(e.target).submit(), 500);
+        });
+
+        function highlight() {
+            let name = $('#keyword').val().trim(); //Retrive search keyword from search box
+
+            //If name == null then return nothing
+            if (!name) return;
+
+            //g = global search, i = case insensitive
+            let re = new RegExp(escapeRegExp(name), 'gi');
+
+            $('td:nth-child(2)').each((i, el) => {
+                let html = $(el).html().replace(re, '<mark>$&</mark>');
+                $(el).html(html);
+            });
+        }
     </script>
 }

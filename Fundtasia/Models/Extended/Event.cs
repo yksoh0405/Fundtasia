@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace Fundtasia.Models
 {
@@ -19,28 +20,27 @@ namespace Fundtasia.Models
         public int Likes { get; set; }
         public System.DateTime CreatedDate { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Title required <span class='text-danger'>*</span>")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Title required")]
+        [StringLength(150)]
         public string Title { get; set; }
 
+        [Display(Name = "Cover Image")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Cover Image required")]
         public string CoverImage { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Target required")]
         public decimal Target { get; set; }
 
+        [Display(Name = "YouTube Link")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "YouTube link required")]
         public string YouTubeLink { get; set; }
 
+        [Display(Name = "Display images")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Image required")]
         public string ImageArray { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Summary required")]
-        public string Summary { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Challenge required")]
-        public string Challenge { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Solution required")]
-        public string Solution { get; set; }
+        [AllowHtml]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Article required")]
+        public string Article { get; set; }
     }
 }

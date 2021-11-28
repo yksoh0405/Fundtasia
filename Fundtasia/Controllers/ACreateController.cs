@@ -25,8 +25,14 @@ namespace Fundtasia.Controllers
 
         //Create Event Action
         [HttpGet]
-        public ActionResult CreateEvent()
+        public ActionResult CreateEvent(Event model)
         {
+            if (Request.IsAjaxRequest())
+            {
+                int position = model.YouTubeLink.IndexOf("https://youtu.be/");
+                model.YouTubeLink = model.YouTubeLink.Substring(position);
+                return PartialView("_EventPartial", model);
+            }
             return View();
         }
 

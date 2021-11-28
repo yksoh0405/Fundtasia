@@ -28,9 +28,7 @@
           <Property Name="YouTubeLink" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="ImageArray" Type="varchar(max)" Nullable="false" />
-          <Property Name="Summary" Type="varchar(max)" Nullable="false" />
-          <Property Name="Challenge" Type="varchar(max)" Nullable="false" />
-          <Property Name="Solution" Type="varchar(max)" Nullable="false" />
+          <Property Name="Article" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Merchandise">
           <Key>
@@ -310,9 +308,7 @@ warning 6002: The table/view 'C:\USERS\WLM01\SOURCE\REPOS\FUNDTASIA\FUNDTASIA\AP
           <Property Name="YouTubeLink" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ImageArray" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Summary" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Challenge" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Solution" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Article" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Donations" Relationship="DBModel.FK_Donation_Event" FromRole="Event" ToRole="Donation" />
           <NavigationProperty Name="UserEvents" Relationship="DBModel.FK_UserEvent_Event" FromRole="Event" ToRole="UserEvent" />
         </EntityType>
@@ -498,9 +494,7 @@ warning 6002: The table/view 'C:\USERS\WLM01\SOURCE\REPOS\FUNDTASIA\FUNDTASIA\AP
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="DBModel.Event">
               <MappingFragment StoreEntitySet="Event">
-                <ScalarProperty Name="Solution" ColumnName="Solution" />
-                <ScalarProperty Name="Challenge" ColumnName="Challenge" />
-                <ScalarProperty Name="Summary" ColumnName="Summary" />
+                <ScalarProperty Name="Article" ColumnName="Article" />
                 <ScalarProperty Name="ImageArray" ColumnName="ImageArray" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="YouTubeLink" ColumnName="YouTubeLink" />

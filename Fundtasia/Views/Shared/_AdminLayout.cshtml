@@ -1,4 +1,12 @@
 ﻿<!DOCTYPE html>
+@{ 
+    var ao = new AjaxOptions
+    {
+        UpdateTargetId = "target",
+        LoadingElementId = "loader",
+        OnSuccess = "highlight"
+    };
+}
 
 <html dir="ltr" lang="en">
 <head>
@@ -63,12 +71,13 @@
                         @if (ViewContext.RouteData.Values["controller"].ToString() == "AList")
                         {
                             <li class=" in">
-                                <form role="search" class="app-search d-none d-md-block me-3">
-                                    <input type="text" placeholder="Search..." class="form-control mt-0">
-                                    <a href="" class="active">
+                                @using (Ajax.BeginForm(null, null, ao, new { @class = "app-search d-none d-md-block me-3", role = "search" }))
+                                {
+                                    @Html.TextBox("keyword", null, new { autofocus = "", type = "search", placeholder = "Search", @class = "form-control mt-0" })
+                                    <a href="#" class="active">
                                         <i class="fa fa-search"></i>
                                     </a>
-                                </form>
+                                }
                             </li>
                         }
 
@@ -174,7 +183,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="white-box">
+                        <div class="white-box" id="target">
                             @RenderBody()
                         </div>
                     </div>
