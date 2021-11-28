@@ -54,15 +54,26 @@ namespace Fundtasia.Controllers
                 db.Merchandises.OrderByDescending(fn) :
                 db.Merchandises.OrderBy(fn);
 
-            if (Request.IsAjaxRequest())
-                return PartialView("_MerchandisePartial", model);
-
             return View(model);
         }
 
-        public ActionResult Donation()
+        public ActionResult Donation(string sort, string sortdir)
         {
-            return View();
+            Func<Donation, object> fn = m => m.Id;
+            switch (sort)
+            {
+                case "Id": fn = m => m.Id; break;
+                case "Email": fn = m => m.Email; break;
+                case "TimeDonated": fn = m => m.TimeDonated; break;
+                case "Amount": fn = m => m.Amount; break;
+                case "EventId": fn = m => m.EventId; break;
+            }
+
+            var model = sortdir == "DESC" ?
+                db.Donations.OrderByDescending(fn) :
+                db.Donations.OrderBy(fn);
+
+            return View(model);
         }
 
         public ActionResult Report()

@@ -116,6 +116,7 @@
     <Content Include="Content\brands.css" />
     <Content Include="Content\brands.min.css" />
     <Content Include="Content\candidate-list.css" />
+    <Content Include="Content\donationAdmin.css" />
     <Content Include="Content\flashmsg.css" />
     <Content Include="Content\fontawesome.css" />
     <Content Include="Content\fontawesome.min.css" />
@@ -331,7 +332,7 @@
     <Content Include="Views\ACreate\CreateStaff.cshtml" />
     <Content Include="Views\AEdit\EditStaff.cshtml" />
     <Content Include="Views\AEdit\EditClientUser.cshtml" />
-    <Content Include="Views\AList\_MerchandisePartial.cshtml" />
+    <Content Include="Views\AList\_DonationPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
