@@ -20,6 +20,7 @@
     <link href="~/Content/style-admin.css" rel="stylesheet" />
     <link href="~/Content/style.min.css" rel="stylesheet" />
     <link href="~/Content/font-awesome.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/flashmsg.css" rel="stylesheet" />
     <!-- This css code is a type of kit that need user to register the font awesome account to get it -->
     <script src="https://kit.fontawesome.com/d57fff88a0.js" crossorigin="anonymous"></script>
 
@@ -179,6 +180,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- Main Content Display Here -->
             <div class="container-fluid">
                 <div class="row">
@@ -189,6 +191,9 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Flash Message -->
+            <div class="flashmsg">@TempData["Info"]</div>
 
             <!-- Footer display here -->
             <footer class="footer text-center">

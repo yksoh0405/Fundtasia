@@ -10,7 +10,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>CreateMerchandise</title>
+    <title>Edit Merchandise</title>
 </head>
 <body>
     <div class="card">
@@ -18,44 +18,52 @@
             <form action="" method="post">
                 <div class="form-group">
                     <label>ID:</label>
-                    @Html.TextBoxFor(m => m.Id, new { maxlength = "4", data_upper = "", autofocus = "" })
+                    <fieldset disabled>
+                        @Html.TextBoxFor(m => m.Id, new { maxlength = "4", data_upper = "", autofocus = "", @class = "form-control" })
+                    </fieldset>
                     @*<input class="form-control" id="id" placeholder="Enter ID Here">*@
                 </div>
 
                 <div class="form-group">
                     <label>Name:</label>
-                    @Html.TextBoxFor(m => m.Name, new { maxlength = "50" })
+                    @Html.TextBoxFor(m => m.Name, new { maxlength = "50", @class = "form-control" })
                     @*<input class="form-control" id="name" placeholder="Enter Name Here">*@
                 </div>
 
                 <div class="form-group">
                     <label>Price:</label>
-                    @Html.TextBoxFor(m => m.Price)
+                    @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
                     @*<input class="form-control" id="price" placeholder="0.00">*@
                 </div>
 
                 <div class="form-group">
                     <label>Status:</label>
-                    @Html.DropDownListFor(m => m.Status, (SelectList)ViewBag., "-- Select Option --")
-                    @*<select class="form-control" id="status">
-                        <option>-- Select option --</option>
-                        <option>Available</option>
-                        <option>Unavailable</option>
-                        </select>*@
+                    <div>
+                        <label>@Html.RadioButtonFor(m => m.Status, "Available") Available </label>
+                    </div>
+                    <div>
+                        <label>@Html.RadioButtonFor(m => m.Status, "Unavailable") Unavailable </label>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label>Image:</label>
-                    <input class="form-control" id="image" placeholder="shirt1.jpg">
+                    <fieldset disabled>
+                        @Html.TextBoxFor(m => m.Image, new { @class = "form-control" })
+                    </fieldset>
+                    @*<input class="form-control" id="image" placeholder="shirt1.jpg">*@
                 </div>
 
                 @*<div class="form-group">
-                    <label for="formFile" class="form-label">Image:</label>
-                    <input class="form-control" type="file" id="formFile">
-                    </div>*@
+                <label for="formFile" class="form-label">Image:</label>
+                <input class="form-control" type="file" id="formFile">
+                </div>*@
 
                 <br />
-                <button type="submit" class="btn btn-primary float-right">Submit</button>
+                <section>
+                    <button class="edit-btn">Edit</button>
+                    <button type="reset" class="create-btn">Reset</button>
+                </section>
             </form>
         </div>
     </div>

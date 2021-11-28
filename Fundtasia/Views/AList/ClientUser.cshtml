@@ -4,6 +4,8 @@
     ViewBag.Title = "ClientUser";
 }
 
+<link href="~/Content/UserList.css" rel="stylesheet" />
+
 <table class="table">
     <tr>
         <th>First Name</th>
@@ -29,7 +31,7 @@
                 <td>@Html.DisplayFor(modelItem => clientUser.Status)</td>
                 <td>@lastLoginTime</td>
                 <td>@lastLoginIP</td>
-                <td><button data-get="/Admin/EditProfile">Edit</button></td>
+                <td><button type="button" class="edit-btn" data-get="/AEdit/EditClientUser/@clientUser.Email">Edit</button></td>
             </tr>
         }
     }

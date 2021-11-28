@@ -1,0 +1,46 @@
+﻿@model User
+
+@{
+    ViewBag.Title = "Edit Staff";
+}
+
+<link href="~/Content/UserList.css" rel="stylesheet" />
+
+<form action="" method="post" class="editStaff">
+    <div id="editStaffForm">
+        <div class="form-group">
+            <label>Last Name: </label>
+            @Html.TextBoxFor(s => s.LastName, new { maxlength = "50", data_upper = "", autofocus = "", @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            <label>First Name: </label>
+            @Html.TextBoxFor(s => s.FirstName, new { maxlength = "50", @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            <label>Email: </label>
+            @Html.TextBoxFor(s => s.Email, new { maxlength = "150", @class = "form-control", @readonly = "readonly" })
+        </div>
+
+        <div class="form-group">
+            <label>Status: </label>
+            <div>
+                
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Role: </label>
+            <div>
+                <label id="staffRole">@Html.RadioButtonFor(s => s.Role, "Admin") Admin </label>
+                <label>@Html.RadioButtonFor(s => s.Role, "Staff", new { @checked = true }) Staff </label>
+            </div>
+        </div>
+
+        <div id="editStaffBtn">
+            <button class="edit-btn">Edit</button>&nbsp;&nbsp;&nbsp;
+            <button type="reset" class="reset-btn">Reset</button>
+        </div>
+    </div>
+</form>

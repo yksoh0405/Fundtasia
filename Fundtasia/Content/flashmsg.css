@@ -1,0 +1,37 @@
+﻿.flashmsg:not(:empty) {
+    font-size: 17px;
+    position: absolute;
+    background: white;
+    color: #006AA6;
+    border: 1px solid black;
+    border-radius:24px;
+    padding: 9px 25px;
+    max-width: 500px;
+    left: 50%;
+    transform: translate(-50%);
+    top: -100px;
+    opacity: 0;
+    animation: fade 5s linear 0s 1 normal;
+}
+
+@keyframes fade {
+    0% {
+        top: -100px;
+        opacity: 0;
+    }
+
+    10% {
+        top: 100px;
+        opacity: 1;
+    }
+
+    90% {
+        top: 100px;
+        opacity: 1;
+    }
+
+    100% {
+        top: -100px;
+        opacity: 0;
+    }
+}
