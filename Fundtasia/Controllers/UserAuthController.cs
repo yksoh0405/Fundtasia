@@ -56,6 +56,7 @@ namespace Fundtasia.Controllers
                 user.ConfirmPassword = Crypto.Hash(user.ConfirmPassword);
                 #endregion
                 //Bind the data
+                user.Id = Guid.NewGuid();
                 user.IsEmailVerified = false;
                 user.Role = "User";
                 user.Status = "Active";
@@ -141,7 +142,8 @@ namespace Fundtasia.Controllers
                     if (string.Compare(Crypto.Hash(login.PasswordHash), v.PasswordHash) == 0)
                     {
                         int timeout = login.RememberMe ? 525600 : 20; //525600 min = 1 year
-                        var ticket = new FormsAuthenticationTicket(login.Email, login.RememberMe, timeout);
+                        //Set cookies
+                        var ticket = new FormsAuthenticationTicket(v.Id.ToString(), login.RememberMe, timeout);
                         string encrypted = FormsAuthentication.Encrypt(ticket);
                         var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypted);
                         cookie.Expires = DateTime.Now.AddMinutes(timeout);
@@ -154,6 +156,11 @@ namespace Fundtasia.Controllers
                         }
                         else
                         {
+                            var modifyData = db.Users.Find(v.Id);
+                            modifyData.LastLoginTime = DateTime.Now;
+                            modifyData.LastLoginIP = GetLocalIPAddress();
+                            db.SaveChanges();
+                            Session["UserSession"] = v;
                             return RedirectToAction("Index", "Home");
                         }
                     }
@@ -179,6 +186,7 @@ namespace Fundtasia.Controllers
             CheckAuth();
             //Clear the session
             FormsAuthentication.SignOut();
+            Session["UserSession"] = null;
             return RedirectToAction("LogIn", "UserAuth");
         }
 

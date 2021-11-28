@@ -283,9 +283,6 @@
     <Compile Include="Models\Merchandise.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Report.cs">
-      <DependentUpon>DB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>

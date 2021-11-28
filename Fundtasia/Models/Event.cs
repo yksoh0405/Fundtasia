@@ -29,7 +29,7 @@ namespace Fundtasia.Models
         public decimal Target { get; set; }
         public string YouTubeLink { get; set; }
         public System.DateTime CreatedDate { get; set; }
-        public string ImageArray { get; set; }
+        public string Images { get; set; }
         public string Article { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

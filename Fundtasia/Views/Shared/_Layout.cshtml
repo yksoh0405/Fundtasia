@@ -1,4 +1,9 @@
 ﻿<!DOCTYPE html>
+
+@{ 
+    User userSession = (User)Session["UserSession"];
+}
+
 <html>
 <head>
     <meta charset="utf-8" />
@@ -52,7 +57,7 @@
                             <li class="nav-item dropdown">
                                 <a href="#"> Account <i class="fa fa-angle-down"></i></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    @if (!Request.IsAuthenticated)
+                                    @if (userSession == null)
                                     {
                                         <li>@Html.ActionLink("Sign Up", "SignUp", "UserAuth")</li>
                                         <li>@Html.ActionLink("Log In", "LogIn", "UserAuth")</li>
@@ -60,8 +65,14 @@
                                     }
                                     else
                                     {
-                                        <li>@Html.ActionLink(HttpContext.Current.User.Identity.Name, "ViewProfile", "UserAuth")</li>
-                                        <li>@Html.ActionLink("Dashboard", "Dashboard", "Admin")</li>
+                                        if (userSession.Role == "User")
+                                        {
+                                            <li>@Html.ActionLink(userSession.FirstName, "ViewProfile", "UserAuth", new { user = userSession.Id })</li>
+                                        }
+                                        else
+                                        {
+                                            <li>@Html.ActionLink("Dashboard", "Dashboard", "Admin")</li>
+                                        }
                                         <li>
                                             @using (Html.BeginForm("Logout", "UserAuth", FormMethod.Post, new { id = "logoutForm" }))
                                             {

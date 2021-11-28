@@ -20,4 +20,6 @@ namespace Fundtasia.Models
         [Display(Name = "Remember Me")]
         public bool RememberMe { get; set; }
     }
+
+
 }
