@@ -4,6 +4,8 @@
     ViewBag.Title = "Staff";
 }
 
+<link href="~/Content/UserList.css" rel="stylesheet" />
+
 <table class="table">
     <tr>
         <th>First Name</th>
@@ -19,6 +21,7 @@
         if (staff.Role != "User")
         {
             var verified = staff.IsEmailVerified.ToString() == "True" ? "True" : "False";
+
             <tr>
                 <td>@Html.DisplayFor(modelItem => staff.FirstName)</td>
                 <td>@Html.DisplayFor(modelItem => staff.LastName)</td>
@@ -26,7 +29,7 @@
                 <td>@Html.DisplayFor(modelItem => staff.Status)</td>
                 <td>@Html.DisplayFor(modelItem => staff.LastLoginTime)</td>
                 <td>@Html.DisplayFor(modelItem => staff.Role)</td>
-                <td><button data-get="/Admin/EditProfile">Edit</button></td>
+                <td><button type="button" class="edit-btn" data-get="/AEdit/EditStaff/@staff.Email">Edit</button></td>
             </tr>
         }
     }

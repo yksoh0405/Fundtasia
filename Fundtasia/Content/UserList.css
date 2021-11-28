@@ -1,0 +1,68 @@
+﻿.edit-btn {
+    height: 35px;
+    width: 75px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: white;
+    border: 2px solid darkgreen;
+    font-size: 16px;
+    color: darkgreen;
+    transition-duration: 0.4s;
+}
+
+    .edit-btn:hover {
+        background-color: darkgreen;
+        border: 2px solid darkgreen;
+        color: white;
+    }
+
+.create-btn {
+    height: 35px;
+    width: 75px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: white;
+    border: 2px solid darkblue;
+    font-size: 16px;
+    color: darkblue;
+    transition-duration: 0.4s;
+}
+
+    .create-btn:hover {
+        background-color: darkblue;
+        border: 2px solid darkblue;
+        color: white;
+    }
+
+.reset-btn {
+    height: 35px;
+    width: 75px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: white;
+    border: 2px solid darkred;
+    font-size: 16px;
+    color: darkred;
+    transition-duration: 0.4s;
+}
+
+    .reset-btn:hover {
+        background-color: darkred;
+        border: 2px solid darkred;
+        color: white;
+    }
+
+#createStaffForm, #editStaffForm, #editUserForm {
+    max-width: 40%;
+}
+
+#staffRole {
+    padding-right: 30px;
+}
+
+#createStaffBtn, #editStaffBtn, #editUserBtn {
+    text-align: center;
+}

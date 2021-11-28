@@ -18,6 +18,20 @@ namespace Fundtasia.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult CreateStaff(User model)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Users.Add(model);
+                db.SaveChanges();
+
+                return RedirectToAction("Staff", "AList");
+            }
+
+            return View(model);
+        }
+
         public ActionResult CreateUser()
         {
             return View();

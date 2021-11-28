@@ -138,6 +138,7 @@
     <Content Include="Content\createMerch.css" />
     <Content Include="Content\svg-with-js.css" />
     <Content Include="Content\svg-with-js.min.css" />
+    <Content Include="Content\UserList.css" />
     <Content Include="Content\v4-shims.css" />
     <Content Include="Content\v4-shims.min.css" />
     <Content Include="Content\xsIcon.css" />
@@ -327,6 +328,9 @@
     <Content Include="Views\ACreate\CreateEvent.cshtml" />
     <Content Include="Views\ACreate\CreateMerchandise.cshtml" />
     <Content Include="Views\AEdit\EditMerchandise.cshtml" />
+    <Content Include="Views\ACreate\CreateStaff.cshtml" />
+    <Content Include="Views\AEdit\EditStaff.cshtml" />
+    <Content Include="Views\AEdit\EditClientUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
