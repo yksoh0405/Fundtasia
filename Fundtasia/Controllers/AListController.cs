@@ -33,9 +33,20 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
-        public ActionResult Merchandise()
+        public ActionResult Merchandise(string sort, string sortdir)
         {
-            var model = db.Merchandises;
+            Func<Merchandise, object> fn = m => m.Id;
+            switch(sort)
+            {
+                case "Id": fn = m => m.Id; break;
+                case "Name": fn = m => m.Name; break;
+                case "Price": fn = m => m.Price; break;
+            }
+
+            var model = sortdir == "DESC" ?
+                db.Merchandises.OrderByDescending(fn) :
+                db.Merchandises.OrderBy(fn);
+
             return View(model);
         }
 

@@ -15,30 +15,27 @@
     <title>Merchandise</title>
 </head>
 <body>
-    <button type="button" class="create-btn">+ Add New Product</button>
+    <h4><b>Sort By: </b></h4>
+
+    @foreach (var f in fields)
+    {
+        string d = "ASC";
+        string c = "";
+
+        if (f == sort)
+        {
+            d = sortdir == "DESC" ? "ASC" : "DESC";
+            c = sortdir;
+        }
+
+        <a href="?sort=@f&sortdir=@d" class="@c "><button class="create-btn">@f</button></a>
+    }
 
     <div class="container">
         <div class="row">
-
-            <button class="donate-submit">
-                @foreach (var f in fields)
-                {
-                    string d = "ASC";
-                    string c = "";
-
-                    if (f == sort)
-                    {
-                        d = sortdir == "DESC" ? "ASC" : "DESC";
-                        c = sortdir;
-                    }
-
-                    <a href="?sort=@f&sortdir=@d" class="@c">@f</a>
-                }
-            </button>
-
             @foreach (var m in Model)
             {
-                <div class="col-md-3 col-sm-11">
+                <div class="col-12 col-md-6 col-lg-4">
                     <div class="card text-center">
                         <img src="~/Images/Merchandise/@m.Image" />
                         <div class="card-body">
