@@ -67,9 +67,15 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
-        public ActionResult EventDetail()
+        public ActionResult EventDetail(string id)
         {
-            return View();
+            if(id == null)
+            {
+                return RedirectToAction("Event", "Home");
+            }
+            var model = db.Events.Find(id);
+
+            return View(model);
         }
     }
 }
