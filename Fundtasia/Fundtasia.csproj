@@ -154,11 +154,12 @@
     <Content Include="Images\Logos\logo-black.png" />
     <Content Include="Images\Logos\logo-white.png" />
     <Content Include="Images\Logos\logo-icon.png" />
-    <Content Include="Images\Merchandise\shirt1.jpg" />
-    <Content Include="Images\Merchandise\shirt2.jpg" />
-    <Content Include="Images\Merchandise\shirt3.jpg" />
-    <Content Include="Images\Merchandise\shirt4.jpg" />
+    <Content Include="Images\Uploads\Merchandise\shirt1.jpg" />
+    <Content Include="Images\Uploads\Merchandise\shirt2.jpg" />
+    <Content Include="Images\Uploads\Merchandise\shirt3.jpg" />
+    <Content Include="Images\Uploads\Merchandise\shirt4.jpg" />
     <Content Include="Images\Uploads\Event\fundtasia-charity-run.jpg" />
+    <Content Include="Images\Uploads\Event\pict_large.jpg" />
     <Content Include="Models\DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DB.edmx</DependentUpon>
@@ -278,8 +279,10 @@
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Extended\Event.cs" />
+    <Compile Include="Models\Extended\Payment.cs" />
     <Compile Include="Models\Extended\User.cs" />
     <Compile Include="Models\Extended\UserLogin.cs" />
+    <Compile Include="Models\Extended\UserMerchandise.cs" />
     <Compile Include="Models\Merchandise.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>

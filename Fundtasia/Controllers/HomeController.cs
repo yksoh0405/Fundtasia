@@ -25,7 +25,8 @@ namespace Fundtasia.Controllers
 
         public ActionResult Donation()
         {
-            return View();
+            var model = db.Merchandises;
+            return View(model);
         }
 
         public ActionResult Payment()
@@ -38,9 +39,32 @@ namespace Fundtasia.Controllers
             return View();
         }
 
-        public ActionResult Event()
+        public ActionResult Event(string sort, string sortdir, int page = 1)
         {
-            return View();
+            Func<Event, object> fn = s => s.Id;
+
+            switch (sort)
+            {
+                case "CreatedTime": fn = s => s.CreatedDate; break;
+                case "Title": fn = s => s.Title; break;
+                case "View": fn = s => s.View; break;
+            }
+
+            var sorted = sortdir == "ASC" ? db.Events.OrderBy(fn) : db.Events.OrderByDescending(fn);
+
+            if (page < 1)
+            {
+                return RedirectToAction(null, new { page = 1 });
+            }
+
+            var model = sorted.ToPagedList(page, 10);
+
+            if (page > model.PageCount)
+            {
+                return RedirectToAction(null, new { page = model.PageCount });
+            }
+
+            return View(model);
         }
 
         public ActionResult EventDetail()

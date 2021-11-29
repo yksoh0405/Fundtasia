@@ -88,6 +88,12 @@ namespace Fundtasia.Controllers
         public ActionResult VerifyAccount(string id)
         {
             CheckAuth();
+
+            if(id == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             bool Status = false;
             using (db)
             {

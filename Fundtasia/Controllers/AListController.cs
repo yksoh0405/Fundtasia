@@ -63,7 +63,7 @@ namespace Fundtasia.Controllers
             switch (sort)
             {
                 case "Id": fn = m => m.Id; break;
-                case "Email": fn = m => m.Email; break;
+                case "Email": fn = m => m.Id; break;
                 case "TimeDonated": fn = m => m.TimeDonated; break;
                 case "Amount": fn = m => m.Amount; break;
                 case "EventId": fn = m => m.EventId; break;

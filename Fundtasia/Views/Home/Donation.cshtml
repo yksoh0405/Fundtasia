@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<Merchandise>
+@{
     ViewBag.Title = "Donation";
 }
 
@@ -58,7 +59,7 @@
 
             <h5 class="card-title">Enter custom amount (if any):</h5>
             <input type="number" class="form-control" id="amount" name="amount" placeholder="Numbers only" min="1" max="50000" value=""><br />
-            
+
             <!-- For index page purpose -->
             <span id="merchandise"></span>
 
@@ -74,97 +75,35 @@
     <p>*All of the funds will directly contribute to the fundraising event.</p>
 
     <div class="row">
-        <div class="col-sm-6 mt-4">
-            <div class="card">
-                <img src="~/Images/Merchandise/shirt1.jpg" />
-                <div class="card-body">
-                    <p>RM 50.00</p>
-                    <h4 class="card-title">Stop Poverty V1 T-Shirt</h4>
-                    <h5>Select a size:</h5>
-                    <form method="POST" action="~/Home/Payment">
-                        <input type="radio" id="size1" name="size1" value="S">
-                        <label for="S">S</label><br>
-                        <input type="radio" id="size2" name="size2" value="M">
-                        <label for="M">M</label><br>
-                        <input type="radio" id="size3" name="size3" value="L">
-                        <label for="L">L</label><br>
-                        <input type="radio" id="size4" name="size4" value="XL">
-                        <label for="XL">XL</label><br>
+        @foreach (Merchandise merchandise in Model)
+        {
+            if (String.Equals(merchandise.Status, "Available"))
+            {
+                <div class="col-sm-6 mt-4">
+                    <div class="card">
+                            <img src="~/Images/Uploads/Merchandise/@merchandise.Image" class="img-fluid" />
+                            <div class="card-body">
+                                <p>RM @merchandise.Price</p>
+                                <h4 class="card-title">@merchandise.Name</h4>
+                                <h5>Select a size:</h5>
+                                @using (Html.BeginForm("Payment", "Home", FormMethod.Post))
+                                {
+                                        <input type="radio" id="S" name="@merchandise.Id-Size" value="S">
+                                        <label for="S">S</label><br>
+                                        <input type="radio" id="M" name="@merchandise.Id-Size" value="M">
+                                        <label for="M">M</label><br>
+                                        <input type="radio" id="L" name="@merchandise.Id-Size" value="L">
+                                        <label for="L">L</label><br>
+                                        <input type="radio" id="XL" name="@merchandise.Id-Size" value="XL">
+                                        <label for="XL">XL</label><br>
 
-                        <input type="submit" value="Purchase" class="donate-submit" />
-                    </form>
+                                        <button class="btn btn-sm d-flex float-right rounded h-25 px-2 m-2">Purchase</button>
+                                }
+                                </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="col-sm-6 mt-4">
-            <div class="card">
-                <img src="~/Images/Merchandise/shirt2.jpg" />
-                <div class="card-body">
-                    <p>RM 50.00</p>
-                    <h4 class="card-title">Stop Poverty V2 T-Shirt</h4>
-                    <h5>Select a size:</h5>
-                    <form method="POST" action="~/Home/Payment">
-                        <input type="radio" id="size1" name="size1" value="S">
-                        <label for="S">S</label><br>
-                        <input type="radio" id="size2" name="size2" value="M">
-                        <label for="M">M</label><br>
-                        <input type="radio" id="size3" name="size3" value="L">
-                        <label for="L">L</label><br>
-                        <input type="radio" id="size4" name="size4" value="XL">
-                        <label for="XL">XL</label><br>
-
-                        <input type="submit" value="Purchase" class="donate-submit" />
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-6 mt-4">
-            <div class="card">
-                <img src="~/Images/Merchandise/shirt3.jpg" />
-                <div class="card-body">
-                    <p>RM 50.00</p>
-                    <h4 class="card-title">Fight Poverty Not The Poor T-Shirt</h4>
-                    <h5>Select a size:</h5>
-                    <form method="POST" action="~/Home/Payment">
-                        <input type="radio" id="size1" name="size1" value="S">
-                        <label for="S">S</label><br>
-                        <input type="radio" id="size2" name="size2" value="M">
-                        <label for="M">M</label><br>
-                        <input type="radio" id="size3" name="size3" value="L">
-                        <label for="L">L</label><br>
-                        <input type="radio" id="size4" name="size4" value="XL">
-                        <label for="XL">XL</label><br>
-
-                        <input type="submit" value="Purchase" class="donate-submit" />
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-6 mt-4">
-            <div class="card">
-                <img src="~/Images/Merchandise/shirt4.jpg" />
-                <div class="card-body">
-                    <p>RM 50.00</p>
-                    <h4 class="card-title">Break The Poverty Machine T-Shirt</h4>
-                    <h5>Select a size:</h5>
-                    <form method="POST" action="~/Home/Payment">
-                        <input type="radio" id="size1" name="size1" value="S">
-                        <label for="S">S</label><br>
-                        <input type="radio" id="size2" name="size2" value="M">
-                        <label for="M">M</label><br>
-                        <input type="radio" id="size3" name="size3" value="L">
-                        <label for="L">L</label><br>
-                        <input type="radio" id="size4" name="size4" value="XL">
-                        <label for="XL">XL</label><br>
-
-                        <input type="submit" value="Purchase" class="donate-submit" />
-                    </form>
-                </div>
-            </div>
-        </div>
+            }
+        }
     </div>
 </div>
 
