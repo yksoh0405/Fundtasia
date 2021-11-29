@@ -20,6 +20,11 @@ namespace Fundtasia.Models
         public decimal Price { get; set; }
         public System.DateTime PurchaseTime { get; set; }
         public string Size { get; set; }
+        public string FullName { get; set; }
+        public string StreetAddress { get; set; }
+        public string State { get; set; }
+        public string City { get; set; }
+        public string PostalCode { get; set; }
     
         public virtual Merchandise Merchandise { get; set; }
         public virtual User User { get; set; }

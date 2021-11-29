@@ -13,13 +13,14 @@
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="TimeDonated" Type="datetime" Nullable="false" />
           <Property Name="Amount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="EventId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EventId" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="View" Type="int" Nullable="false" />
           <Property Name="Likes" Type="int" Nullable="false" />
@@ -27,7 +28,6 @@
           <Property Name="Target" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="YouTubeLink" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="Images" Type="varchar(max)" Nullable="false" />
           <Property Name="Article" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Merchandise">
@@ -78,9 +78,14 @@ warning 6002: The table/view 'C:\USERS\WLM01\SOURCE\REPOS\FUNDTASIA\FUNDTASIA\AP
           <Property Name="Price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="PurchaseTime" Type="datetime" Nullable="false" />
           <Property Name="Size" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FullName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="StreetAddress" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="State" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PostalCode" Type="char" MaxLength="5" Nullable="false" />
         </EntityType>
         <Association Name="FK_Donation_Event">
-          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
           <End Role="Donation" Type="Self.Donation" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Event">
@@ -99,6 +104,18 @@ warning 6002: The table/view 'C:\USERS\WLM01\SOURCE\REPOS\FUNDTASIA\FUNDTASIA\AP
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Donation">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Event">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -172,6 +189,10 @@ warning 6002: The table/view 'C:\USERS\WLM01\SOURCE\REPOS\FUNDTASIA\FUNDTASIA\AP
             <End Role="User" EntitySet="User" />
             <End Role="Donation" EntitySet="Donation" />
           </AssociationSet>
+          <AssociationSet Name="FK_Event_User" Association="Self.FK_Event_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Event" EntitySet="Event" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserEvent_Event" Association="Self.FK_UserEvent_Event">
             <End Role="Event" EntitySet="Event" />
             <End Role="UserEvent" EntitySet="UserEvent" />
@@ -208,6 +229,10 @@ warning 6002: The table/view 'C:\USERS\WLM01\SOURCE\REPOS\FUNDTASIA\FUNDTASIA\AP
             <End Role="User" EntitySet="Users" />
             <End Role="Donation" EntitySet="Donations" />
           </AssociationSet>
+          <AssociationSet Name="FK_Event_User" Association="DBModel.FK_Event_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserEvent_Event" Association="DBModel.FK_UserEvent_Event">
             <End Role="Event" EntitySet="Events" />
             <End Role="UserEvent" EntitySet="UserEvents" />
@@ -233,7 +258,7 @@ warning 6002: The table/view 'C:\USERS\WLM01\SOURCE\REPOS\FUNDTASIA\FUNDTASIA\AP
           <Property Name="UserId" Type="Guid" Nullable="false" />
           <Property Name="TimeDonated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="EventId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EventId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Event" Relationship="DBModel.FK_Donation_Event" FromRole="Donation" ToRole="Event" />
           <NavigationProperty Name="User" Relationship="DBModel.FK_Donation_User" FromRole="Donation" ToRole="User" />
         </EntityType>
@@ -242,6 +267,7 @@ warning 6002: The table/view 'C:\USERS\WLM01\SOURCE\REPOS\FUNDTASIA\FUNDTASIA\AP
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="View" Type="Int32" Nullable="false" />
           <Property Name="Likes" Type="Int32" Nullable="false" />
@@ -249,9 +275,9 @@ warning 6002: The table/view 'C:\USERS\WLM01\SOURCE\REPOS\FUNDTASIA\FUNDTASIA\AP
           <Property Name="Target" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="YouTubeLink" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Images" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Article" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Donations" Relationship="DBModel.FK_Donation_Event" FromRole="Event" ToRole="Donation" />
+          <NavigationProperty Name="User" Relationship="DBModel.FK_Event_User" FromRole="Event" ToRole="User" />
           <NavigationProperty Name="UserEvents" Relationship="DBModel.FK_UserEvent_Event" FromRole="Event" ToRole="UserEvent" />
         </EntityType>
         <EntityType Name="Merchandise">
@@ -281,6 +307,7 @@ warning 6002: The table/view 'C:\USERS\WLM01\SOURCE\REPOS\FUNDTASIA\FUNDTASIA\AP
           <Property Name="LastLoginTime" Type="DateTime" Precision="3" />
           <Property Name="LastLoginIP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Donations" Relationship="DBModel.FK_Donation_User" FromRole="User" ToRole="Donation" />
+          <NavigationProperty Name="Events" Relationship="DBModel.FK_Event_User" FromRole="User" ToRole="Event" />
           <NavigationProperty Name="UserEvents" Relationship="DBModel.FK_UserEvent_User" FromRole="User" ToRole="UserEvent" />
           <NavigationProperty Name="UserMerchandises" Relationship="DBModel.FK_UserMerchandise_User" FromRole="User" ToRole="UserMerchandise" />
         </EntityType>
@@ -294,6 +321,11 @@ warning 6002: The table/view 'C:\USERS\WLM01\SOURCE\REPOS\FUNDTASIA\FUNDTASIA\AP
           <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="PurchaseTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Size" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="StreetAddress" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PostalCode" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="Merchandise" Relationship="DBModel.FK_UserMerchandise_Merchandise" FromRole="UserMerchandise" ToRole="Merchandise" />
           <NavigationProperty Name="User" Relationship="DBModel.FK_UserMerchandise_User" FromRole="UserMerchandise" ToRole="User" />
         </EntityType>
@@ -310,7 +342,7 @@ warning 6002: The table/view 'C:\USERS\WLM01\SOURCE\REPOS\FUNDTASIA\FUNDTASIA\AP
           <NavigationProperty Name="User" Relationship="DBModel.FK_UserEvent_User" FromRole="UserEvent" ToRole="User" />
         </EntityType>
         <Association Name="FK_Donation_Event">
-          <End Type="DBModel.Event" Role="Event" Multiplicity="1" />
+          <End Type="DBModel.Event" Role="Event" Multiplicity="0..1" />
           <End Type="DBModel.Donation" Role="Donation" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Event">
@@ -329,6 +361,18 @@ warning 6002: The table/view 'C:\USERS\WLM01\SOURCE\REPOS\FUNDTASIA\FUNDTASIA\AP
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Donation">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_User">
+          <End Type="DBModel.User" Role="User" Multiplicity="1" />
+          <End Type="DBModel.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Event">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -402,7 +446,6 @@ warning 6002: The table/view 'C:\USERS\WLM01\SOURCE\REPOS\FUNDTASIA\FUNDTASIA\AP
             <EntityTypeMapping TypeName="DBModel.Event">
               <MappingFragment StoreEntitySet="Event">
                 <ScalarProperty Name="Article" ColumnName="Article" />
-                <ScalarProperty Name="Images" ColumnName="Images" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="YouTubeLink" ColumnName="YouTubeLink" />
                 <ScalarProperty Name="Target" ColumnName="Target" />
@@ -410,6 +453,7 @@ warning 6002: The table/view 'C:\USERS\WLM01\SOURCE\REPOS\FUNDTASIA\FUNDTASIA\AP
                 <ScalarProperty Name="Likes" ColumnName="Likes" />
                 <ScalarProperty Name="View" ColumnName="View" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -445,6 +489,11 @@ warning 6002: The table/view 'C:\USERS\WLM01\SOURCE\REPOS\FUNDTASIA\FUNDTASIA\AP
           <EntitySetMapping Name="UserMerchandises">
             <EntityTypeMapping TypeName="DBModel.UserMerchandise">
               <MappingFragment StoreEntitySet="UserMerchandise">
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="StreetAddress" ColumnName="StreetAddress" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="Size" ColumnName="Size" />
                 <ScalarProperty Name="PurchaseTime" ColumnName="PurchaseTime" />
                 <ScalarProperty Name="Price" ColumnName="Price" />

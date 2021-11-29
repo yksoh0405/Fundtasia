@@ -12,9 +12,9 @@ namespace Fundtasia.Controllers
         DBEntities1 db = new DBEntities1();
 
         // Edit Staff
-        public ActionResult EditStaff(string email)
+        public ActionResult EditStaff(Guid Id)
         {
-            var model = db.Users.Find(email);
+            var model = db.Users.Find(Id);
             if (model == null)
             {
                 return RedirectToAction("Staff", "AList");
@@ -26,7 +26,7 @@ namespace Fundtasia.Controllers
         [HttpPost]
         public ActionResult EditStaff(User model)
         {
-            var s = db.Users.Find(model.Email);
+            var s = db.Users.Find(model.Id);
 
             if (s == null)
             {
@@ -48,9 +48,9 @@ namespace Fundtasia.Controllers
         }
 
         // Edit Client
-        public ActionResult EditClientUser(string email)
+        public ActionResult EditClientUser(Guid Id)
         {
-            var model = db.Users.Find(email);
+            var model = db.Users.Find(Id);
             if (model == null)
             {
                 return RedirectToAction("ClientUser", "AList");
@@ -62,7 +62,7 @@ namespace Fundtasia.Controllers
         [HttpPost]
         public ActionResult EditClientUser(User model)
         {
-            var cu = db.Users.Find(model.Email);
+            var cu = db.Users.Find(model.Id);
 
             if (cu == null)
             {
