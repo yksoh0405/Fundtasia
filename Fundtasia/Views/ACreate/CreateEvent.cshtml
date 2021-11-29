@@ -16,33 +16,7 @@
 
 <div class="row">
     <!-- Column -->
-    <div class="col-lg-12 col-md-12" id="target">
-        <div class="white-box">
-            @*
-                <div class="user-bg bg-info bg-gradient" id="dropArea">
-                    <p class="text-center mt-5 fs-5 fw-bold">
-                        Drag and drop your cover image here
-                    </p>
-                </div>
-            *@
-            <div class="user-bg bg-info bg-gradient">
-                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/ @youtubeId" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-                @*
-            <p class="text-center mt-5 fs-5 fw-bold">
-                Drag and drop your cover image here
-            </p>
-        </div>
-        <div class="user-btm-box mt-5 d-md-flex">
-            <input class="form-control" name="name" value="" id="dropText" disabled />
-                *@
-            </div>
-            
-        </div>
-    </div>
-    <!-- Column -->
-    <!-- Column -->
-    <div class="col-lg-8 col-xlg-9 col-md-12">
+    <div class="col-12">
         <div class="card">
             <div class="card-body">
                 @using (Ajax.BeginForm(ao))
@@ -72,12 +46,6 @@
                         </div>
                     </div>
                     <div class="form-group mb-4">
-                        @Html.LabelFor(model => model.ImageArray, htmlAttributes: new { @class = "col-md-12 p-0" })
-                        <div class="col-md-12 border-bottom p-0">
-                            @Html.EditorFor(model => model.ImageArray, new { htmlAttributes = new { @class = "form-control p-0 border-0", required = "", type = "file", multiple = "" } })
-                        </div>
-                    </div>
-                    <div class="form-group mb-4">
                         @Html.LabelFor(model => model.Article, htmlAttributes: new { @class = "col-md-12 p-0" })
                         <div class="col-md-12 border-bottom p-0">
                             @Html.TextAreaFor(model => model.Article, new { @class = "ckeditor", required = "" })
@@ -85,7 +53,7 @@
                     </div>
                     <div class="form-group mb-4">
                         <div class="col-sm-12">
-                            <button class="btn btn-success">Update Profile</button>
+                            <button class="btn btn-success rounded-pill text-white">Submit</button>
                         </div>
                     </div>
 

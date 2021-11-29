@@ -162,10 +162,9 @@ namespace Fundtasia.Controllers
                         }
                         else
                         {
-                            var modifyData = db.Users.Find(v.Id);
-                            modifyData.LastLoginTime = DateTime.Now;
-                            modifyData.LastLoginIP = GetLocalIPAddress();
-                            db.SaveChanges();
+                            v.LastLoginTime = DateTime.Now;
+                            v.LastLoginIP = GetLocalIPAddress();
+                            da.SaveChanges();
                             Session["UserSession"] = v;
                             return RedirectToAction("Index", "Home");
                         }

@@ -39,30 +39,15 @@ namespace Fundtasia.Controllers
 
         //Create Event Action
         [HttpGet]
-        public ActionResult CreateEvent(Event model)
+        public ActionResult CreateEvent()
         {
-            if (Request.IsAjaxRequest())
-            {
-                int position = model.YouTubeLink.IndexOf("https://youtu.be/");
-                model.YouTubeLink = model.YouTubeLink.Substring(position);
-                return PartialView("_EventPartial", model);
-            }
             return View();
         }
 
-        //Create Event Post Action
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult UploadFiles(IEnumerable<HttpPostedFileBase> files)
+        public ActionResult CreateEvent(Event model)
         {
-
-            foreach (var file in files)
-            {
-                string filePath = Guid.NewGuid() + Path.GetExtension(file.FileName);
-                file.SaveAs(Path.Combine(Server.MapPath("~/Images/Uploads/Event"), filePath));
-                //Here you can write code for save this information in your database if you want
-            }
-            return Json("File uploaded successfully");
+            return View(model);
         }
 
         public ActionResult CreateMerchandise()

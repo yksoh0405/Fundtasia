@@ -35,10 +35,6 @@ namespace Fundtasia.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "YouTube link required")]
         public string YouTubeLink { get; set; }
 
-        [Display(Name = "Display images")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Image required")]
-        public string ImageArray { get; set; }
-
         [AllowHtml]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Article required")]
         public string Article { get; set; }
