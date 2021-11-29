@@ -17,7 +17,7 @@ namespace Fundtasia.Controllers
 
         public ActionResult Staff()
         {
-            var model = db.Users.ToList();
+            var model = db.Users;
             return View(model);
         }
 
