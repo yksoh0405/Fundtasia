@@ -1,2 +1,11 @@
-﻿th {
+﻿.table tr a {
+    color: inherit;
 }
+
+    .table tr a.ASC::after {
+        content: '\25B4';
+    }
+
+    .table tr a.DESC::after {
+        content: '\25BE';
+    }

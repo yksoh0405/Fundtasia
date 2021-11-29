@@ -59,14 +59,14 @@ namespace Fundtasia.Controllers
 
         public ActionResult Donation(string sort, string sortdir)
         {
-            Func<Donation, object> fn = m => m.Id;
+            Func<Donation, object> fn = d => d.Id;
             switch (sort)
             {
-                case "Id": fn = m => m.Id; break;
-                case "Email": fn = m => m.Email; break;
-                case "TimeDonated": fn = m => m.TimeDonated; break;
-                case "Amount": fn = m => m.Amount; break;
-                case "EventId": fn = m => m.EventId; break;
+                case "Id": fn = d => d.Id; break;
+                case "UserId": fn = d => d.UserId; break;
+                case "TimeDonated": fn = d => d.TimeDonated; break;
+                case "Amount": fn = d => d.Amount; break;
+                case "EventId": fn = d => d.EventId; break;
             }
 
             var model = sortdir == "DESC" ?

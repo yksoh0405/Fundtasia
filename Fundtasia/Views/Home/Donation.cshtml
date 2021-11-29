@@ -74,6 +74,33 @@
     <p>*All of the funds will directly contribute to the fundraising event.</p>
 
     <div class="row">
+
+        @foreach (var m in Model) //will display data from Admin Merchandise
+        {
+            <div class="col-sm-6 mt-4">
+                <div class="card">
+                    <img src="~/Images/Merchandise/@m.Image" />
+                    <div class="card-body">
+                        <p>RM @m.Price.00</p>
+                        <h4 class="card-title">@m.Name</h4>
+                        <h5>Select a size:</h5>
+                        <form method="POST" action="~/Home/Payment">
+                            <input type="radio" id="size1" name="size1" value="S">
+                            <label for="S">S</label><br>
+                            <input type="radio" id="size2" name="size2" value="M">
+                            <label for="M">M</label><br>
+                            <input type="radio" id="size3" name="size3" value="L">
+                            <label for="L">L</label><br>
+                            <input type="radio" id="size4" name="size4" value="XL">
+                            <label for="XL">XL</label><br>
+
+                            <input type="submit" value="Purchase" class="donate-submit" /> @*After submit, will pass this data to Payment*@
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+
         <div class="col-sm-6 mt-4">
             <div class="card">
                 <img src="~/Images/Merchandise/shirt1.jpg" />

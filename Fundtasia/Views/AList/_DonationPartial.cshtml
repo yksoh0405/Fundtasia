@@ -1,10 +1,11 @@
 ﻿@{ 
-    string[] fields = { "Id", "Email", "TimeDonated", "Amount", "EventId" };
+    string[] fields = { "Id", "UserId", "TimeDonated", "Amount", "EventId" };
 
     string sort = Request.Params["sort"];
     string sortdir = Request.Params["sortdir"];
 }
 
+<link href="~/Content/donationAdmin.css" rel="stylesheet" />
 <h3 class="box-title">@ViewBag.Title Table</h3>
 <div class="table-responsive">
     <table class="table text-nowrap">
@@ -30,7 +31,7 @@
             {
                 <tr>
                     <td>@d.Id</td>
-                    <td>@d.Email</td>
+                    <td>@d.UserId</td>
                     <td>@d.TimeDonated</td>
                     <td>@d.Amount</td>
                     <td>@d.EventId</td>
