@@ -9,6 +9,7 @@ using System.Net;
 using System.Web.Security;
 using Fundtasia.Models;
 using System.Net.Sockets;
+using System.Data.Entity.Validation;
 
 namespace Fundtasia.Controllers
 {
@@ -37,6 +38,13 @@ namespace Fundtasia.Controllers
             //Model Validation
             if (ModelState.IsValid)
             {
+                #region Check confirm password == password
+                if (user.PasswordHash != user.ConfirmPassword)
+                {
+                    ModelState.AddModelError("ConfirmPassword", "Confirm Password and Password does not match");
+                    return View(user);
+                }
+                #endregion
 
                 #region Email is already exist
                 var isExist = IsEmailExist(user.Email);
@@ -89,7 +97,7 @@ namespace Fundtasia.Controllers
         {
             CheckAuth();
 
-            if(id == null)
+            if (id == null)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -162,9 +170,17 @@ namespace Fundtasia.Controllers
                         }
                         else
                         {
-                            v.LastLoginTime = DateTime.Now;
-                            v.LastLoginIP = GetLocalIPAddress();
-                            da.SaveChanges();
+                            try
+                            {
+                                v.LastLoginTime = DateTime.Now;
+                                v.LastLoginIP = GetLocalIPAddress();
+                                da.SaveChanges();
+                            }
+                            catch (DbEntityValidationException e)
+                            {
+                                Console.WriteLine(e);
+                            }
+
                             Session["UserSession"] = v;
                             return RedirectToAction("Index", "Home");
                         }

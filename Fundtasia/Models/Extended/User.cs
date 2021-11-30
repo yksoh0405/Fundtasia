@@ -37,7 +37,6 @@ namespace Fundtasia.Models
 
         [Display(Name = "Confirm Password")]
         [DataType(DataType.Password)]
-        [Compare("PasswordHash", ErrorMessage = "Confirm password and password do not match")]
         public string ConfirmPassword { get; set; }
 
     }
