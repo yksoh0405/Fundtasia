@@ -310,7 +310,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Event.cshtml" />
     <Content Include="Views\Home\Donation.cshtml" />
-    <Content Include="Views\Home\Payment.cshtml" />
+    <Content Include="Views\Home\MerchandisePayment.cshtml" />
     <Content Include="Views\Home\Receipt.cshtml" />
     <Content Include="Views\UserAuth\LogIn.cshtml" />
     <Content Include="Views\UserAuth\SignUp.cshtml" />
@@ -334,6 +334,7 @@
     <Content Include="Views\AEdit\EditStaff.cshtml" />
     <Content Include="Views\AEdit\EditClientUser.cshtml" />
     <Content Include="Views\AList\_DonationPartial.cshtml" />
+    <Content Include="Views\Home\DonationPayment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

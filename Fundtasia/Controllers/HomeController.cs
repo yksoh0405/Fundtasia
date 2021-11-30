@@ -29,7 +29,12 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
-        public ActionResult Payment()
+        public ActionResult MerchandisePayment()
+        {
+            return View();
+        }
+
+        public ActionResult DonationPayment()
         {
             return View();
         }
