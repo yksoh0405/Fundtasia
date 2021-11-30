@@ -41,7 +41,7 @@
 <div class="card" style="width: 30rem; margin-bottom:100px">
     <img src="~/Images/Logos/donate icon.png" class="card-img-top">
     <div class="card-body">
-        <form method="POST" action="~/Home/Payment">
+        <form method="POST" action="~/Home/DonationPayment">
             <h5 class="card-title">Select the amount:</h5>
             <input type="radio" id="donateAmount1" name="donateAmount" value="1">
             <label for="donateAmount1">RM 1</label><br>
@@ -84,7 +84,7 @@
                         <p>RM @m.Price.00</p>
                         <h4 class="card-title">@m.Name</h4>
                         <h5>Select a size:</h5>
-                        <form method="POST" action="~/Home/Payment">
+                        <form method="POST" action="~/Home/MerchandisePayment">
                             <input type="radio" id="size1" name="size1" value="S">
                             <label for="S">S</label><br>
                             <input type="radio" id="size2" name="size2" value="M">
@@ -100,98 +100,6 @@
                 </div>
             </div>
         }
-
-        <div class="col-sm-6 mt-4">
-            <div class="card">
-                <img src="~/Images/Merchandise/shirt1.jpg" />
-                <div class="card-body">
-                    <p>RM 50.00</p>
-                    <h4 class="card-title">Stop Poverty V1 T-Shirt</h4>
-                    <h5>Select a size:</h5>
-                    <form method="POST" action="~/Home/Payment">
-                        <input type="radio" id="size1" name="size1" value="S">
-                        <label for="S">S</label><br>
-                        <input type="radio" id="size2" name="size2" value="M">
-                        <label for="M">M</label><br>
-                        <input type="radio" id="size3" name="size3" value="L">
-                        <label for="L">L</label><br>
-                        <input type="radio" id="size4" name="size4" value="XL">
-                        <label for="XL">XL</label><br>
-
-                        <input type="submit" value="Purchase" class="donate-submit" />
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-6 mt-4">
-            <div class="card">
-                <img src="~/Images/Merchandise/shirt2.jpg" />
-                <div class="card-body">
-                    <p>RM 50.00</p>
-                    <h4 class="card-title">Stop Poverty V2 T-Shirt</h4>
-                    <h5>Select a size:</h5>
-                    <form method="POST" action="~/Home/Payment">
-                        <input type="radio" id="size1" name="size1" value="S">
-                        <label for="S">S</label><br>
-                        <input type="radio" id="size2" name="size2" value="M">
-                        <label for="M">M</label><br>
-                        <input type="radio" id="size3" name="size3" value="L">
-                        <label for="L">L</label><br>
-                        <input type="radio" id="size4" name="size4" value="XL">
-                        <label for="XL">XL</label><br>
-
-                        <input type="submit" value="Purchase" class="donate-submit" />
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-6 mt-4">
-            <div class="card">
-                <img src="~/Images/Merchandise/shirt3.jpg" />
-                <div class="card-body">
-                    <p>RM 50.00</p>
-                    <h4 class="card-title">Fight Poverty Not The Poor T-Shirt</h4>
-                    <h5>Select a size:</h5>
-                    <form method="POST" action="~/Home/Payment">
-                        <input type="radio" id="size1" name="size1" value="S">
-                        <label for="S">S</label><br>
-                        <input type="radio" id="size2" name="size2" value="M">
-                        <label for="M">M</label><br>
-                        <input type="radio" id="size3" name="size3" value="L">
-                        <label for="L">L</label><br>
-                        <input type="radio" id="size4" name="size4" value="XL">
-                        <label for="XL">XL</label><br>
-
-                        <input type="submit" value="Purchase" class="donate-submit" />
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-6 mt-4">
-            <div class="card">
-                <img src="~/Images/Merchandise/shirt4.jpg" />
-                <div class="card-body">
-                    <p>RM 50.00</p>
-                    <h4 class="card-title">Break The Poverty Machine T-Shirt</h4>
-                    <h5>Select a size:</h5>
-                    <form method="POST" action="~/Home/Payment">
-                        <input type="radio" id="size1" name="size1" value="S">
-                        <label for="S">S</label><br>
-                        <input type="radio" id="size2" name="size2" value="M">
-                        <label for="M">M</label><br>
-                        <input type="radio" id="size3" name="size3" value="L">
-                        <label for="L">L</label><br>
-                        <input type="radio" id="size4" name="size4" value="XL">
-                        <label for="XL">XL</label><br>
-
-                        <input type="submit" value="Purchase" class="donate-submit" />
-                    </form>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
