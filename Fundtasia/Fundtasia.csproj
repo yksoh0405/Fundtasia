@@ -126,6 +126,7 @@
     <Content Include="Content\owl.carousel.min.css" />
     <Content Include="Content\owl.video.play.html" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\payment.css" />
     <Content Include="Content\regular.css" />
     <Content Include="Content\regular.min.css" />
     <Content Include="Content\responsive.css" />
@@ -280,6 +281,7 @@
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Extended\Event.cs" />
+    <Compile Include="Models\Extended\Merchandise.cs" />
     <Compile Include="Models\Extended\Payment.cs" />
     <Compile Include="Models\Extended\User.cs" />
     <Compile Include="Models\Extended\UserLogin.cs" />

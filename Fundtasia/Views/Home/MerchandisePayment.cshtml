@@ -1,5 +1,5 @@
 ﻿@using Fundtasia
-@model dynamic
+@model Merchandise
 @{
     ViewBag.Title = "Merchandise Payment";
 }
@@ -15,43 +15,62 @@
 </head>
 
 <body>
+
     <form method="post" action="~/Home/Receipt">
-        <div class="card" style="width: 28rem;">
-            <div class="card-body">
-                <h2 class="card-title">💳 Card Details 💳</h2>
-                <h5>Name : </h5>
-                <input type="text" class="form-control" id="" placeholder="Name on Card"><br />
-                <h5>Card Number : </h5>
-                <input type="text" class="form-control" id="" placeholder="0000 0000 0000 0000"><br />
-                <h5>Expiry Date : </h5>
-                <input type="text" class="form-control" id="" placeholder="(MM/YY)"><br />
-                <h5>CVV : </h5>
-                <input type="text" class="form-control" id="" placeholder="CVV"><br />
+        <div class="row">
+            <div class="card" style="width: 28rem;">
+                <div class="card-body">
+                    <h3 class="card-title">👕 Merchandise Selected 👕</h3>
+                    <div class="card text-center">
+                        <img src="~/Images/Uploads/Merchandise/@Model.Image" />
+                        <div class="card-body">
+                            <h4 style="color: #9B0909">RM @Model.Price.00</h4>
+                            <h4 class="card-title" style="min-height:50px;">@Model.Name</h4>
+                            <h4>Size : @ViewBag.Size</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="width: 28rem;">
+                <div class="card-body">
+                    <h2 class="card-title">💳 Card Details 💳</h2>
+                    <h5>Name : </h5>
+                    <input type="text" class="form-control" id="" placeholder="Name on Card" autocomplete="off"><br />
+                    <h5>Card Number : </h5>
+                    <input type="text" class="form-control" id="" placeholder="0000 0000 0000 0000" autocomplete="off"><br />
+                    <h5>Expiry Date : </h5>
+                    <input type="text" class="form-control" id="" placeholder="(MM/YY)" autocomplete="off"><br />
+                    <h5>CVV : </h5>
+                    <input type="text" class="form-control" id="" placeholder="CVV" autocomplete="off"><br />
+                </div>
             </div>
         </div>
 
-        <div class="card" style="width: 28rem;">
-            <div class="card-body">
-                <h2 class="card-title">📫 Billing Address 📫</h2>
-                <h5>Full Name : </h5>
-                <input type="text" class="form-control" id="" placeholder="Full Name Here"><br />
-                <h5>Street Address : </h5>
-                <input type="text" class="form-control" id="" placeholder="Street Address"><br />
-                <h5>State : </h5>
-                <input type="text" class="form-control" id="" placeholder="State"><br />
-                <h5>City : </h5>
-                <input type="text" class="form-control" id="" placeholder="City"><br />
-                <h5>Postal Code : </h5>
-                <input type="text" class="form-control" id="" placeholder="00000"><br />
+        <div class="row">
+            <div class="card" style="width: 28rem;">
+                <div class="card-body">
+                    <h2 class="card-title">📫 Billing Address 📫</h2>
+                    <h5>Full Name : </h5>
+                    <input type="text" class="form-control" id="" placeholder="Full Name Here" autocomplete="off"><br />
+                    <h5>Street Address : </h5>
+                    <input type="text" class="form-control" id="" placeholder="Street Address" autocomplete="off"><br />
+                    <h5>State : </h5>
+                    <input type="text" class="form-control" id="" placeholder="State" autocomplete="off"><br />
+                    <h5>City : </h5>
+                    <input type="text" class="form-control" id="" placeholder="City" autocomplete="off"><br />
+                    <h5>Postal Code : </h5>
+                    <input type="text" class="form-control" id="" placeholder="00000" autocomplete="off"><br />
+                </div>
             </div>
-        </div>
 
-        <div class="card" style="width: 28rem;">
-            <div class="card-body">
-                <h2 class="card-title">Verification</h2>
-                <h5>reCAPTCHA </h5>
-                <p>reCAPTCHA here</p>
-                <input type="submit" value="Proceed" class="donate-submit" />
+            <div class="card" style="width: 28rem;">
+                <div class="card-body">
+                    <h2 class="card-title">Verification</h2>
+                    <h5>reCAPTCHA </h5>
+                    <p>reCAPTCHA here</p>
+                    <input type="submit" value="Proceed" class="donate-submit" />
+                </div>
             </div>
         </div>
     </form>

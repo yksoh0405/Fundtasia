@@ -29,9 +29,19 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
-        public ActionResult MerchandisePayment()
+        [HttpGet]
+        public ActionResult MerchandisePayment(string id, string size)
         {
-            return View();
+            var model = db.Merchandises.Find(id);
+
+            if (model == null)
+            {
+                return RedirectToAction("Donation");
+            }
+
+            ViewBag.Size = size;
+            
+            return View(model);
         }
 
         public ActionResult DonationPayment()
