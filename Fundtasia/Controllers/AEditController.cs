@@ -83,13 +83,35 @@ namespace Fundtasia.Controllers
         }
 
         [HttpGet]
-        public ActionResult EditEvent(Event @event)
+        public ActionResult EditEvent(string id)
         {
-            if(@event == null)
+            var model = db.Events.Find(id);
+            if(model == null)
             {
                 return RedirectToAction("Event", "AList");
             }
-            return View();
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult EditEvent(Event model)
+        {
+            var m = db.Events.Find(model.Id);
+            if (m == null)
+            {
+                return RedirectToAction("Event", "AList");  //No record found
+            }
+
+            if (ModelState.IsValid)
+            {
+                m.Title = model.Title;
+                m.CoverImage = model.CoverImage;
+                m.YouTubeLink = model.YouTubeLink;
+                m.Article = model.Article;
+                db.SaveChanges();
+            }
+
+            return View(model);
         }
 
         // Edit Merchandise

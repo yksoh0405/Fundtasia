@@ -252,6 +252,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AEditController.cs" />
     <Compile Include="Controllers\AListController.cs" />
+    <Compile Include="Controllers\Merchandise.cs" />
     <Compile Include="Controllers\UserAuthController.cs" />
     <Compile Include="Crypto.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -335,6 +336,8 @@
     <Content Include="Views\AEdit\EditClientUser.cshtml" />
     <Content Include="Views\AList\_DonationPartial.cshtml" />
     <Content Include="Views\Home\DonationPayment.cshtml" />
+    <Content Include="Views\UserAuth\ViewProfile.cshtml" />
+    <Content Include="Views\AEdit\EditEvent.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

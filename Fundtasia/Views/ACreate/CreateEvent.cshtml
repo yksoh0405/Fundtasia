@@ -1,16 +1,6 @@
 ﻿@model Event
 @{
     ViewBag.Title = "Create Event";
-
-    string youtubeId = Request.Params["YouTubeLink"];
-    var ao = new AjaxOptions
-    {
-        UpdateTargetId = "target",
-        LoadingElementId = "loader"
-    };
-    //LoadingElementId = "loader",
-    //OnFailure = "failure", when the result display got problem you may use this to display failure
-    //If your search result is successfuly displayed you may use OnSuccess to trigger the script
 }
 
 
@@ -19,9 +9,10 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                @using (Ajax.BeginForm(ao))
+                @using (Html.BeginForm())
                 {
                     <div class="form-group mb-4">
+                        
                         @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "col-md-12 p-0" })
                         <div class="col-md-12 border-bottom p-0">
                             @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control p-0 border-0", required = "", autofocus = "" } })
