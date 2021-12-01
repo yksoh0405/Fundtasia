@@ -1,27 +1,22 @@
-﻿body {
-}
-
-p{
-    color:black;
-}
-
-.card {
+﻿.card {
     margin: 0 auto;
     float: none;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 
-input.donate-submit {
-    display: flex;
-    float: right;
-    height: 40px;
-    border-radius: 10px;
-    background-color: white;
-    padding: 0 22px;
-    border: 2px solid #3E3E3E;
+.cards-container {
+    column-count: 2;
 }
 
-    input.donate-submit:hover {
-        box-shadow: 0 1px 2px 0 rgba(0,0,0,0.24), 0 3px 4px 0 rgba(0,0,0,0.19);
-        cursor: pointer;
+    .cards-container div {
+        background: floralwhite;
+        height: 50px;
+        margin: 10px 0;
+        // to avoid column breaks -webkit-column-break-inside: avoid;
+        page-break-inside: avoid;
+        break-inside: avoid;
     }
+
+        .cards-container div:first-child {
+            margin: 0;
+        }
