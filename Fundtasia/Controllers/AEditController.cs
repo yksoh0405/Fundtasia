@@ -82,6 +82,16 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public ActionResult EditEvent(Event @event)
+        {
+            if(@event == null)
+            {
+                return RedirectToAction("Event", "AList");
+            }
+            return View();
+        }
+
         // Edit Merchandise
         // GET: AEdit
         public ActionResult EditMerchandise(string Id)
