@@ -14,7 +14,8 @@
         {
             //Grid.Column(model name, display name)
             grid.Column("CreatedDate", "Created Date"),
-            grid.Column("Title")
+            grid.Column("Title"),
+            grid.Column("", "", @<text><button class="edit-btn" data-get="/AEdit/EditEvent/@item.Id">Edit</button></text>)
         }
     )
 </div>
