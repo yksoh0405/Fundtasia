@@ -9,6 +9,7 @@ using System.Net;
 using System.Web.Security;
 using Fundtasia.Models;
 using System.Net.Sockets;
+using System.Dynamic;
 
 namespace Fundtasia.Controllers
 {
@@ -29,18 +30,15 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        public ActionResult MerchandisePayment(string id, string size)
+        public ActionResult MerchandisePayment(string id)
         {
             var model = db.Merchandises.Find(id);
 
             if (model == null)
             {
-                return RedirectToAction("Donation");
+                return RedirectToAction("Receipt");
             }
 
-            ViewBag.Size = size;
-            
             return View(model);
         }
 
@@ -51,6 +49,7 @@ namespace Fundtasia.Controllers
 
         public ActionResult Receipt()
         {
+            //pass img, price and name from merch payment
             return View();
         }
 
