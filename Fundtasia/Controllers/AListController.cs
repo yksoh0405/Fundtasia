@@ -27,16 +27,37 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        public ActionResult Event(string keyword = "")
+        public ActionResult Event(string sort, string sortdir, int page = 1, string keyword = "")
         {
             keyword = keyword.Trim();
-            var model = db.Events.Where(s => s.Title.Contains(keyword));
 
-            if (Request.IsAjaxRequest())
+            //Sorting
+            Func<Event, object> fn = s => s.Id;
+
+            switch (sort)
             {
-                return View(model);
+                case "Id": fn = s => s.CreatedDate; break;
+                case "Name": fn = s => s.Title; break;
             }
+
+            var sorted = sortdir == "DESC" ? db.Events.Where(s => s.Title.Contains(keyword)).OrderByDescending(fn) : db.Events.Where(s => s.Title.Contains(keyword)).OrderBy(fn);
+
+            //Paging
+            if (page < 1)
+            {
+                return RedirectToAction(null, new { page = 1 });
+            }
+
+            var model = sorted.ToPagedList(page, 10);
+
+            if (page > model.PageCount)
+            {
+                return RedirectToAction(null, new { page = model.PageCount });
+            }
+
+            //Ajax Request
+            if (Request.IsAjaxRequest()) return PartialView("_Event", model);
+            
             return View(model);
         }
 

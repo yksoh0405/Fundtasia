@@ -69,6 +69,7 @@
                     <ul class="navbar-nav ms-auto d-flex align-items-center">
                         <!-- Search bar -->
                         @* Only display this for AList controller *@
+                        @RenderSection("searchBar", false)
                         @if (ViewContext.RouteData.Values["controller"].ToString() == "AList")
                         {
                             <li class=" in">
@@ -202,7 +203,7 @@
         </div>
     </div>
 
-    <!-- Modal Display -->
+    <!-- Logout Modal Display -->
     <div id="logOutModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="logOutModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -219,7 +220,7 @@
                     </button>
                     @using (Html.BeginForm("Logout", "UserAuth", FormMethod.Post, new { id = "logoutForm" }))
                     {
-                        <button href="javascript:document.getElementById('logoutForm').submit()" class="btn waves-effect waves-light btn-rounded btn-light-danger text-danger">Log Out</button>
+                        <button script="javascript:document.getElementById('logoutForm').submit()" class="btn waves-effect waves-light btn-rounded btn-light-danger text-danger">Log Out</button>
                     }
                 </div>
             </div>

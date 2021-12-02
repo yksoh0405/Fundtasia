@@ -12,32 +12,36 @@
                 @using (Html.BeginForm())
                 {
                     <div class="form-group mb-4">
-                        
-                        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "col-md-12 p-0" })
+                        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "col-lg-6 col-md-12 p-0" })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "col-lg-6 col-md-12 text-danger text-justify" })
                         <div class="col-md-12 border-bottom p-0">
                             @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control p-0 border-0", required = "", autofocus = "" } })
                         </div>
                     </div>
                     <div class="form-group mb-4">
-                        @Html.LabelFor(model => model.CoverImage, htmlAttributes: new { @class = "col-md-12 p-0" })
+                        @Html.LabelFor(model => model.CoverImage, htmlAttributes: new { @class = "col-lg-6 col-md-12 p-0" })
+                        @Html.ValidationMessageFor(model => model.CoverImage, "", new { @class = "col-lg-6 col-md-12 text-danger text-justify" })
                         <div class="col-md-12 border-bottom p-0">
                             @Html.EditorFor(model => model.CoverImage, new { htmlAttributes = new { @class = "form-control p-0 border-0", required = "", type = "file" } })
                         </div>
                     </div>
                     <div class="form-group mb-4">
-                        @Html.LabelFor(model => model.Target, htmlAttributes: new { @class = "col-md-12 p-0" })
+                        @Html.LabelFor(model => model.Target, htmlAttributes: new { @class = "col-lg-6 col-md-12 p-0" })
+                        @Html.ValidationMessageFor(model => model.Target, "", new { @class = "col-lg-6 col-md-12 text-danger text-justify" })
                         <div class="col-md-12 border-bottom p-0">
                             @Html.EditorFor(model => model.Target, new { htmlAttributes = new { @class = "form-control p-0 border-0", required = "", type = "number", min = 1 } })
                         </div>
                     </div>
                     <div class="form-group mb-4">
-                        @Html.LabelFor(model => model.YouTubeLink, htmlAttributes: new { @class = "col-md-12 p-0" })
+                        @Html.LabelFor(model => model.YouTubeLink, htmlAttributes: new { @class = "col-lg-6 col-md-12 p-0" })
+                        @Html.ValidationMessageFor(model => model.YouTubeLink, "", new { @class = "col-lg-6 col-md-12 text-danger text-justify" })
                         <div class="col-md-12 border-bottom p-0">
                             @Html.EditorFor(model => model.YouTubeLink, new { htmlAttributes = new { @class = "form-control p-0 border-0", required = "", type = "url", min = 1 } })
                         </div>
                     </div>
                     <div class="form-group mb-4">
-                        @Html.LabelFor(model => model.Article, htmlAttributes: new { @class = "col-md-12 p-0" })
+                        @Html.LabelFor(model => model.Article, htmlAttributes: new { @class = "col-lg-6 col-md-12 p-0" })
+                        @Html.ValidationMessageFor(model => model.Article, "", new { @class = "col-lg-6 col-md-12 text-danger text-justify" })
                         <div class="col-md-12 border-bottom p-0">
                             @Html.TextAreaFor(model => model.Article, new { @class = "ckeditor", required = "" })
                         </div>

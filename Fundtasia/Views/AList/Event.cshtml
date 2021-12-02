@@ -1,33 +1,13 @@
-﻿@model IEnumerable<Event>
-
-@{
+﻿@{
     ViewBag.Title = "Event";
-    var grid = new WebGrid(source: Model, defaultSort: "CreatedDate", canPage: true, canSort: true, rowsPerPage: 10);
 }
 
-<h3 class="box-title">@ViewBag.Title Table</h3>
-<div class="table-responsive">
-@grid.GetHtml(
-    //This param can add class
-    tableStyle: "table text-nowrap",
-    columns: new []
-        {
-            //Grid.Column(model name, display name)
-            grid.Column("CreatedDate", "Created Date"),
-            grid.Column("Title"),
-            grid.Column("", "", @<text><button class="edit-btn" data-get="/AEdit/EditEvent/@item.Id">Edit</button></text>)
-        }
-    )
+<div id="target">
+    @Html.Partial("_Event")
 </div>
 
 @section foot{
     <script>
-        let param = new URL(location).searchParams;
-        let sort = param.get('sort');
-        let sortdir = param.get('sortdir');
-        //This symbol ($(``)) can display the value of variable in console
-        $(`th a[href*='sort=${sort}&']`).addClass(sortdir);
-
         let timer = null;
         $('#keyword').on('input', e => {
             clearTimeout(timer);
@@ -35,18 +15,16 @@
         });
 
         function highlight() {
-            let name = $('#keyword').val().trim(); //Retrive search keyword from search box
+            let keyword = $('#keyword').val().trim();
 
-            //If name == null then return nothing
-            if (!name) return;
+            if (!keyword) return;
 
-            //g = global search, i = case insensitive
-            let re = new RegExp(escapeRegExp(name), 'gi');
+            let re = new RegExp(escapeRegExp(keyword), 'gi');
 
-            $('td:nth-child(2)').each((i, el) => {
-                let html = $(el).html().replace(re, '<mark>$&</mark>');
+            $('td:nth-child(3)').each((i, el) => {
+                let html = $(el).html().replace(re, '<mark style="background-color: #ffb5ae;">$&</mark>');
                 $(el).html(html);
             });
         }
     </script>
-}
+    }

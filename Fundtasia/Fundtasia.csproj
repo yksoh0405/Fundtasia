@@ -282,7 +282,6 @@
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Extended\Event.cs" />
-    <Compile Include="Models\Extended\Merchandise.cs" />
     <Compile Include="Models\Extended\Payment.cs" />
     <Compile Include="Models\Extended\User.cs" />
     <Compile Include="Models\Extended\UserLogin.cs" />
@@ -340,6 +339,7 @@
     <Content Include="Views\Home\DonationPayment.cshtml" />
     <Content Include="Views\UserAuth\ViewProfile.cshtml" />
     <Content Include="Views\AEdit\EditEvent.cshtml" />
+    <Content Include="Views\AList\_Event.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

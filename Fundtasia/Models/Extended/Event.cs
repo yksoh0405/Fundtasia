@@ -32,7 +32,7 @@ namespace Fundtasia.Models
         public decimal Target { get; set; }
 
         [Display(Name = "YouTube Link")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "YouTube link required")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "YouTube Link required")]
         public string YouTubeLink { get; set; }
 
         [AllowHtml]
