@@ -10,6 +10,16 @@ namespace Fundtasia.Models
     public partial class User
     {
         public string ConfirmPassword { get; set; }
+
+
+        public User(Guid Id, string Email, string Role, string FirstName, string LastName)
+        {
+            this.Id = Id;
+            this.Email = Email;
+            this.Role = Role;
+            this.FirstName = FirstName;
+            this.LastName = LastName;
+        }
     }
 
     public class UserMetadata
