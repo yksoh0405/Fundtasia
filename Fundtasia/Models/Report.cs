@@ -16,8 +16,8 @@ namespace Fundtasia.Models
     {
         public string Id { get; set; }
         public string Title { get; set; }
-        public System.DateTime CreatedTime { get; set; }
-        public string CreatedBy { get; set; }
+        public System.DateTime CreatedDate { get; set; }
+        public System.Guid CreatedBy { get; set; }
     
         public virtual User User { get; set; }
     }

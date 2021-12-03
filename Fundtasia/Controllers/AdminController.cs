@@ -16,7 +16,19 @@ namespace Fundtasia.Controllers
         // GET: Admin
         public ActionResult Dashboard()
         {
-            CheckAuth();
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (Session["UserSession"] != null)
+            {
+                User loginUser = (User)Session["UserSession"];
+                if (String.Equals(loginUser.Role, "User"))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
             return View();
         }
 
@@ -40,18 +52,18 @@ namespace Fundtasia.Controllers
         }
 
         //This code is to check login session to avoid the logined user go to other page
-        [NonAction]
-        public void CheckAuth()
+        public ActionResult CheckAuth()
         {
             if (!Request.IsAuthenticated)
             {
                 User loginUser = (User)Session["UserSession"];
-                if(loginUser.Role == "User")
+                if (loginUser.Role == "User")
                 {
-                    RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home");
                 }
-                RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
             }
+            return null;
         }
     }
 }

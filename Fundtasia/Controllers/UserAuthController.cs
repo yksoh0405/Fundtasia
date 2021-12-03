@@ -22,7 +22,10 @@ namespace Fundtasia.Controllers
         [HttpGet]
         public ActionResult SignUp()
         {
-            CheckAuth();
+            if (Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -31,7 +34,10 @@ namespace Fundtasia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SignUp([Bind(Exclude = "IsEmailVerified, ActivationCode")] User user)
         {
-            CheckAuth();
+            if (Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             bool Status = false;
             string message = "";
 
@@ -95,8 +101,6 @@ namespace Fundtasia.Controllers
         [HttpGet]
         public ActionResult VerifyAccount(string id)
         {
-            CheckAuth();
-
             if (id == null)
             {
                 return RedirectToAction("Index", "Home");
@@ -128,7 +132,10 @@ namespace Fundtasia.Controllers
         [HttpGet]
         public ActionResult LogIn()
         {
-            CheckAuth();
+            if (Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -137,7 +144,10 @@ namespace Fundtasia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogIn(UserLogin login, string ReturnUrl = "")
         {
-            CheckAuth();
+            if (Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             string message = "";
             //Verification
             using (DBEntities1 da = new DBEntities1())
@@ -181,7 +191,8 @@ namespace Fundtasia.Controllers
                                 Console.WriteLine(e);
                             }
 
-                            Session["UserSession"] = v;
+                            User userSession = new User(v.Id, v.Email, v.Role, v.FirstName, v.LastName);
+                            Session["UserSession"] = userSession;
                             return RedirectToAction("Index", "Home");
                         }
                     }
@@ -204,7 +215,6 @@ namespace Fundtasia.Controllers
         [HttpPost]
         public ActionResult Logout()
         {
-            CheckAuth();
             //Clear the session
             FormsAuthentication.SignOut();
             Session["UserSession"] = null;
@@ -213,7 +223,10 @@ namespace Fundtasia.Controllers
 
         public ActionResult ForgotPassword()
         {
-            CheckAuth();
+            if (Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -222,19 +235,9 @@ namespace Fundtasia.Controllers
         {
             if (!Request.IsAuthenticated)
             {
-                RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
             }
             return View();
-        }
-
-        //This code is to check login session to avoid the logined user go to other page
-        [NonAction]
-        public void CheckAuth()
-        {
-            if (Request.IsAuthenticated)
-            {
-                RedirectToAction("Index", "Home");
-            }
         }
 
         [NonAction]
