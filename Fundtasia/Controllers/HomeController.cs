@@ -26,6 +26,11 @@ namespace Fundtasia.Controllers
 
         public ActionResult Donation()
         {
+            if (!Request.IsAuthenticated)
+            {
+                RedirectToAction("LogIn", "UserAuth");
+            }
+
             var model = db.Merchandises;
             return View(model);
         }
@@ -44,7 +49,23 @@ namespace Fundtasia.Controllers
 
         public ActionResult DonationPayment()
         {
+            ViewBag.EventList = new SelectList(db.Events, "Id", "Title");
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult DonationPayment(Donation model)
+        {
+            if (ModelState.IsValid)
+            {
+                model.TimeDonated = DateTime.Now;
+                db.Donations.Add(model);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.EventList = new SelectList(db.Donations, "Id", "Title");
+            return View(model);
         }
 
         public ActionResult Receipt()

@@ -3,20 +3,7 @@
     float: none;
     margin-bottom: 30px;
 }
-
-.cards-container {
-    column-count: 2;
+    
+label {
+    cursor: pointer;
 }
-
-    .cards-container div {
-        background: floralwhite;
-        height: 50px;
-        margin: 10px 0;
-        // to avoid column breaks -webkit-column-break-inside: avoid;
-        page-break-inside: avoid;
-        break-inside: avoid;
-    }
-
-        .cards-container div:first-child {
-            margin: 0;
-        }

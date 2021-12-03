@@ -61,17 +61,41 @@ h2 {
 
 input.donate-submit {
     display: flex;
+    float: none;
+    margin-left: 120px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: white;
+    padding: 0 22px;
+    border: 2px solid #3E3E3E;
+    transition-duration: 0.25s;
+}
+
+    input.donate-submit:hover {
+        box-shadow: 0 1px 2px 0 rgba(0,0,0,0.24), 0 3px 4px 0 rgba(0,0,0,0.19);
+        cursor: pointer;
+        background-color: #8F9AA0;
+        color: white;
+    }
+
+input.button-normal {
+    margin-top: 20px;
+    margin-left: 470px;
+    display: flex;
     float: right;
     height: 40px;
     border-radius: 10px;
     background-color: white;
     padding: 0 22px;
     border: 2px solid #3E3E3E;
+    transition-duration: 0.25s;
 }
 
-    input.donate-submit:hover {
+    input.button-normal:hover {
         box-shadow: 0 1px 2px 0 rgba(0,0,0,0.24), 0 3px 4px 0 rgba(0,0,0,0.19);
         cursor: pointer;
+        background-color: #8F9AA0;
+        color: white;
     }
 
 .card-body p {

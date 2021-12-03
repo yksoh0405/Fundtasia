@@ -1,7 +1,9 @@
 ﻿@using Fundtasia
-@model dynamic
+@model Donation
 @{
     ViewBag.Title = "Donation Payment";
+
+    IEnumerable<Donation> donation = ViewBag.Donation;
 }
 
 <!DOCTYPE html>
@@ -18,15 +20,26 @@
     <form method="post" action="~/Home/Receipt">
         <div class="card" style="width: 28rem;">
             <div class="card-body">
+                <h2 class="card-title">💰 Donation Amount 💰</h2>
+                <h5 class="card-title">Enter the amount:</h5>
+                @Html.TextBoxFor(d => d.Amount, new { @class = "form-control", autocomplete = "off", placeholder = "Enter here" })
+                <br />
+                <h5 class="card-title">Select Event:</h5>
+                @Html.DropDownListFor(d => d.EventId, (SelectList)ViewBag.EventList, "-- Select One --", new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="card" style="width: 28rem;">
+            <div class="card-body">
                 <h2 class="card-title">💳 Card Details 💳</h2>
                 <h5>Name : </h5>
-                <input type="text" class="form-control" id="" placeholder="Name on Card"><br />
+                <input type="text" class="form-control" id="" placeholder="Name on Card" required><br />
                 <h5>Card Number : </h5>
-                <input type="text" class="form-control" id="" placeholder="0000 0000 0000 0000"><br />
+                <input type="text" class="form-control" id="" placeholder="0000 0000 0000 0000" required><br />
                 <h5>Expiry Date : </h5>
-                <input type="text" class="form-control" id="" placeholder="(MM/YY)"><br />
+                <input type="text" class="form-control" id="" placeholder="(MM/YY)" required><br />
                 <h5>CVV : </h5>
-                <input type="text" class="form-control" id="" placeholder="CVV"><br />
+                <input type="text" class="form-control" id="" placeholder="CVV" required><br />
             </div>
         </div>
 
@@ -41,3 +54,34 @@
     </form>
 </body>
 </html>
+
+@section foot
+{
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#fix1").change(function () {
+                $("#amount").val = 1;
+            });
+            $("#fix2").change(function () {
+                $("#amount").val = 5;
+            });
+            $("#fix3").change(function () {
+                $("#amount").val = 10;
+            });
+            $("#fix4").change(function () {
+                $("#amount").val = 20;
+            });
+            $("#fix5").change(function () {
+                $("#amount").val = 50;
+            });
+            $("#fix6").change(function () {
+                $("#amount").val = 100;
+            });
+            $("#custom").change(function () {
+                $("#amount").val = null;
+            });
+        });
+
+    </script>
+}
