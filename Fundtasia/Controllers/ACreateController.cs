@@ -161,15 +161,31 @@ namespace Fundtasia.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateMerchandise(Merchandise model)
+        public ActionResult CreateMerchandise(MerchandiseInsertVM model)
         {
+            string err = ValidatePhoto(model.ImageURL);
+
+            if (err != null)
+            {
+                ModelState.AddModelError("Image", err);
+            }
+
             if (ModelState.IsValid)
             {
                 string max = db.Merchandises.Max(m => m.Id) ?? "M000";
                 int n = int.Parse(max.Substring(1));
                 model.Id = (n + 1).ToString("'M'000");
 
-                db.Merchandises.Add(model);
+                var merchandise = new Merchandise
+                {
+                    Id = model.Id,
+                    Name = model.Name,
+                    Image = SaveMerchandisePhoto(model.ImageURL),   
+                    Price = model.Price,
+                    Status = model.Status
+                };
+
+                db.Merchandises.Add(merchandise);
                 db.SaveChanges();
                 TempData["Info"] = "Merchandise added.";
 

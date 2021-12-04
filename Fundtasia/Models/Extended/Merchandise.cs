@@ -14,40 +14,52 @@ namespace Fundtasia.Models
 
     public class MerchandiseMetadata
     {
+        public string Id { get; set; }
+
         [Required(AllowEmptyStrings = false, ErrorMessage = "Merchandise Name is required")]
         public string Name { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Merchandise Image is required")]
-        public string Image { get; set; }
-
         [Required(AllowEmptyStrings = false, ErrorMessage = "Merchandise Price is required")]
         public decimal Price { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Merchandise Status is required")]
+        public string Status { get; set; }
     }
 
     public class MerchandiseInsertVM
     {
+        public string Id { get; set; }
+
         [Required(AllowEmptyStrings = false, ErrorMessage = "Merchandise Name is required")]
         [StringLength(150)]
         public string Name { get; set; }
 
         [Required]
-        public HttpPostedFileBase Image { get; set; }
+        public HttpPostedFileBase ImageURL { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Merchandise Price is required")]
         public decimal Price { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Merchandise Status is required")]
+        public string Status { get; set; }
     }
 
     public class MerchandiseEditVM
     {
+        public string Id { get; set; }
+
         [Required(AllowEmptyStrings = false, ErrorMessage = "Merchandise Name is required")]
         public string Name { get; set; }
 
         [Required]
-        public HttpPostedFileBase Image { get; set; }
+        public HttpPostedFileBase ImageURL { get; set; }
 
-        public string ImageURL { get; set; }
+        public string Image { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Merchandise Price is required")]
         public decimal Price { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Merchandise Status is required")]
+        public string Status { get; set; }
     }
 }
