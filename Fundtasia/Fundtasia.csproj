@@ -146,6 +146,7 @@
     <Content Include="Content\xsIcon.css" />
     <Content Include="Global.asax" />
     <Content Include="Images\Background\background.png" />
+    <Content Include="Images\Background\insert-image.png" />
     <Content Include="Images\Background\poverty-eradication.jpg" />
     <Content Include="Images\Logos\small-logo-icon.png" />
     <Content Include="Images\Logos\small-text-black.png" />
@@ -156,11 +157,11 @@
     <Content Include="Images\Logos\logo-white.png" />
     <Content Include="Images\Logos\logo-icon.png" />
     <Content Include="Images\Uploads\Event\myanmar.jpg" />
+    <Content Include="Images\Uploads\Event\pict_large %283%29.jpg" />
     <Content Include="Images\Uploads\Merchandise\shirt1.jpg" />
     <Content Include="Images\Uploads\Merchandise\shirt2.jpg" />
     <Content Include="Images\Uploads\Merchandise\shirt3.jpg" />
     <Content Include="Images\Uploads\Merchandise\shirt4.jpg" />
-    <Content Include="Images\Uploads\Event\fundtasia-charity-run.jpg" />
     <Content Include="Images\Uploads\Event\madagascar.jpg" />
     <Content Include="Models\DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -253,7 +254,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AEditController.cs" />
     <Compile Include="Controllers\AListController.cs" />
-    <Compile Include="Controllers\Merchandise.cs" />
+    <Compile Include="Models\Extended\Merchandise.cs" />
     <Compile Include="Controllers\UserAuthController.cs" />
     <Compile Include="Crypto.cs" />
     <Compile Include="Controllers\HomeController.cs" />

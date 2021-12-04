@@ -1,15 +1,28 @@
-﻿@model Event
+﻿@model EventInsertVM
 @{
     ViewBag.Title = "Create Event";
 }
 
+@section head{
+    <style>
+        .upload{
+            display: block;
+        }
+        img#uploadCoverImage {
+            display: block;
+            width: 512px;
+            height: 315px;
+            object-fit: cover;
+        }
+    </style>
+}
 
 <div class="row">
     <!-- Column -->
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                @using (Html.BeginForm())
+                @using (Html.BeginForm(new { enctype = "multipart/form-data" }))
                 {
                     <div class="form-group mb-4">
                         @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "col-lg-6 col-md-12 p-0" })
@@ -19,11 +32,12 @@
                         </div>
                     </div>
                     <div class="form-group mb-4">
-                        @Html.LabelFor(model => model.CoverImage, htmlAttributes: new { @class = "col-lg-6 col-md-12 p-0" })
-                        @Html.ValidationMessageFor(model => model.CoverImage, "", new { @class = "col-lg-6 col-md-12 text-danger text-justify" })
-                        <div class="col-md-12 border-bottom p-0">
-                            @Html.EditorFor(model => model.CoverImage, new { htmlAttributes = new { @class = "form-control p-0 border-0", required = "", type = "file" } })
-                        </div>
+                        <label class="upload">
+                            @Html.LabelFor(model => model.CoverImage, htmlAttributes: new { @class = "col-lg-6 col-md-12 p-0" })
+                            @Html.ValidationMessageFor(model => model.CoverImage, "", new { @class = "col-lg-6 col-md-12 text-danger text-justify" })
+                            @Html.TextBoxFor(model => model.CoverImage, new { @class = "form-control p-0 border-0 w-100", required = "", type = "file", accept = "image/jpeg,image/png" })
+                            <img src="~/Images/Background/insert-image.png" id="uploadCoverImage" />
+                        </label>
                     </div>
                     <div class="form-group mb-4">
                         @Html.LabelFor(model => model.Target, htmlAttributes: new { @class = "col-lg-6 col-md-12 p-0" })
@@ -49,6 +63,7 @@
                     <div class="form-group mb-4">
                         <div class="col-sm-12">
                             <button class="btn btn-success rounded-pill text-white">Submit</button>
+                            <button class="btn btn-warning rounded-pill text-white" type="RESET">Reset</button>
                         </div>
                     </div>
 
@@ -63,4 +78,29 @@
 @section foot{
     <script src="~/Scripts/ckeditor/ckeditor.js"></script>
     <script src="~/Scripts/ckeditor/adapters/jquery.js"></script>
+    <script>
+
+        function validatePhoto(f) {
+            let reType = /^image\/(jpeg|png)$/i;
+            let reName = /^.+\.(jpg|jpeg|png)$/i;
+            //Return f if (size < 1mb) && (reType and reName both regex return true )
+            return f && f.size <= 1 * 1024 * 1024 && reType.test(f.type) && reName.test(f.name);
+        }
+
+        let src = null;
+        $('.upload input').change(e => {
+            let f = e.target.files[0];
+            let img = $(e.target).siblings('img')[0];
+
+            //Display default image if there is no source
+            if (!src) src = img.src;
+
+            if (validatePhoto(f)) {
+                img.src = URL.createObjectURL(f);
+            } else {
+                img.src = src;
+                e.target.value = '';
+            }
+        });
+    </script>
 }

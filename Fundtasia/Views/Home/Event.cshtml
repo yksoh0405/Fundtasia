@@ -34,12 +34,12 @@
                 <div class="entry-header">
                     <div class="entry-title">
                         <h2>
-                            <a href="#">@s.Title</a>
+                            <a href="@Url.Action("EventDetail", "Home", new { id = s.Id })">@s.Title</a>
                         </h2>
                     </div>
                 </div>
                 <div class="entry-content">
-                    <p>@s.Article.Substring(0, s.Article.IndexOf(".")).</p>
+                    <p>@Html.Raw(s.Article.Substring(0, s.Article.IndexOf("."))).</p>
                 </div>
                 <div class="post-footer">
                     <a href="@Url.Action("EventDetail", "Home", new { id = s.Id })" class="btn-link">Read More <i class="fa fa-arrow-right"></i></a>
