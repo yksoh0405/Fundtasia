@@ -31,8 +31,7 @@
         <p>
             You can help us to decrease poverty issues by donating to our charity that focuses on helping them. Funds that have been raised will 100% go towards
             the people that are struggling with poverty and we will provide them with basic needs to help them survive and ease their struggles! You are able to
-            donate a fixed amount which will be RM1, RM5, RM10, RM20, RM50, RM100, or a custom amount! You may also support us by buying our merchandise and the funds
-            will also go directly to those in need.
+            donate a minimum amount of RM1! You may also support us by buying our merchandise and the funds will also go directly to those in need.
         </p>
     </div>
 </div>
@@ -42,28 +41,10 @@
 <div class="card" style="width: 30rem; margin-bottom:100px">
     <img src="~/Images/Logos/donate icon.png" class="card-img-top">
     <div class="card-body">
-        <form method="POST" action="~/Home/DonationPayment">
-            <h5 class="card-title">Select the amount:</h5>
-            <input type="radio" id="donateAmount1" name="donateAmount" value="1">
-            <label for="donateAmount1">RM 1</label><br>
-            <input type="radio" id="donateAmount2" name="donateAmount" value="5">
-            <label for="donateAmount2">RM 5</label><br>
-            <input type="radio" id="donateAmount3" name="donateAmount" value="10">
-            <label for="donateAmount3">RM 10</label><br>
-            <input type="radio" id="donateAmount4" name="donateAmount" value="20">
-            <label for="donateAmount4">RM 20</label><br>
-            <input type="radio" id="donateAmount5" name="donateAmount" value="50">
-            <label for="donateAmount5">RM 50</label><br>
-            <input type="radio" id="donateAmount6" name="donateAmount" value="100">
-            <label for="donateAmount6">RM 100</label><br>
-
-            <h5 class="card-title">Enter custom amount (if any):</h5>
-            <input type="number" class="form-control" id="amount" name="amount" placeholder="Numbers only" min="1" max="50000" value=""><br />
-            
-            <!-- For index page purpose -->
-            <span id="merchandise"></span>
-
-            <input type="submit" value="Donate" class="donate-submit" />
+        <!-- For index page purpose -->
+        <span id="merchandise"></span>
+        <form action="~/Home/DonationPayment">
+            <input type="submit" value="Click Here to Donate" class="donate-submit" />
         </form>
     </div>
 </div>
@@ -85,7 +66,7 @@
                         <p>RM @m.Price.00</p>
                         <h4 class="card-title">@m.Name</h4>
                         <form method="get" action="~/Home/MerchandisePayment?Id=@m.Id">
-                            <input type="submit" value="Purchase" id="submitBtn" class="donate-submit" data-get="/Home/MerchandisePayment?Id=@m.Id&size=size" /> @*After submit, will pass this data to Payment*@
+                            <input type="submit" value="Purchase" id="submitBtn" class="button-normal" data-get="/Home/MerchandisePayment?Id=@m.Id&size=size" /> @*After submit, will pass this data to Payment*@
                         </form>
                     </div>
                 </div>
