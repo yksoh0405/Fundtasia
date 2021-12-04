@@ -75,8 +75,12 @@ namespace Fundtasia.Controllers
         [HttpPost]
         public ActionResult CreateMerchandise(Merchandise model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
+                string max = db.Merchandises.Max(m => m.Id) ?? "M000";
+                int n = int.Parse(max.Substring(1));
+                model.Id = (n + 1).ToString("'M'000");
+
                 db.Merchandises.Add(model);
                 db.SaveChanges();
                 TempData["Info"] = "Merchandise added.";

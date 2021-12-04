@@ -1,4 +1,4 @@
-﻿@model Merchandise
+﻿@model MerchandiseCreate
 
 @{
     ViewBag.Title = "Add Merchandise";
@@ -16,19 +16,18 @@
     <div class="card">
         <div class="card-body">
             <form action="" method="post">
-                <div class="form-group">
-                    <label>ID:</label>
-                    @Html.TextBoxFor(m => m.Id, new { maxlength = "4", data_upper = "", autofocus = "", @class="form-control", autocomplete = "off" })
-                </div>
+                @Html.ValidationSummary(true)
 
                 <div class="form-group">
                     <label>Name:</label>
                     @Html.TextBoxFor(m => m.Name, new { maxlength = "50", @class = "form-control", autocomplete = "off" })
+                    @Html.ValidationMessageFor(m => m.Name)
                 </div>
 
                 <div class="form-group">
                     <label>Price:</label>
                     @Html.TextBoxFor(m => m.Price, new { @class = "form-control", autocomplete = "off" })
+                    @Html.ValidationMessageFor(m => m.Price)
                 </div>
 
                 <div class="form-group">
@@ -39,18 +38,17 @@
                     <div>
                         <label>@Html.RadioButtonFor(m => m.Status, "Unavailable") Unavailable </label>
                     </div>
+                    @Html.ValidationMessageFor(m => m.Status)
                 </div>
                  
                 <div class="form-group">
-                    <label>Image:</label>
-                    @Html.TextBoxFor(m => m.Image, new { @class = "form-control"})
-                    @*<input class="form-control" id="image" placeholder="shirt1.jpg">*@
+                    <label class="upload">
+                        Image:
+                        @Html.TextBoxFor(m => m.ImagePic, new { type = "file", accept = "image/jpeg,image/png", hidden = "" })
+                        <img src="~/Images/Uploads/Merchandise/preview.jpg" />
+                    </label>
+                    @Html.ValidationMessageFor(m => m.ImagePic)
                 </div>
-
-                @*<div class="form-group">
-                <label for="formFile" class="form-label">Image:</label>
-                <input class="form-control" type="file" id="formFile">
-                </div>*@
 
                 <br />
                 <section>
@@ -62,3 +60,39 @@
     </div>
 </body>
 </html>
+
+@section foot {
+    <script>
+        $.validator.setDefaults({
+            ignore: ''
+        });
+
+        function validatePhoto(f) {
+            let reType = /^image\/(jpeg|png)$/i;
+            let reName = /^.+\.(jpg|jpeg|png)$/i;
+
+            return f &&
+                f.size <= 1 * 1024 * 1024 &&
+                reType.test(f.type) &&
+                reName.test(f.name);
+        }
+
+        let src = null;
+
+        $('.upload input').change(e => {
+            let f = e.target.files[0];
+            let img = $(e.target).siblings('img')[0];
+
+            if (!src) src = img.src;
+
+            if (validatePhoto(f)) {
+                img.src = URL.createObjectURL(f);
+            }
+            else {
+                img.src = src;
+                e.target.value = '';
+            }
+            $(e.target).valid();
+        });
+    </script>
+}

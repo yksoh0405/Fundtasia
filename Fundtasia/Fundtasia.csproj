@@ -156,6 +156,7 @@
     <Content Include="Images\Logos\logo-white.png" />
     <Content Include="Images\Logos\logo-icon.png" />
     <Content Include="Images\Uploads\Event\myanmar.jpg" />
+    <Content Include="Images\Uploads\Merchandise\preview.jpg" />
     <Content Include="Images\Uploads\Merchandise\shirt1.jpg" />
     <Content Include="Images\Uploads\Merchandise\shirt2.jpg" />
     <Content Include="Images\Uploads\Merchandise\shirt3.jpg" />
@@ -282,6 +283,7 @@
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Extended\Event.cs" />
+    <Compile Include="Models\Extended\Merchandise.cs" />
     <Compile Include="Models\Extended\Payment.cs" />
     <Compile Include="Models\Extended\User.cs" />
     <Compile Include="Models\Extended\UserLogin.cs" />
@@ -351,6 +353,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Views\Merchandise\" />
     <Folder Include="Views\Partial\" />
     <Folder Include="Views\Utils\" />
   </ItemGroup>
