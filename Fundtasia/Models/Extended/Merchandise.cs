@@ -1,27 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using System.Linq;
 using System.Web;
-using System.ComponentModel.DataAnnotations;
 
 namespace Fundtasia.Models
 {
-    public class MerchandiseCreate
+    [MetadataType(typeof(MerchandiseMetadata))]
+    public partial class Merchandise
     {
-        public string Id { get; set; }
+    }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Title required")]
-        [StringLength(100)]
+    public class MerchandiseMetadata
+    {
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Merchandise Name is required")]
         public string Name { get; set; }
 
-        [Required]
-        public HttpPostedFileBase ImagePic { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Merchandise Image is required")]
+        public string Image { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Price required")]
-        [RegularExpression(@"^\$?\d+(\.(\d{2}))?$", ErrorMessage = "Invalid Price format")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Merchandise Price is required")]
         public decimal Price { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Status required")]
-        public string Status { get; set; }
     }
 }

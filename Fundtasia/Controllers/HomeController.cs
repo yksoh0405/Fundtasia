@@ -85,7 +85,7 @@ namespace Fundtasia.Controllers
                 case "View": fn = s => s.View; break;
             }
 
-            var sorted = sortdir == "ASC" ? db.Events.OrderBy(fn) : db.Events.OrderByDescending(fn);
+            var sorted = sortdir == "DESC" ? db.Events.OrderByDescending(fn) : db.Events.OrderBy(fn);
 
             if (page < 1)
             {
