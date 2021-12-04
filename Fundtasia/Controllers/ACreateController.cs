@@ -17,12 +17,38 @@ namespace Fundtasia.Controllers
         //This controller is used to handle the Create request from View to Model
         public ActionResult CreateStaff()
         {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (Session["UserSession"] != null)
+            {
+                User loginUser = (User)Session["UserSession"];
+                if (String.Equals(loginUser.Role, "User"))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
             return View();
         }
 
         [HttpPost]
         public ActionResult CreateStaff(User model)
         {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (Session["UserSession"] != null)
+            {
+                User loginUser = (User)Session["UserSession"];
+                if (String.Equals(loginUser.Role, "User"))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
             if (ModelState.IsValid)
             {
                 db.Users.Add(model);
@@ -36,6 +62,19 @@ namespace Fundtasia.Controllers
 
         public ActionResult CreateUser()
         {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (Session["UserSession"] != null)
+            {
+                User loginUser = (User)Session["UserSession"];
+                if (String.Equals(loginUser.Role, "User"))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
             return View();
         }
 
@@ -43,23 +82,72 @@ namespace Fundtasia.Controllers
         [HttpGet]
         public ActionResult CreateEvent()
         {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (Session["UserSession"] != null)
+            {
+                User loginUser = (User)Session["UserSession"];
+                if (String.Equals(loginUser.Role, "User"))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
             return View();
         }
 
         [HttpPost]
-        public ActionResult CreateEvent(Event model)
+        public ActionResult CreateEvent(EventInsertVM model)
         {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (Session["UserSession"] != null)
+            {
+                User loginUser = (User)Session["UserSession"];
+                model.UserId = loginUser.Id;
+                if (String.Equals(loginUser.Role, "User"))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
+            string err = ValidatePhoto(model.CoverImage);
+
+            if (err != null)
+            {
+                ModelState.AddModelError("CoverImage", err);
+            }
+
             if (ModelState.IsValid)
             {
                 //Generate Id
-                string max = db.Events.Max(e => e.Id) ?? "E000";
-                int n = int.Parse(max.Substring(1));
-                model.Id = (n + 1).ToString("'E'000");
+                int m = (db.Events.Count()) + 1;
+                string id = $"E{m}";
 
-                //model.UserId =
-                //model.CreatedDate
+                int endIndex = model.YouTubeLink.Length;
+                int startIndex = endIndex - 11;
+                model.YouTubeLink = model.YouTubeLink.Substring(startIndex);
 
-                db.Events.Add(model);
+                var e = new Event
+                {
+                    Id = id,
+                    UserId = model.UserId,
+                    Title = model.Title,
+                    View = 0,
+                    Likes = 0,
+                    CoverImage = SaveEventPhoto(model.CoverImage),
+                    Target = model.Target,
+                    YouTubeLink = model.YouTubeLink,
+                    CreatedDate = DateTime.Now,
+                    Article = model.Article
+                };
+
+                db.Events.Add(e);
                 db.SaveChanges();
                 TempData["Message"] = "Event created";
                 return RedirectToAction("Event", "AList");
@@ -93,12 +181,38 @@ namespace Fundtasia.Controllers
 
         public ActionResult CreateReport()
         {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (Session["UserSession"] != null)
+            {
+                User loginUser = (User)Session["UserSession"];
+                if (String.Equals(loginUser.Role, "User"))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
             return View();
         }
 
         [HttpPost]
         public ActionResult CreateReport(Report model)
         {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (Session["UserSession"] != null)
+            {
+                User loginUser = (User)Session["UserSession"];
+                if (String.Equals(loginUser.Role, "User"))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
             return View();
         }
 
@@ -128,27 +242,12 @@ namespace Fundtasia.Controllers
             //Generate Unique Id
             //Save the image in the format of .jpg
             string name = Guid.NewGuid().ToString("n") + ".jpg";
-            string path = Server.MapPath($"~/Uploads/Event/{name}");
+            string path = Server.MapPath($"~/Images/Uploads/Event/{name}");
 
             //Image resizing
             var img = new WebImage(f.InputStream);
 
-            if (img.Width > img.Height)
-            {
-                //Crop the image width when image width > image height
-                int px = (img.Width - img.Height) / 2;
-                img.Crop(0, px, 0, px);
-                //Crop(Top, Left, Bottom, Right)
-            }
-
-            if (img.Width < img.Height)
-            {
-                //Crop the image width when image width < image height
-                int px = (img.Height - img.Width) / 2;
-                img.Crop(px, 0, px, 0);
-            }
-
-            img.Resize(201, 201).Crop(1, 1).Save(path, "jpeg");
+            img.Resize(513, 316).Crop(1, 1).Save(path, "jpeg");
 
             return name;
         }
@@ -158,25 +257,10 @@ namespace Fundtasia.Controllers
             //Generate Unique Id
             //Save the image in the format of .jpg
             string name = Guid.NewGuid().ToString("n") + ".jpg";
-            string path = Server.MapPath($"~/Uploads/Merchandise/{name}");
+            string path = Server.MapPath($"~/Images/Uploads/Merchandise/{name}");
 
             //Image resizing
             var img = new WebImage(f.InputStream);
-
-            if (img.Width > img.Height)
-            {
-                //Crop the image width when image width > image height
-                int px = (img.Width - img.Height) / 2;
-                img.Crop(0, px, 0, px);
-                //Crop(Top, Left, Bottom, Right)
-            }
-
-            if (img.Width < img.Height)
-            {
-                //Crop the image width when image width < image height
-                int px = (img.Height - img.Width) / 2;
-                img.Crop(px, 0, px, 0);
-            }
 
             img.Resize(296, 295).Crop(1, 1).Save(path, "jpeg");
 

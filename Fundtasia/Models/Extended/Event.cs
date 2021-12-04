@@ -50,7 +50,7 @@ namespace Fundtasia.Models
         public string Title { get; set; }
 
         [Display(Name = "Cover Image")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Cover Image required")]
+        [Required]
         public HttpPostedFileBase CoverImage { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Target required")]
@@ -73,7 +73,7 @@ namespace Fundtasia.Models
         public string Title { get; set; }
 
         [Display(Name = "Cover Image")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Cover Image required")]
+        [Required]
         public HttpPostedFileBase CoverImage { get; set; }
 
         public string ImageURL { get; set; }

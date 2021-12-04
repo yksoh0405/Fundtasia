@@ -85,11 +85,21 @@ namespace Fundtasia.Controllers
         [HttpGet]
         public ActionResult EditEvent(string id)
         {
-            var model = db.Events.Find(id);
-            if(model == null)
+            var m = db.Events.Find(id);
+            if(m == null)
             {
                 return RedirectToAction("Event", "AList");
             }
+
+            var model = new EventEditVM
+            {
+                Title = m.Title,
+                ImageURL = m.CoverImage,
+                Target = m.Target,
+                YouTubeLink = "https://youtu.be/" + m.YouTubeLink,
+                Article = m.Article
+            };
+
             return View(model);
         }
 
@@ -104,6 +114,10 @@ namespace Fundtasia.Controllers
 
             if (ModelState.IsValid)
             {
+                int endIndex = model.YouTubeLink.Length;
+                int startIndex = endIndex - 11;
+                model.YouTubeLink = model.YouTubeLink.Substring(startIndex);
+
                 m.Title = model.Title;
                 m.CoverImage = model.CoverImage;
                 m.YouTubeLink = model.YouTubeLink;

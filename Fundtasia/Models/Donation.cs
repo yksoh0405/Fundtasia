@@ -22,6 +22,5 @@ namespace Fundtasia.Models
     
         public virtual Event Event { get; set; }
         public virtual User User { get; set; }
-        public object ReturnDate { get; internal set; }
     }
 }

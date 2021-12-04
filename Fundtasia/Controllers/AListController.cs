@@ -17,18 +17,58 @@ namespace Fundtasia.Controllers
 
         public ActionResult Staff()
         {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (Session["UserSession"] != null)
+            {
+                User loginUser = (User)Session["UserSession"];
+                if (String.Equals(loginUser.Role, "User"))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
             var model = db.Users;
             return View(model);
         }
 
         public ActionResult ClientUser()
         {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (Session["UserSession"] != null)
+            {
+                User loginUser = (User)Session["UserSession"];
+                if (String.Equals(loginUser.Role, "User"))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
             var model = db.Users.ToList();
             return View(model);
         }
 
-        public ActionResult Event(string sort, string sortdir, int page = 1, string keyword = "")
+        public ActionResult Event(string sort = "CreatedDate", string sortdir = "DESC", int page = 1, string keyword = "")
         {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (Session["UserSession"] != null)
+            {
+                User loginUser = (User)Session["UserSession"];
+                if (String.Equals(loginUser.Role, "User"))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
             keyword = keyword.Trim();
 
             //Sorting
@@ -36,8 +76,10 @@ namespace Fundtasia.Controllers
 
             switch (sort)
             {
-                case "Id": fn = s => s.CreatedDate; break;
-                case "Name": fn = s => s.Title; break;
+                case "Id": fn = s => s.Id; break;
+                case "CreatedDate": fn = s => s.CreatedDate; break;
+                case "Title": fn = s => s.Title; break;
+                case "View": fn = s => s.View; break;
             }
 
             var sorted = sortdir == "DESC" ? db.Events.Where(s => s.Title.Contains(keyword)).OrderByDescending(fn) : db.Events.Where(s => s.Title.Contains(keyword)).OrderBy(fn);
@@ -49,6 +91,11 @@ namespace Fundtasia.Controllers
             }
 
             var model = sorted.ToPagedList(page, 10);
+
+            if (model == null)
+            {
+                return View();
+            }
 
             if (page > model.PageCount)
             {
@@ -63,6 +110,20 @@ namespace Fundtasia.Controllers
 
         public ActionResult Merchandise(string sort, string sortdir)
         {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (Session["UserSession"] != null)
+            {
+                User loginUser = (User)Session["UserSession"];
+                if (String.Equals(loginUser.Role, "User"))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
             Func<Merchandise, object> fn = m => m.Id;
             switch(sort)
             {
@@ -80,6 +141,19 @@ namespace Fundtasia.Controllers
 
         public ActionResult Donation(string sort, string sortdir)
         {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (Session["UserSession"] != null)
+            {
+                User loginUser = (User)Session["UserSession"];
+                if (String.Equals(loginUser.Role, "User"))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
             Func<Donation, object> fn = d => d.Id;
             switch (sort)
             {
@@ -97,9 +171,54 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
-        public ActionResult Report()
+        public ActionResult Report(string sort, string sortdir, int page = 1, string keyword = "")
         {
-            return View();
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (Session["UserSession"] != null)
+            {
+                User loginUser = (User)Session["UserSession"];
+                if (String.Equals(loginUser.Role, "User"))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            
+            keyword = keyword.Trim();
+
+            //Sorting
+            Func<Report, object> fn = s => s.Id;
+
+            switch (sort)
+            {
+                case "Id": fn = s => s.Id; break;
+                case "Title": fn = s => s.Title; break;
+                case "CreatedDate": fn = s => s.CreatedDate; break;
+                case "CreatedBy": fn = s => s.CreatedBy; break;
+            }
+
+            var sorted = sortdir == "DESC" ? db.Reports.Where(s => s.Title.Contains(keyword)).OrderByDescending(fn) : db.Reports.Where(s => s.Title.Contains(keyword)).OrderBy(fn);
+
+            //Paging
+            if (page < 1)
+            {
+                return RedirectToAction(null, new { page = 1 });
+            }
+
+            var model = sorted.ToPagedList(page, 10);
+
+            if (page > model.PageCount)
+            {
+                return RedirectToAction(null, new { page = model.PageCount });
+            }
+
+            //Ajax Request
+            if (Request.IsAjaxRequest()) return PartialView("_Report", model);
+
+            return View(model);
         }
     }
 }

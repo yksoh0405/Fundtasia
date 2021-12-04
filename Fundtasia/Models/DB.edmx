@@ -35,7 +35,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="Image" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
@@ -316,7 +316,7 @@ warning 6002: The table/view 'D:\TESTAREA\TEST U\FUNDTASIA\APP_DATA\DB.MDF.dbo.U
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="Image" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />

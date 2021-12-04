@@ -1,0 +1,58 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model IPagedList<Report>
+@{
+    var ao = new AjaxOptions
+    {
+        UpdateTargetId = "target",
+        LoadingElementId = "loader",
+        OnSuccess = "highlight"
+    };
+    string[] fields = { "Id", "Title", "Created Date", "Created By" };
+    string sort = Request.Params["sort"];
+    string sortdir = Request.Params["sortdir"];
+    string keyword = Request.Params["keyword"];
+}
+<table class="table text-nowrap">
+    <tr>
+        @foreach (var f in fields)
+        {
+            string d = "DESC";
+            string c = "";
+
+            if (f == sort)
+            {
+                d = sortdir == "DESC" ? "ASC" : "DESC";
+                c = sortdir;
+            }
+
+            <th>
+                @Ajax.ActionLink(f, null, new { sort = f, sortdir = d }, ao, new { @class = c })
+            </th>
+        }
+    </tr>
+    @foreach (var s in Model)
+    {
+            <tr>
+            <td>@s.Id</td>
+            <td>@s.Title</td>
+            <td>@s.CreatedDate</td>
+            <td>@s.User.FirstName @s.User.LastName</td>
+            <td><button class="btn btn-success text-white" data-get="/Admin/ReportDetails/@s.Id">View</button></td>
+        </tr>
+    }
+</table>
+
+@{
+    var po = PagedListRenderOptions.ClassicPlusFirstAndLast;
+    po.LinkToFirstPageFormat = "First";
+    po.LinkToLastPageFormat = "Last";
+    po.LinkToPreviousPageFormat = "Previous";
+    po.LinkToNextPageFormat = "Next";
+}
+
+@Html.PagedListPager(
+    Model,
+    p => $"?sort={sort}&sortdir={sortdir}&page={p}",
+    PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(po, ao)
+)

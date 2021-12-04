@@ -5,13 +5,13 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="d69245650e6f4004b1f45fbd49d4cee1" Name="Diagram1">
-        <EntityTypeShape EntityType="DBModel.Donation" Width="1.5" PointX="5.25" PointY="10" />
-        <EntityTypeShape EntityType="DBModel.Event" Width="1.5" PointX="8" PointY="8.5" />
-        <EntityTypeShape EntityType="DBModel.Merchandise" Width="1.5" PointX="7.375" PointY="6.125" />
-        <EntityTypeShape EntityType="DBModel.Report" Width="1.5" PointX="1" PointY="10.875" />
-        <EntityTypeShape EntityType="DBModel.User" Width="1.5" PointX="2.375" PointY="6.25" />
-        <EntityTypeShape EntityType="DBModel.UserMerchandise" Width="1.5" PointX="5.125" PointY="6.125" />
-        <EntityTypeShape EntityType="DBModel.UserEvent" Width="1.5" PointX="8" PointY="12.125" />
+        <EntityTypeShape EntityType="DBModel.Donation" Width="1.5" PointX="5.75" PointY="9.75" />
+        <EntityTypeShape EntityType="DBModel.Event" Width="1.5" PointX="13.125" PointY="8.5" />
+        <EntityTypeShape EntityType="DBModel.Merchandise" Width="1.5" PointX="2.25" PointY="5.25" />
+        <EntityTypeShape EntityType="DBModel.Report" Width="1.5" PointX="10.75" PointY="5" />
+        <EntityTypeShape EntityType="DBModel.User" Width="1.5" PointX="8.25" PointY="4.875" />
+        <EntityTypeShape EntityType="DBModel.UserMerchandise" Width="1.5" PointX="5.625" PointY="4.875" />
+        <EntityTypeShape EntityType="DBModel.UserEvent" Width="1.5" PointX="10.625" PointY="8.125" />
         <AssociationConnector Association="DBModel.FK_Donation_Event" />
         <AssociationConnector Association="DBModel.FK_Donation_User" />
         <AssociationConnector Association="DBModel.FK_Event_User" />

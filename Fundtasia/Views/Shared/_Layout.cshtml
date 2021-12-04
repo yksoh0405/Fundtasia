@@ -19,6 +19,7 @@
     <link href="~/Content/xsIcon.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/responsive.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/style.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
     <script src="https://kit.fontawesome.com/d57fff88a0.js" crossorigin="anonymous"></script>
 
@@ -61,21 +62,33 @@
                                     }
                                     else
                                     {
-                                        User userSession = (User)Session["UserSession"];
-                                        if (String.Equals(userSession.Role, "User"))
+                                        try
                                         {
-                                            <li>@Html.ActionLink(userSession.FirstName, "ViewProfile", "UserAuth", new { user = userSession.Id })</li>
-                                        }
-                                        else
-                                        {
-                                            <li>@Html.ActionLink("Dashboard", "Dashboard", "Admin")</li>
-                                        }
-                                        <li>
-                                            @using (Html.BeginForm("Logout", "UserAuth", FormMethod.Post, new { id = "logoutForm" }))
+                                            User userSession = (User)Session["UserSession"];
+                                            if (String.Equals(userSession.Role, "User"))
                                             {
-                                                <a href="javascript:document.getElementById('logoutForm').submit()">Log Out</a>
+                                                <li>@Html.ActionLink(userSession.FirstName, "ViewProfile", "UserAuth", new { user = userSession.Id })</li>
                                             }
-                                        </li>
+                                            else
+                                            {
+                                                <li>@Html.ActionLink("Dashboard", "Dashboard", "Admin")</li>
+                                            }
+                                            <li>
+                                                @using (Html.BeginForm("Logout", "UserAuth", FormMethod.Post, new { id = "logoutForm" }))
+                                                {
+                                                    <a href="javascript:document.getElementById('logoutForm').submit()">Log Out</a>
+                                                }
+                                            </li>
+                                        }
+                                        catch (Exception)
+                                        {
+                                            FormsAuthentication.SignOut();
+                                            Session["UserSession"] = null;
+                                            <li>@Html.ActionLink("Sign Up", "SignUp", "UserAuth")</li>
+                                            <li>@Html.ActionLink("Log In", "LogIn", "UserAuth")</li>
+                                            <li>@Html.ActionLink("Forgot Password", "ForgotPassword", "UserAuth")</li>
+                                        }
+
                                     }
 
                                 </ul>
