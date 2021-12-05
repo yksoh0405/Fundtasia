@@ -17,7 +17,6 @@ namespace Fundtasia.Models
     {
         public string Id { get; set; }
         public int View { get; set; }
-        public int Likes { get; set; }
         public System.DateTime CreatedDate { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Title required")]

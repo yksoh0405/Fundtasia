@@ -18,14 +18,13 @@ namespace Fundtasia.Models
         public Event()
         {
             this.Donations = new HashSet<Donation>();
-            this.UserEvents = new HashSet<UserEvent>();
+            this.Users = new HashSet<User>();
         }
     
         public string Id { get; set; }
         public System.Guid UserId { get; set; }
         public string Title { get; set; }
         public int View { get; set; }
-        public int Likes { get; set; }
         public string CoverImage { get; set; }
         public decimal Target { get; set; }
         public string YouTubeLink { get; set; }
@@ -36,6 +35,6 @@ namespace Fundtasia.Models
         public virtual ICollection<Donation> Donations { get; set; }
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserEvent> UserEvents { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

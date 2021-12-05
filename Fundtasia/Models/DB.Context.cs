@@ -31,6 +31,5 @@ namespace Fundtasia.Models
         public virtual DbSet<Report> Reports { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserMerchandise> UserMerchandises { get; set; }
-        public virtual DbSet<UserEvent> UserEvents { get; set; }
     }
 }

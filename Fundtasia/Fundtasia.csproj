@@ -295,9 +295,6 @@
     <Compile Include="Models\User.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UserEvent.cs">
-      <DependentUpon>DB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UserMerchandise.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>

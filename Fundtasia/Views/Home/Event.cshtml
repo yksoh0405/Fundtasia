@@ -17,46 +17,46 @@
 <div class="row">
     @foreach (var s in Model)
     {
-    <div class="col-lg-6 col-md-6">
-        <div class="post">
-            <div class="post-media post-image">
-                <a href="@Url.Action("EventDetail", "Home", new { id = s.Id })"><img src="~/Images/Uploads/Event/@s.CoverImage" class="img-fluid w-100" /></a>
-            </div>
-            <div class="post-body">
-                <div class="post-meta">
-                    <span class="post-author">BY @s.User.FirstName @s.User.LastName</span>
-                    <div class="post-meta-date">
-                        <span class="day">@s.CreatedDate.Day</span>
-                        <span class="month">@s.CreatedDate.ToString("MMMM")</span>
-                        <span class="year">@s.CreatedDate.Year</span>
-                    </div>
+        <div class="col-lg-6 col-md-6">
+            <div class="post">
+                <div class="post-media post-image">
+                    <a href="@Url.Action("EventDetail", "Home", new { id = s.Id })"><img src="~/Images/Uploads/Event/@s.CoverImage" class="img-fluid w-100" /></a>
                 </div>
-                <div class="entry-header">
-                    <div class="entry-title">
-                        <h2>
-                            <a href="@Url.Action("EventDetail", "Home", new { id = s.Id })">@s.Title</a>
-                        </h2>
-                    </div>
-                </div>
-                <div class="entry-content">
-                    <p>@Html.Raw(s.Article.Substring(0, s.Article.IndexOf("."))).</p>
-                </div>
-                <div class="post-footer">
-                    <div class="row">
-                        <div class="col">
-                            <a href="@Url.Action("EventDetail", "Home", new { id = s.Id })" class="btn-link">Read More <i class="fa fa-arrow-right"></i></a>
-                        </div>
-                        <div class="col">
-                            <i class="fas fa-eye"></i> @s.View
-                        </div>
-                        <div class="col">
-                            <i class="fas fa-thumbs-up"></i> @s.Likes
+                <div class="post-body">
+                    <div class="post-meta">
+                        <span class="post-author">BY @s.User.FirstName @s.User.LastName</span>
+                        <div class="post-meta-date">
+                            <span class="day">@s.CreatedDate.Day</span>
+                            <span class="month">@s.CreatedDate.ToString("MMMM")</span>
+                            <span class="year">@s.CreatedDate.Year</span>
                         </div>
                     </div>
-                    
+                    <div class="entry-header">
+                        <div class="entry-title">
+                            <h2>
+                                <a href="@Url.Action("EventDetail", "Home", new { id = s.Id })">@s.Title</a>
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="entry-content">
+                        <p>@Html.Raw(s.Article.Substring(0, s.Article.IndexOf("."))).</p>
+                    </div>
+                    <div class="post-footer">
+                        <div class="row">
+                            <div class="col">
+                                <a href="@Url.Action("EventDetail", "Home", new { id = s.Id })" class="btn-link">Read More <i class="fa fa-arrow-right"></i></a>
+                            </div>
+                            <div class="col">
+                                <i class="fas fa-eye"></i> @s.View
+                            </div>
+                            <div class="col">
+                                <i class="fas fa-thumbs-up"></i> @s.UserEvents.Where(e => e.EventId.Contains(s.Id)).Count()
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     }
 </div>

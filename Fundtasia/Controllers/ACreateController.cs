@@ -139,7 +139,6 @@ namespace Fundtasia.Controllers
                     UserId = model.UserId,
                     Title = model.Title,
                     View = 0,
-                    Likes = 0,
                     CoverImage = SaveEventPhoto(model.CoverImage),
                     Target = model.Target,
                     YouTubeLink = model.YouTubeLink,
