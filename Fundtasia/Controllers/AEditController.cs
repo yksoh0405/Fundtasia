@@ -88,7 +88,7 @@ namespace Fundtasia.Controllers
         public ActionResult EditEvent(string id)
         {
             var m = db.Events.Find(id);
-            if(m == null)
+            if (m == null)
             {
                 return RedirectToAction("Event", "AList");
             }
