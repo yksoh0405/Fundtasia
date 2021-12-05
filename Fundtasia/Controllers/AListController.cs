@@ -108,7 +108,7 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
-        public ActionResult Merchandise(string sort, string sortdir)
+        public ActionResult Merchandise(string sort = "Name", string sortdir = "ASC", string keyword = "", int page = 1)
         {
             if (!Request.IsAuthenticated)
             {
@@ -124,17 +124,36 @@ namespace Fundtasia.Controllers
                 }
             }
 
+            keyword = keyword.Trim();
+
             Func<Merchandise, object> fn = m => m.Id;
-            switch(sort)
+            switch (sort)
             {
                 case "Id": fn = m => m.Id; break;
                 case "Name": fn = m => m.Name; break;
                 case "Price": fn = m => m.Price; break;
             }
 
-            var model = sortdir == "DESC" ?
-                db.Merchandises.OrderByDescending(fn) :
-                db.Merchandises.OrderBy(fn);
+            var sorted = sortdir == "DESC" ? db.Merchandises.Where(s => s.Name.Contains(keyword)).OrderByDescending(fn) : db.Merchandises.Where(s => s.Name.Contains(keyword)).OrderBy(fn);
+
+            if (page < 1)
+            {
+                return RedirectToAction(null, new { page = 1 });
+            }
+
+            var model = sorted.ToPagedList(page, 10);
+
+            if (model == null)
+            {
+                return View();
+            }
+
+            if (page > model.PageCount)
+            {
+                return RedirectToAction(null, new { page = model.PageCount });
+            }
+
+            if (Request.IsAjaxRequest()) return PartialView("_Merchandise", model);
 
             return View(model);
         }

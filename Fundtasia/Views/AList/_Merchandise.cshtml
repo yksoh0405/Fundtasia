@@ -1,0 +1,55 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model IPagedList<Merchandise>
+
+<link href="~/Content/merchandiseAdmin.css" rel="stylesheet" />
+
+@{
+    var ao = new AjaxOptions
+    {
+        UpdateTargetId = "target",
+        LoadingElementId = "loader",
+        OnSuccess = "highlight"
+    };
+
+    string[] fields = { "Id", "Name", "Price" };
+    string sort = Request.Params["sort"];
+    string sortdir = Request.Params["sortdir"];
+    string keyword = Request.Params["keyword"];
+}
+
+
+<h4><b>Sort By: </b></h4>
+
+@foreach (var f in fields)
+{
+    string d = "ASC";
+    string c = "";
+
+    if (f == sort)
+    {
+        d = sortdir == "DESC" ? "ASC" : "DESC";
+        c = sortdir;
+    }
+
+    @Ajax.ActionLink(f, null, new { sort = f, sortdir = d }, ao, new { @class = "create-btn btn" })
+}
+
+<div class="container">
+    <div class="row">
+        @foreach (var m in Model)
+        {
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card text-center">
+                    <img src="~/Images/Uploads/Merchandise/@m.Image" style="height: 400px" />
+                    <div class="card-body">
+                        <h4 style="color: #9B0909">RM @m.Price.00</h4>
+                        <h4 class="card-title mname" style="min-height:50px;">@m.Name</h4>
+                        <button type="button" class="edit-btn" data-get="/AEdit/EditMerchandise/@m.Id">Edit</button>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
