@@ -156,13 +156,12 @@
     <Content Include="Images\Logos\logo-black.png" />
     <Content Include="Images\Logos\logo-white.png" />
     <Content Include="Images\Logos\logo-icon.png" />
-    <Content Include="Images\Uploads\Event\myanmar.jpg" />
-    <Content Include="Images\Uploads\Event\pict_large %283%29.jpg" />
+    <Content Include="Images\Uploads\Event\83d1ea6cdc4c4e7ab333e129964c854c.jpg" />
+    <Content Include="Images\Uploads\Event\b8553108668f49bda9e56dd9aa9d427f.jpg" />
     <Content Include="Images\Uploads\Merchandise\shirt1.jpg" />
     <Content Include="Images\Uploads\Merchandise\shirt2.jpg" />
     <Content Include="Images\Uploads\Merchandise\shirt3.jpg" />
     <Content Include="Images\Uploads\Merchandise\shirt4.jpg" />
-    <Content Include="Images\Uploads\Event\madagascar.jpg" />
     <Content Include="Models\DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DB.edmx</DependentUpon>
