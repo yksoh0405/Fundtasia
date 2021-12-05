@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -132,25 +133,28 @@ namespace Fundtasia.Controllers
         // GET: AEdit
         public ActionResult EditMerchandise(string Id)
         {
-            var model = db.Merchandises.Find(Id);
-            if (model == null)
+            var m = db.Merchandises.Find(Id);
+            if (m == null)
             {
-                return RedirectToAction("Merchandise", "AList");   //no record found
+                return RedirectToAction("Merchandise", "AList");
             }
+
+            var model = new MerchandiseEditVM
+            {
+                Id = m.Id,
+                Name = m.Name,
+                Image = m.Image,
+                Price = m.Price,
+                Status = m.Status
+            };
 
             return View(model);
         }
 
         // POST: AEdit
         [HttpPost]
-        public ActionResult EditMerchandise(Merchandise model)
+        public ActionResult EditMerchandise(MerchandiseEditVM model)
         {
-            var m = db.Merchandises.Find(model.Id);  //find record with id
-
-            if (m == null)
-            {
-                return RedirectToAction("Merchandise", "AList");  //no record found
-            }
 
             if (ModelState.IsValid)
             {
@@ -164,6 +168,61 @@ namespace Fundtasia.Controllers
             }
 
             return View(model);
+
+            // TODO
+            var m = db.Merchandises.Find(model.Id);
+            if (m == null)
+            {
+                return RedirectToAction("Merchandise", "AList");
+            }
+
+            if (model.ImageURL != null)
+            {
+                string err = ValidatePhoto(model.ImageURL);
+                if (err != null)
+                {
+                    ModelState.AddModelError("Photo", err);
+                }
+            }
+
+            if (ModelState.IsValid)
+            {
+                m.Name = model.Name;
+                m.Email = model.Email;
+
+                if (model.Photo != null)
+                {
+                    DeletePhoto(m.PhotoURL);
+                    m.PhotoURL = SavePhoto(model.Photo);
+                }
+
+                db.SaveChanges();
+                TempData["Info"] = "Merchandise edited";
+                return RedirectToAction("Merchandise", "AList");
+            }
+            model.Image = m.Image;
+            return View(model);
+        }
+
+        private string ValidatePhoto(HttpPostedFileBase f)
+        {
+            var reType = new Regex(@"^image\/(jpeg|png)$", RegexOptions.IgnoreCase);
+            var reName = new Regex(@"^.+\.(jpg|jpeg|png)$", RegexOptions.IgnoreCase);
+
+            if (f == null)
+            {
+                return "No image inserted";
+            }
+            else if (!reType.IsMatch(f.ContentType) || !reName.IsMatch(f.FileName))
+            {
+                return "Only JPG or PNG image is allowed";
+            }
+            else if (f.ContentLength > 1 * 1024 * 1024)
+            {
+                // nmb = n * 1024 * 1024
+                return "Image size exceeded 1Mb";
+            }
+            return null;
         }
     }
 }

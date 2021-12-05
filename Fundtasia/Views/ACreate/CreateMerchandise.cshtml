@@ -1,4 +1,4 @@
-﻿@model MerchandiseCreate
+﻿@model MerchandiseInsertVM
 
 @{
     ViewBag.Title = "Add Merchandise";
@@ -13,9 +13,8 @@
     <title>Create Merchandise</title>
 </head>
 <body>
-    <div class="card">
-        <div class="card-body">
-            <form action="" method="post">
+
+            <form action="" method="post" enctype = "multipart/form-data">
                 @Html.ValidationSummary(true)
 
                 <div class="form-group">
@@ -44,10 +43,11 @@
                 <div class="form-group">
                     <label class="upload">
                         Image:
-                        @Html.TextBoxFor(m => m.ImagePic, new { type = "file", accept = "image/jpeg,image/png", hidden = "" })
-                        <img src="~/Images/Uploads/Merchandise/preview.jpg" />
+                        <br />
+                        @Html.TextBoxFor(m => m.ImageURL, new { type = "file", accept = "image/jpeg,image/png" })
+                        <img src="~/Images/Uploads/Merchandise/preview.jpg" id="uploadPreview"/>
                     </label>
-                    @Html.ValidationMessageFor(m => m.ImagePic)
+                    @Html.ValidationMessageFor(m => m.ImageURL)
                 </div>
 
                 <br />
@@ -56,17 +56,14 @@
                     <button type="reset" class="create-btn">Reset</button>
                 </section>
             </form>
-        </div>
-    </div>
+    <br />
+    <br />
+
 </body>
 </html>
 
 @section foot {
     <script>
-        $.validator.setDefaults({
-            ignore: ''
-        });
-
         function validatePhoto(f) {
             let reType = /^image\/(jpeg|png)$/i;
             let reName = /^.+\.(jpg|jpeg|png)$/i;
@@ -81,7 +78,7 @@
 
         $('.upload input').change(e => {
             let f = e.target.files[0];
-            let img = $(e.target).siblings('img')[0];
+            let img = $(e.target).siblings('#uploadPreview')[0];
 
             if (!src) src = img.src;
 
