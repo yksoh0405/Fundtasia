@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace Fundtasia.Controllers
@@ -155,20 +156,6 @@ namespace Fundtasia.Controllers
         [HttpPost]
         public ActionResult EditMerchandise(MerchandiseEditVM model)
         {
-
-            if (ModelState.IsValid)
-            {
-                m.Name = model.Name;
-                m.Price = model.Price;
-                m.Status = model.Status;
-                db.SaveChanges();
-
-                TempData["Info"] = "Merchandise edited.";
-                return RedirectToAction("Merchandise", "AList");
-            }
-
-            return View(model);
-
             // TODO
             var m = db.Merchandises.Find(model.Id);
             if (m == null)
@@ -188,19 +175,22 @@ namespace Fundtasia.Controllers
             if (ModelState.IsValid)
             {
                 m.Name = model.Name;
-                m.Email = model.Email;
+                m.Price = model.Price;
+                m.Status = model.Status;
 
-                if (model.Photo != null)
+                if (model.ImageURL != null)
                 {
-                    DeletePhoto(m.PhotoURL);
-                    m.PhotoURL = SavePhoto(model.Photo);
+                    DeleteMerchandisePhoto(m.Image);
+                    m.Image = SaveMerchandisePhoto(model.ImageURL);
                 }
 
                 db.SaveChanges();
                 TempData["Info"] = "Merchandise edited";
                 return RedirectToAction("Merchandise", "AList");
             }
+
             model.Image = m.Image;
+
             return View(model);
         }
 
@@ -223,6 +213,28 @@ namespace Fundtasia.Controllers
                 return "Image size exceeded 1Mb";
             }
             return null;
+        }
+
+        private string SaveMerchandisePhoto(HttpPostedFileBase f)
+        {
+            //Generate Unique Id
+            //Save the image in the format of .jpg
+            string name = Guid.NewGuid().ToString("n") + ".jpg";
+            string path = Server.MapPath($"~/Images/Uploads/Merchandise/{name}");
+
+            //Image resizing
+            var img = new WebImage(f.InputStream);
+
+            img.Resize(296, 295).Crop(1, 1).Save(path, "jpeg");
+
+            return name;
+        }
+
+        private void DeleteMerchandisePhoto(string name)
+        {
+            name = System.IO.Path.GetFileName(name);
+            string path = Server.MapPath($"~/Images/Uploads/Merchandise/{name}");
+            System.IO.File.Delete(path);
         }
     }
 }
