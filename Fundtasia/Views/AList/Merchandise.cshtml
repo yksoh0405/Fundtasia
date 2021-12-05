@@ -1,55 +1,33 @@
 ﻿@{
     ViewBag.Title = "Admin Merchandise";
 
-    string[] fields = { "Id", "Name", "Price" };
-    string sort = Request.Params["sort"];
-    string sortdir = Request.Params["sortdir"];
 }
 
-<!DOCTYPE html>
 <link href="~/Content/merchandiseAdmin.css" rel="stylesheet" />
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Merchandise</title>
-</head>
-<body>
-    <div class="target">
-        <h4><b>Sort By: </b></h4>
+<div id="target">
+    @Html.Partial("_Merchandise")
+</div>
 
-        @foreach (var f in fields)
-        {
-            string d = "ASC";
-            string c = "";
+@section foot{
+    <script>
+        let timer = null;
+        $('#keyword').on('input', e => {
+            clearTimeout(timer);
+            timer = setTimeout(() => $(e.target).submit(), 500);
+        });
 
-            if (f == sort)
-            {
-                d = sortdir == "DESC" ? "ASC" : "DESC";
-                c = sortdir;
-            }
+        function highlight() {
+            let keyword = $('#keyword').val().trim();
 
-            <a href="?sort=@f&sortdir=@d"><button class="create-btn"> @f </button></a>
+            if (!keyword) return;
+
+            let re = new RegExp(escapeRegExp(keyword), 'gi');
+
+            $('.mname').each((i, el) => {
+                let html = $(el).html().replace(re, '<mark style="background-color: #ffb5ae;">$&</mark>');
+                $(el).html(html);
+            });
         }
-
-        <div class="container">
-            <div class="row">
-                @foreach (var m in Model)
-                {
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <div class="card text-center">
-                            <img src="~/Images/Uploads/Merchandise/@m.Image" style="height: 400px"/>
-                            <div class="card-body">
-                                <h4 style="color: #9B0909">RM @m.Price.00</h4>
-                                <h4 class="card-title" style="min-height:50px;">@m.Name</h4>
-                                <button type="button" class="edit-btn" data-get="/AEdit/EditMerchandise/@m.Id">Edit</button>
-                            </div>
-                        </div>
-                    </div>
-                }
-
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+    </script>
+}

@@ -13,15 +13,14 @@
     <title>Edit Merchandise</title>
 </head>
 <body>
-    <div class="card">
-        <div class="card-body">
+
             <form action="" method="post" enctype = "multipart/form-data">
                 @Html.ValidationSummary(true)
 
                 <div class="form-group">
                     <label>ID:</label>
                     <fieldset disabled>
-                        @Html.TextBoxFor(m => m.Id, new { maxlength = "4", data_upper = "", autofocus = "", @class = "form-control" })
+                        @Html.TextBoxFor(m => m.Id, new { maxlength = "4", data_upper = "", autofocus = "", @class = "form-control", @readonly = "" })
                     </fieldset>
                 </div>
 
@@ -50,11 +49,11 @@
 
                 <div class="form-group">
                     <label class="upload">
-                        Image:
-                        @Html.TextBoxFor(m => m.ImageURL, new { type = "file", accept = "image/jpeg,image/png" })
-                        <img src="~/Images/Uploads/Merchandise/preview.jpg" id="uploadPreview" />
+                        Image (Press Below to add Image) :
+                        @Html.TextBoxFor(m => m.Image, new { type = "file", accept = "image/jpeg,image/png", hidden = ""})
+                        <img src="~/Images/Uploads/Merchandise/@Model.ImageURL" id="uploadPreview" />
                     </label>
-                    @Html.ValidationMessageFor(m => m.ImageURL)
+                    @Html.ValidationMessageFor(m => m.Image)
                 </div>
 
                 <br />
@@ -63,8 +62,9 @@
                     <button type="reset" class="create-btn">Reset</button>
                 </section>
             </form>
-        </div>
-    </div>
+    <br />
+    <br />
+
 </body>
 </html>
 

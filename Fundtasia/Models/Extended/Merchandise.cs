@@ -51,10 +51,9 @@ namespace Fundtasia.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "Merchandise Name is required")]
         public string Name { get; set; }
 
-        [Required]
-        public HttpPostedFileBase ImageURL { get; set; }
+        public HttpPostedFileBase Image { get; set; }
 
-        public string Image { get; set; }
+        public string ImageURL { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Merchandise Price is required")]
         public decimal Price { get; set; }

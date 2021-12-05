@@ -158,7 +158,7 @@ namespace Fundtasia.Controllers
             {
                 Id = m.Id,
                 Name = m.Name,
-                Image = m.Image,
+                ImageURL = m.Image,
                 Price = m.Price,
                 Status = m.Status
             };
@@ -170,36 +170,41 @@ namespace Fundtasia.Controllers
         [HttpPost]
         public ActionResult EditMerchandise(MerchandiseEditVM model)
         {
+            // TODO
             var m = db.Merchandises.Find(model.Id);
             if (m == null)
             {
                 return RedirectToAction("Merchandise", "AList");
             }
 
-            if (model.ImageURL != null)
+            if (model.Image != null)
             {
-                string err = ValidatePhoto(model.ImageURL);
+                string err = ValidatePhoto(model.Image);
                 if (err != null)
                 {
-                    ModelState.AddModelError("ImageURL", err);
+                    ModelState.AddModelError("Image", err);
                 }
             }
 
             if (ModelState.IsValid)
             {
                 m.Name = model.Name;
+                m.Price = model.Price;
+                m.Status = model.Status;
 
-                if (model.ImageURL != null)
+                if (model.Image != null)
                 {
                     DeleteMerchandisePhoto(m.Image);
-                    m.Image = SaveMerchandisePhoto(model.ImageURL);
+                    m.Image = SaveMerchandisePhoto(model.Image);
                 }
 
                 db.SaveChanges();
                 TempData["Info"] = "Merchandise edited";
                 return RedirectToAction("Merchandise", "AList");
             }
-            model.Image = m.Image;
+
+            model.ImageURL = m.Image;
+
             return View(model);
         }
 
