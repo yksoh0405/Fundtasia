@@ -68,12 +68,13 @@ namespace Fundtasia.Models
 
     public class EventEditVM
     {
+        public string Id { get; set; }
+
         [Required(AllowEmptyStrings = false, ErrorMessage = "Title required")]
         [StringLength(250)]
         public string Title { get; set; }
 
         [Display(Name = "Cover Image")]
-        [Required]
         public HttpPostedFileBase CoverImage { get; set; }
 
         public string ImageURL { get; set; }

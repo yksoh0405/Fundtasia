@@ -1,16 +1,10 @@
 ﻿@model Event
 @{
     ViewBag.Title = "Event Detail";
-}
-
-@section head{
-    <style>
-        #owl-demo .item img {
-            display: block;
-            width: 100%;
-            height: auto;
-        }
-    </style>
+    var ao = new AjaxOptions
+    {
+        UpdateTargetId = "target"
+    };
 }
 
 <div class="row">
@@ -32,10 +26,53 @@
 <!-- Target Progress Bar -->
 <div class="row">
     <div class="col-lg-12 mx-auto mt-5">
-        <h3>Target: RM @Model.Target</h3>
+        <div class="row">
+            <div class="col">
+                <h3>Target: RM @Model.Target</h3>
+            </div>
+            <div class="col">
+                <i class="fas fa-eye"></i> @Model.View
+            </div>
+            <div class="col">
+                <i class="fas fa-thumbs-up"></i> @Model.Likes
+            </div>
+        </div>
         <div class="progress">
-
+            @{
+                //TODO - Get sum of the donation
+                //ViewBag.TotalDonation
+            }
             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;"></div>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-12 mx-auto mt-5" id="target">
+    <div class="row">
+        <div class="col">
+            <h4>
+                @{
+                    //TODO - Get count of the user and event
+                    //ViewBag.UserEvent
+                }
+                123 People has
+                <i class="far fa-thumbs-up"></i>
+                this article
+            </h4>
+        </div>
+        <div class="col">
+            @if (!Request.IsAuthenticated)
+            {
+                <a href="#popup" class="view-speaker ts-image-popup" data-effect="mfp-zoom-in">
+                    <i class="far fa-thumbs-up"></i> Like
+                </a>
+            }
+            else
+            {
+                <a href="@Url.Action("EventDetail", "Home", new { id = Model.Id })" class="view-speaker ts-image-popup" data-effect="mfp-zoom-in">
+                    <i class="far fa-thumbs-up"></i> Like
+                </a>
+            }
         </div>
     </div>
 </div>
@@ -47,19 +84,16 @@
     </div>
 </div>
 
-@section foot{
-    <script>
-        $(document).ready(function () {
-
-            $("#owl-demo").owlCarousel({
-
-                navigation: true,
-                slideSpeed: 300,
-                paginationSpeed: 400,
-                singleItem: true
-
-            });
-
-        });
-    </script>
+@* If user is not login account *@
+@if (!Request.IsAuthenticated)
+{
+    <div id="popup" class="container ts-speaker-popup mfp-hide">
+        <div class="p-5">
+            <h3 class="text-center">Seems like you havent login your account yet</h3>
+            <div class="mx-auto">
+                @Html.ActionLink("Sign Up", "SignUp", "UserAuth", null, new { @class = "btn" })
+                @Html.ActionLink("Log In", "LogIn", "UserAuth", null, new { @class = "btn" })
+            </div>
+        </div>
+    </div>
 }

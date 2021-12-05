@@ -88,7 +88,7 @@ namespace Fundtasia.Controllers
         public ActionResult EditEvent(string id)
         {
             var m = db.Events.Find(id);
-            if(m == null)
+            if (m == null)
             {
                 return RedirectToAction("Event", "AList");
             }
@@ -106,12 +106,21 @@ namespace Fundtasia.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditEvent(Event model)
+        public ActionResult EditEvent(EventEditVM model)
         {
             var m = db.Events.Find(model.Id);
             if (m == null)
             {
                 return RedirectToAction("Event", "AList");  //No record found
+            }
+
+            if (model.CoverImage != null)
+            {
+                string err = ValidatePhoto(model.CoverImage);
+                if (err != null)
+                {
+                    ModelState.AddModelError("CoverImage", err);
+                }
             }
 
             if (ModelState.IsValid)
@@ -121,12 +130,17 @@ namespace Fundtasia.Controllers
                 model.YouTubeLink = model.YouTubeLink.Substring(startIndex);
 
                 m.Title = model.Title;
-                m.CoverImage = model.CoverImage;
+                if (model.CoverImage != null)
+                {
+                    DeleteEventPhoto(m.CoverImage);
+                    m.CoverImage = SaveEventPhoto(model.CoverImage);
+                }
                 m.YouTubeLink = model.YouTubeLink;
                 m.Article = model.Article;
                 db.SaveChanges();
+                return RedirectToAction("Event", "AList");
             }
-
+            model.ImageURL = m.CoverImage;
             return View(model);
         }
 
@@ -156,7 +170,6 @@ namespace Fundtasia.Controllers
         [HttpPost]
         public ActionResult EditMerchandise(MerchandiseEditVM model)
         {
-            // TODO
             var m = db.Merchandises.Find(model.Id);
             if (m == null)
             {
@@ -168,15 +181,13 @@ namespace Fundtasia.Controllers
                 string err = ValidatePhoto(model.ImageURL);
                 if (err != null)
                 {
-                    ModelState.AddModelError("Photo", err);
+                    ModelState.AddModelError("ImageURL", err);
                 }
             }
 
             if (ModelState.IsValid)
             {
                 m.Name = model.Name;
-                m.Price = model.Price;
-                m.Status = model.Status;
 
                 if (model.ImageURL != null)
                 {
@@ -188,9 +199,7 @@ namespace Fundtasia.Controllers
                 TempData["Info"] = "Merchandise edited";
                 return RedirectToAction("Merchandise", "AList");
             }
-
             model.Image = m.Image;
-
             return View(model);
         }
 
@@ -215,6 +224,21 @@ namespace Fundtasia.Controllers
             return null;
         }
 
+        private string SaveEventPhoto(HttpPostedFileBase f)
+        {
+            //Generate Unique Id
+            //Save the image in the format of .jpg
+            string name = Guid.NewGuid().ToString("n") + ".jpg";
+            string path = Server.MapPath($"~/Images/Uploads/Event/{name}");
+
+            //Image resizing
+            var img = new WebImage(f.InputStream);
+
+            img.Resize(513, 316).Crop(1, 1).Save(path, "jpeg");
+
+            return name;
+        }
+
         private string SaveMerchandisePhoto(HttpPostedFileBase f)
         {
             //Generate Unique Id
@@ -228,6 +252,13 @@ namespace Fundtasia.Controllers
             img.Resize(296, 295).Crop(1, 1).Save(path, "jpeg");
 
             return name;
+        }
+
+        private void DeleteEventPhoto(string name)
+        {
+            name = System.IO.Path.GetFileName(name);
+            string path = Server.MapPath($"~/Images/Uploads/Event/{name}");
+            System.IO.File.Delete(path);
         }
 
         private void DeleteMerchandisePhoto(string name)

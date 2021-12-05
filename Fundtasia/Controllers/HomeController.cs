@@ -109,7 +109,8 @@ namespace Fundtasia.Controllers
                 return RedirectToAction("Event", "Home");
             }
             var model = db.Events.Find(id);
-
+            model.View = model.View + 1;
+            db.SaveChanges();
             return View(model);
         }
     }
