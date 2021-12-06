@@ -16,17 +16,26 @@ namespace Fundtasia.Controllers
         // Edit Staff
         public ActionResult EditStaff(Guid Id)
         {
-            var model = db.Users.Find(Id);
-            if (model == null)
+            var m = db.Users.Find(Id);
+            if (m == null)
             {
                 return RedirectToAction("Staff", "AList");
             }
+
+            var model = new UserEditVM
+            {
+                LastName = m.LastName,
+                FirstName = m.FirstName,
+                Email = m.Email,
+                Role = m.Role,
+                Status = m.Status
+            };
 
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult EditStaff(User model)
+        public ActionResult EditStaff(UserEditVM model)
         {
             var s = db.Users.Find(model.Id);
 
@@ -52,17 +61,25 @@ namespace Fundtasia.Controllers
         // Edit Client
         public ActionResult EditClientUser(Guid Id)
         {
-            var model = db.Users.Find(Id);
-            if (model == null)
+            var m = db.Users.Find(Id);
+            if (m == null)
             {
                 return RedirectToAction("ClientUser", "AList");
             }
+
+            var model = new ClientUserEditVM
+            {
+                LastName = m.LastName,
+                FirstName = m.FirstName,
+                Email = m.Email,
+                Status = m.Status
+            };
 
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult EditClientUser(User model)
+        public ActionResult EditClientUser(ClientUserEditVM model)
         {
             var cu = db.Users.Find(model.Id);
 

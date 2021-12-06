@@ -1,4 +1,4 @@
-﻿@model User
+﻿@model ClientUserEditVM
 
 @{
     ViewBag.Title = "Edit Client User";
@@ -26,7 +26,8 @@
         <div class="form-group">
             <label>Status: </label>
             <div>
-                <button></button>
+                <label id="userStatus">@Html.RadioButtonFor(s => s.Status, "Active") Active </label>
+                <label>@Html.RadioButtonFor(s => s.Status, "Inactive") Inactive </label>
             </div>
         </div>
 

@@ -342,6 +342,7 @@
     <Content Include="Views\AList\_Event.cshtml" />
     <Content Include="Views\AList\_Report.cshtml" />
     <Content Include="Views\AList\_Merchandise.cshtml" />
+    <Content Include="Views\ACreate\CreateClientUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,14 +1,14 @@
 ﻿@model User
 
 @{
-    ViewBag.Title = "Create Staff";
+    ViewBag.Title = "Create Client User";
 }
 
 <link href="~/Content/UserList.css" rel="stylesheet" />
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "createStaff" }))
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "createClientUser" }))
 {
-    <div id="createStaffForm">
+    <div id="createClientUserForm">
         <div class="form-group">
             <label>Last Name: </label>
             @Html.TextBoxFor(s => s.LastName, new { maxlength = "50", data_upper = "", autofocus = "", @class = "form-control" })
@@ -34,14 +34,14 @@
         </div>
 
         <div class="form-group">
-            <label>Role: </label>
+            <label>Email auto verified? </label>
             <div>
-                <label id="staffRole">@Html.RadioButtonFor(s => s.Role, "Admin") Admin </label>
-                <label>@Html.RadioButtonFor(s => s.Role, "Staff", new { @checked = true }) Staff </label>
+                <label id="emailVerification">@Html.RadioButtonFor(s => s.IsEmailVerified, "true", new { @checked = true }) Yes </label>
+                <label>@Html.RadioButtonFor(s => s.IsEmailVerified, "false") No </label>
             </div>
         </div>
 
-        <div id="createStaffBtn">
+        <div id="createClientUserBtn">
             <button class="create-btn">Create</button>&nbsp;&nbsp;&nbsp;
             <button type="reset" class="reset-btn">Reset</button>
         </div>

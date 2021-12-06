@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Helpers;
@@ -49,8 +51,28 @@ namespace Fundtasia.Controllers
                     return RedirectToAction("Index", "Home");
                 }
             }
+
             if (ModelState.IsValid)
             {
+                // Check email exist
+                var isExist = IsEmailExist(model.Email);
+                if (isExist)
+                {
+                    ModelState.AddModelError("EmailExist", "Email Already Exist");
+                    return View(model);
+                }
+
+                // Password hash
+                model.PasswordHash = Crypto.Hash(model.PasswordHash);
+
+                // Activation Code
+                model.ActivationCode = Guid.NewGuid();
+
+                // Bind data
+                model.Id = Guid.NewGuid();
+                model.IsEmailVerified = true;
+                model.Status = "Active";
+
                 db.Users.Add(model);
                 db.SaveChanges();
 
@@ -60,7 +82,7 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
-        public ActionResult CreateUser()
+        public ActionResult CreateClientUser()
         {
             if (!Request.IsAuthenticated)
             {
@@ -76,6 +98,58 @@ namespace Fundtasia.Controllers
                 }
             }
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateClientUser(User model)
+        {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (Session["UserSession"] != null)
+            {
+                User loginUser = (User)Session["UserSession"];
+                if (String.Equals(loginUser.Role, "User"))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
+            if (ModelState.IsValid)
+            {
+                // Check email exist
+                var isExist = IsEmailExist(model.Email);
+                if (isExist)
+                {
+                    ModelState.AddModelError("EmailExist", "Email Already Exist");
+                    return View(model);
+                }
+
+                // Password hash
+                model.PasswordHash = Crypto.Hash(model.PasswordHash);
+
+                // Activation Code
+                model.ActivationCode = Guid.NewGuid();
+
+                // Bind data
+                model.Id = Guid.NewGuid();
+                model.Role = "User";
+                model.Status = "Active";
+
+                db.Users.Add(model);
+                db.SaveChanges();
+
+                if (!model.IsEmailVerified)
+                {
+                    SendVerificaionLinkEmail(model.Email, model.ActivationCode.ToString());
+                }
+
+                return RedirectToAction("ClientUser", "AList");
+            }
+
+            return View(model);
         }
 
         //Create Event Action
@@ -280,6 +354,56 @@ namespace Fundtasia.Controllers
             img.Resize(296, 295).Crop(1, 1).Save(path, "jpeg");
 
             return name;
+        }
+
+
+        [NonAction]
+        public bool IsEmailExist(string email)
+        {
+            //Bring DB to find the existing email
+            using (db)
+            {
+                //FirstOrDefault() only return one record
+                var v = db.Users.Where(s => s.Email == email).FirstOrDefault();
+                return v != null;
+            }
+        }
+
+        [NonAction]
+        public void SendVerificaionLinkEmail(string email, string activationCode)
+        {
+            //URL to activate code
+            var verifyURL = "/UserAuth/VerifyAccount/" + activationCode;
+            var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyURL);
+
+            //Sender and receiver
+            var fromEmail = new MailAddress("fundtasia1101@gmail.com", "Fundtasia Admin");
+            var toEmail = new MailAddress(email);
+            var fromEmailPassword = "lkwefecbllzpgmea"; // Replace with actual password (This password only can be use in Windows computer)
+            string subject = "Fundtasia(Successfull to create an account)";
+
+            string body = "<br><br>" +
+                "<p>We are glad to tell you that your Fundtasia account is successfully created. Please click on the below link to verify your account</p>" +
+                "<br><br>" +
+                "<a href='" + link + "'>" + link + "</a>";
+
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
+            };
+
+            using (var message = new MailMessage(fromEmail, toEmail)
+            {
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true
+            })
+                smtp.Send(message);
         }
 
     }

@@ -1,4 +1,4 @@
-﻿@model User
+﻿@model UserEditVM
 
 @{
     ViewBag.Title = "Edit Staff";
@@ -11,11 +11,13 @@
         <div class="form-group">
             <label>Last Name: </label>
             @Html.TextBoxFor(s => s.LastName, new { maxlength = "50", data_upper = "", autofocus = "", @class = "form-control" })
+            @Html.ValidationMessageFor(s => s.LastName)
         </div>
 
         <div class="form-group">
             <label>First Name: </label>
             @Html.TextBoxFor(s => s.FirstName, new { maxlength = "50", @class = "form-control" })
+            @Html.ValidationMessageFor(s => s.FirstName)
         </div>
 
         <div class="form-group">
@@ -26,7 +28,8 @@
         <div class="form-group">
             <label>Status: </label>
             <div>
-                
+                <label id="userStatus">@Html.RadioButtonFor(s => s.Status, "Active") Active </label>
+                <label>@Html.RadioButtonFor(s => s.Status, "Inactive") Inactive </label>
             </div>
         </div>
 
@@ -34,7 +37,7 @@
             <label>Role: </label>
             <div>
                 <label id="staffRole">@Html.RadioButtonFor(s => s.Role, "Admin") Admin </label>
-                <label>@Html.RadioButtonFor(s => s.Role, "Staff", new { @checked = true }) Staff </label>
+                <label>@Html.RadioButtonFor(s => s.Role, "Staff") Staff </label>
             </div>
         </div>
 

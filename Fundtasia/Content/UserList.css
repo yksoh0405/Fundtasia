@@ -55,14 +55,14 @@
         color: white;
     }
 
-#createStaffForm, #editStaffForm, #editUserForm {
+#createStaffForm, #createClientUserForm, #editStaffForm, #editUserForm {
     max-width: 40%;
 }
 
-#staffRole {
+#staffRole, #userStatus, #emailVerification {
     padding-right: 30px;
 }
 
-#createStaffBtn, #editStaffBtn, #editUserBtn {
+#createStaffBtn, #createClientUserBtn, #editStaffBtn, #editUserBtn {
     text-align: center;
 }
