@@ -35,18 +35,6 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
-        public ActionResult MerchandisePayment(string id)
-        {
-            var model = db.Merchandises.Find(id);
-
-            if (model == null)
-            {
-                return RedirectToAction("Receipt");
-            }
-
-            return View(model);
-        }
-
         public ActionResult DonationPayment()
         {
             ViewBag.EventList = new SelectList(db.Events, "Id", "Title");
@@ -65,6 +53,24 @@ namespace Fundtasia.Controllers
             }
 
             ViewBag.EventList = new SelectList(db.Donations, "Id", "Title");
+            return View(model);
+        }
+
+        public ActionResult DonationReceipt()
+        {
+            //pass img, price and name from donation payment
+            return View();
+        }
+
+        public ActionResult MerchandisePayment(string id)
+        {
+            var model = db.Merchandises.Find(id);
+
+            if (model == null)
+            {
+                return RedirectToAction("Receipt");
+            }
+
             return View(model);
         }
 
