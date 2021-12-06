@@ -74,13 +74,13 @@ namespace Fundtasia.Controllers
             return View();
         }
 
-        public ActionResult Event(string sort, string sortdir, int page = 1)
+        public ActionResult Event(string sort = "CreatedDate", string sortdir = "DESC", int page = 1)
         {
             Func<Event, object> fn = s => s.Id;
 
             switch (sort)
             {
-                case "CreatedTime": fn = s => s.CreatedDate; break;
+                case "CreatedDate": fn = s => s.CreatedDate; break;
                 case "Title": fn = s => s.Title; break;
                 case "View": fn = s => s.View; break;
             }

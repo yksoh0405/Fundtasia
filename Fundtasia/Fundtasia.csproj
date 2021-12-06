@@ -345,6 +345,10 @@
     <Content Include="Views\AList\_Staff.cshtml" />
     <Content Include="Views\AList\_ClientUser.cshtml" />
     <Content Include="Views\ACreate\CreateClientUser.cshtml" />
+    <Content Include="Views\Admin\ViewProfile.cshtml" />
+    <Content Include="Views\AList\MerchandiseSales.cshtml" />
+    <Content Include="Views\AList\_MerchandiseSales.cshtml" />
+    <Content Include="Views\Admin\ViewMerchandiseSale.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -353,7 +357,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Partial\" />
     <Folder Include="Views\Utils\" />
   </ItemGroup>
   <ItemGroup>
