@@ -335,13 +335,15 @@
     <Content Include="Views\ACreate\CreateStaff.cshtml" />
     <Content Include="Views\AEdit\EditStaff.cshtml" />
     <Content Include="Views\AEdit\EditClientUser.cshtml" />
-    <Content Include="Views\AList\_DonationPartial.cshtml" />
+    <Content Include="Views\AList\_Donation.cshtml" />
     <Content Include="Views\Home\DonationPayment.cshtml" />
     <Content Include="Views\UserAuth\ViewProfile.cshtml" />
     <Content Include="Views\AEdit\EditEvent.cshtml" />
     <Content Include="Views\AList\_Event.cshtml" />
     <Content Include="Views\AList\_Report.cshtml" />
     <Content Include="Views\AList\_Merchandise.cshtml" />
+    <Content Include="Views\AList\_Staff.cshtml" />
+    <Content Include="Views\AList\_ClientUser.cshtml" />
     <Content Include="Views\ACreate\CreateClientUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

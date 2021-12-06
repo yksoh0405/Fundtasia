@@ -21,7 +21,7 @@
 
             let re = new RegExp(escapeRegExp(keyword), 'gi');
 
-            $('td:nth-child(3)').each((i, el) => {
+            $('td:nth-child(2)').each((i, el) => {
                 let html = $(el).html().replace(re, '<mark style="background-color: #ffb5ae;">$&</mark>');
                 $(el).html(html);
             });

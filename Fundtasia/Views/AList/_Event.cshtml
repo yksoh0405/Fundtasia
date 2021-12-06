@@ -41,12 +41,6 @@
             <td><button class="btn btn-success text-white" data-get="/AEdit/EditEvent/@s.Id">Edit</button></td>
         </tr>
     }
-    @if (Model == null)
-    {
-        <tr>
-            <td colspan="5">Theres no result created</td>
-        </tr>
-    }
 </table>
 
 @{
@@ -56,6 +50,7 @@
     po.LinkToPreviousPageFormat = "Previous";
     po.LinkToNextPageFormat = "Next";
 }
+
 <div class="mx-auto">
     @Html.PagedListPager(
         Model,

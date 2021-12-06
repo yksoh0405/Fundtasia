@@ -17,7 +17,7 @@
     <tr>
         @foreach (var f in fields)
         {
-            string d = "DESC";
+            string d = "ASC";
             string c = "";
 
             if (f == sort)
@@ -51,8 +51,10 @@
     po.LinkToNextPageFormat = "Next";
 }
 
-@Html.PagedListPager(
-    Model,
-    p => $"?sort={sort}&sortdir={sortdir}&page={p}",
-    PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(po, ao)
-)
+<div class="mx-auto">
+    @Html.PagedListPager(
+        Model,
+        p => $"?sort={sort}&sortdir={sortdir}&page={p}",
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(po, ao)
+    )
+</div>

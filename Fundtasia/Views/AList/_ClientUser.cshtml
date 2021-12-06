@@ -1,0 +1,62 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model IPagedList<User>
+@{
+    var ao = new AjaxOptions
+    {
+        UpdateTargetId = "target",
+        LoadingElementId = "loader",
+        OnSuccess = "highlight"
+    };
+    string[] fields = { "FirstName", "Last Name", "Verified", "Status", "Last Login Time", "Last Login IP", "Edit" };
+    string sort = Request.Params["sort"];
+    string sortdir = Request.Params["sortdir"];
+    string keyword = Request.Params["keyword"];
+}
+<table class="table text-nowrap">
+    <tr>
+        @foreach (var f in fields)
+        {
+            string d = "ASC";
+            string c = "";
+
+            if (f == sort)
+            {
+                d = sortdir == "DESC" ? "ASC" : "DESC";
+                c = sortdir;
+            }
+
+            <th>
+                @Ajax.ActionLink(f, null, new { sort = f, sortdir = d }, ao, new { @class = c })
+            </th>
+        }
+    </tr>
+    @foreach (var s in Model)
+    {
+        <tr>
+            <td>@s.FirstName</td>
+            <td>@s.LastName</td>
+            <td>@s.IsEmailVerified</td>
+            <td>@s.Status</td>
+            <td>@s.LastLoginTime</td>
+            <td>@s.LastLoginIP</td>
+            <td><button class="btn btn-success text-white" data-get="/AEdit/EditEvent/@s.Id">Edit</button></td>
+        </tr>
+    }
+</table>
+
+@{
+    var po = PagedListRenderOptions.ClassicPlusFirstAndLast;
+    po.LinkToFirstPageFormat = "First";
+    po.LinkToLastPageFormat = "Last";
+    po.LinkToPreviousPageFormat = "Previous";
+    po.LinkToNextPageFormat = "Next";
+}
+
+<div class="mx-auto">
+    @Html.PagedListPager(
+        Model,
+        p => $"?sort={sort}&sortdir={sortdir}&page={p}",
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(po, ao)
+    )
+</div>
