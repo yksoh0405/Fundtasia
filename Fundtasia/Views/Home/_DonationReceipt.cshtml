@@ -1,0 +1,65 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model IPagedList<Donation>
+@{
+    var ao = new AjaxOptions
+    {
+        UpdateTargetId = "target",
+        LoadingElementId = "loader",
+        OnSuccess = "highlight"
+    };
+    string[] fields = { "Id", "Donor", "Time Donated", "Amount", "Event" };
+    string sort = Request.Params["sort"];
+    string sortdir = Request.Params["sortdir"];
+    string keyword = Request.Params["keyword"];
+}
+
+<table class="table text-nowrap">
+    <thead>
+        <tr>
+            @foreach (var f in fields)
+            {
+                string d = "ASC";
+                string c = "";
+
+                if (f == sort)
+                {
+                    d = sortdir == "DESC" ? "ASC" : "DESC";
+                    c = sortdir;
+                }
+
+                <th>
+                    @Ajax.ActionLink(f, null, new { sort = f, sortdir = d }, ao, new { @class = c })
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var d in Model.Take(1))
+        {
+            <tr>
+                <td>@d.Id</td>
+                <td>@d.User.FirstName @d.User.LastName</td>
+                <td>@d.TimeDonated</td>
+                <td>@d.Amount</td>
+                <td>@d.Event.Title</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    var po = PagedListRenderOptions.ClassicPlusFirstAndLast;
+    po.LinkToFirstPageFormat = "First";
+    po.LinkToLastPageFormat = "Last";
+    po.LinkToPreviousPageFormat = "Previous";
+    po.LinkToNextPageFormat = "Next";
+}
+
+<div class="mx-auto">
+    @Html.PagedListPager(
+        Model,
+        p => $"?sort={sort}&sortdir={sortdir}&page={p}",
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(po, ao)
+    )
+</div>
