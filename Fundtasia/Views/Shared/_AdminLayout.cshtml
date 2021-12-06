@@ -87,7 +87,7 @@
                         <!-- Display staff / admin name -->
                         <li>
 
-                            <a class="profile-pic" href="#">
+                            <a class="profile-pic" href="@Url.Action("ViewProfile", "Admin")">
                                 <span class="text-white font-medium">Profile</span>
                             </a>
                         </li>
@@ -109,7 +109,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item pt-2 selected">
-                            <a href="@Url.Action("Profile", "Admin")" class="sidebar-link">
+                            <a href="@Url.Action("ViewProfile", "Admin")" class="sidebar-link">
                                 <i class="fas fa-user"></i>
                                 <span class="hide-menu">Profile</span>
                             </a>
@@ -142,6 +142,12 @@
                             <a href="@Url.Action("Donation", "AList")" class="sidebar-link">
                                 <i class="fas fa-hand-holding-usd"></i>
                                 <span class="hide-menu">Donation</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("MerchandiseSales", "AList")" class="sidebar-link">
+                                <i class="fas fa-tshirt"></i>
+                                <span class="hide-menu">Merchandise Sales</span>
                             </a>
                         </li>
                         <li class="sidebar-item">

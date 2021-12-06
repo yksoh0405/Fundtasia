@@ -11,11 +11,9 @@ namespace Fundtasia.Controllers
     public class AListController : Controller
     {
         //This controller is used to handle a list of record between Model and View
-        //Apply AJAX search, sorting, paging skill from P5 Demo 5 + 2(For highlighting purpose)
-        //Need to use the skill from P4 Demo 7 WebGrid
         DBEntities1 db = new DBEntities1();
 
-        public ActionResult Staff(string sort = "LastLoginTime", string sortdir = "DESC", int page = 1, string keyword = "")
+        public ActionResult Staff(string sort = "Last Login Time", string sortdir = "DESC", int page = 1, string keyword = "")
         {
             if (!Request.IsAuthenticated)
             {
@@ -38,11 +36,11 @@ namespace Fundtasia.Controllers
 
             switch (sort)
             {
-                case "FirstName": fn = s => s.FirstName; break;
-                case "LastName": fn = s => s.LastName; break;
+                case "First Name": fn = s => s.FirstName; break;
+                case "Last Name": fn = s => s.LastName; break;
                 case "Verified": fn = s => s.IsEmailVerified; break;
                 case "Status": fn = s => s.Status; break;
-                case "LastLoginTime": fn = s => s.LastLoginTime; break;
+                case "Last Login Time": fn = s => s.LastLoginTime; break;
                 case "Role": fn = s => s.Role; break;
             }
 
@@ -72,7 +70,7 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
-        public ActionResult ClientUser(string sort = "LastLoginTime", string sortdir = "DESC", int page = 1, string keyword = "")
+        public ActionResult ClientUser(string sort = "Last Login Time", string sortdir = "DESC", int page = 1, string keyword = "")
         {
             if (!Request.IsAuthenticated)
             {
@@ -95,12 +93,12 @@ namespace Fundtasia.Controllers
 
             switch (sort)
             {
-                case "FirstName": fn = s => s.FirstName; break;
-                case "LastName": fn = s => s.LastName; break;
+                case "First Name": fn = s => s.FirstName; break;
+                case "Last Name": fn = s => s.LastName; break;
                 case "Verified": fn = s => s.IsEmailVerified; break;
                 case "Status": fn = s => s.Status; break;
-                case "LastLoginTime": fn = s => s.LastLoginTime; break;
-                case "LastIP": fn = s => s.LastLoginIP; break;
+                case "Last Login Time": fn = s => s.LastLoginTime; break;
+                case "Last Login IP": fn = s => s.LastLoginIP; break;
             }
 
             var sorted = sortdir == "DESC" ? db.Users.Where(s => s.FirstName.Contains(keyword)).OrderByDescending(fn) : db.Users.Where(s => s.FirstName.Contains(keyword)).OrderBy(fn);
@@ -129,7 +127,7 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
-        public ActionResult Event(string sort = "CreatedDate", string sortdir = "DESC", int page = 1, string keyword = "")
+        public ActionResult Event(string sort = "Created Date", string sortdir = "DESC", int page = 1, string keyword = "")
         {
             if (!Request.IsAuthenticated)
             {
@@ -153,9 +151,9 @@ namespace Fundtasia.Controllers
             switch (sort)
             {
                 case "Id": fn = s => s.Id; break;
-                case "CreatedDate": fn = s => s.CreatedDate; break;
+                case "Created Date": fn = s => s.CreatedDate; break;
                 case "Title": fn = s => s.Title; break;
-                case "View": fn = s => s.View; break;
+                case "Views": fn = s => s.View; break;
             }
 
             var sorted = sortdir == "DESC" ? db.Events.Where(s => s.Title.Contains(keyword)).OrderByDescending(fn) : db.Events.Where(s => s.Title.Contains(keyword)).OrderBy(fn);
@@ -184,7 +182,7 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
-        public ActionResult Merchandise(string sort = "Name", string sortdir = "ASC", int page = 1, string keyword = "")
+        public ActionResult Merchandise(string sort = "Id", string sortdir = "ASC", int page = 1, string keyword = "")
         {
             if (!Request.IsAuthenticated)
             {
@@ -234,7 +232,7 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
-        public ActionResult Donation(string sort = "TimeDonated", string sortdir = "DESC", int page = 1, string keyword = "")
+        public ActionResult Donation(string sort = "Time Donated", string sortdir = "DESC", int page = 1, string keyword = "")
         {
             if (!Request.IsAuthenticated)
             {
@@ -254,10 +252,10 @@ namespace Fundtasia.Controllers
             switch (sort)
             {
                 case "Id": fn = d => d.Id; break;
-                case "UserId": fn = d => d.User.LastName; break;
-                case "TimeDonated": fn = d => d.TimeDonated; break;
+                case "Donor": fn = d => d.User.FirstName; break;
+                case "Time Donated": fn = d => d.TimeDonated; break;
                 case "Amount": fn = d => d.Amount; break;
-                case "EventId": fn = d => d.EventId; break;
+                case "Event": fn = d => d.EventId; break;
             }
 
             var sorted = sortdir == "DESC" ? db.Donations.Where(s => s.User.FirstName.Contains(keyword)).OrderByDescending(fn) : db.Donations.Where(s => s.User.FirstName.Contains(keyword)).OrderBy(fn);
@@ -285,8 +283,63 @@ namespace Fundtasia.Controllers
 
             return View(model);
         }
+        
+        public ActionResult MerchandiseSales(string sort = "Purchase Time", string sortdir = "DESC", int page = 1, string keyword = "")
+        {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
-        public ActionResult Report(string sort = "CreatedDate", string sortdir = "ASC", int page = 1, string keyword = "")
+            if (Session["UserSession"] != null)
+            {
+                User loginUser = (User)Session["UserSession"];
+                if (String.Equals(loginUser.Role, "User"))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
+            keyword = keyword.Trim();
+
+            //Sorting
+            Func<UserMerchandise, object> fn = s => s.Id;
+
+            switch (sort)
+            {
+                case "Purchase Time": fn = s => s.PurchaseTime; break;
+                case "Name": fn = s => s.FullName; break;
+                case "Merchandise Name": fn = s => s.Merchandise.Name; break;
+                case "Size": fn = s => s.Size; break;
+            }
+
+            var sorted = sortdir == "DESC" ? db.UserMerchandises.Where(s => s.User.FirstName.Contains(keyword)).OrderByDescending(fn) : db.UserMerchandises.Where(s => s.User.FirstName.Contains(keyword)).OrderBy(fn);
+
+            //Paging
+            if (page < 1)
+            {
+                return RedirectToAction(null, new { page = 1 });
+            }
+
+            var model = sorted.ToPagedList(page, 10);
+
+            if (model == null)
+            {
+                return View();
+            }
+
+            if (page > model.PageCount)
+            {
+                return RedirectToAction(null, new { page = model.PageCount });
+            }
+
+            //Ajax Request
+            if (Request.IsAjaxRequest()) return PartialView("_MerchandiseSales", model);
+
+            return View(model);
+        }
+
+        public ActionResult Report(string sort = "Created Date", string sortdir = "ASC", int page = 1, string keyword = "")
         {
             if (!Request.IsAuthenticated)
             {
@@ -311,8 +364,8 @@ namespace Fundtasia.Controllers
             {
                 case "Id": fn = s => s.Id; break;
                 case "Title": fn = s => s.Title; break;
-                case "CreatedDate": fn = s => s.CreatedDate; break;
-                case "CreatedBy": fn = s => s.User.LastName; break;
+                case "Created Date": fn = s => s.CreatedDate; break;
+                case "Created By": fn = s => s.User.LastName; break;
             }
 
             var sorted = sortdir == "DESC" ? db.Reports.Where(s => s.Title.Contains(keyword)).OrderByDescending(fn) : db.Reports.Where(s => s.Title.Contains(keyword)).OrderBy(fn);

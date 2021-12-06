@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Merchandise Sales";
+}
+
+<div id="target">
+    @Html.Partial("_MerchandiseSales")
+</div>
+
+@section foot{
+    <script>
+        let timer = null;
+        $('#keyword').on('input', e => {
+            clearTimeout(timer);
+            timer = setTimeout(() => $(e.target).submit(), 500);
+        });
+
+        function highlight() {
+            let keyword = $('#keyword').val().trim();
+
+            if (!keyword) return;
+
+            let re = new RegExp(escapeRegExp(keyword), 'gi');
+
+            $('td:nth-child(2)').each((i, el) => {
+                let html = $(el).html().replace(re, '<mark style="background-color: #ffb5ae;">$&</mark>');
+                $(el).html(html);
+            });
+        }
+    </script>
+}
