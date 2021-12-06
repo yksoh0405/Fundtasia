@@ -16,13 +16,13 @@ namespace Fundtasia.Models
     {
         public string Id { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Merchandise Name is required")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "*Merchandise Name is required")]
         public string Name { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Merchandise Price is required")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "*Merchandise Price is required")]
         public decimal Price { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Merchandise Status is required")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "*Merchandise Status is required")]
         public string Status { get; set; }
     }
 
@@ -30,17 +30,17 @@ namespace Fundtasia.Models
     {
         public string Id { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Merchandise Name is required")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "*Merchandise Name is required")]
         [StringLength(150)]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "*Merchandise Image is required")]
         public HttpPostedFileBase ImageURL { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Merchandise Price is required")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "*Merchandise Price is required")]
         public decimal Price { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Merchandise Status is required")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "*Merchandise Status is required")]
         public string Status { get; set; }
     }
 
@@ -48,17 +48,17 @@ namespace Fundtasia.Models
     {
         public string Id { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Merchandise Name is required")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "*Merchandise Name is required")]
         public string Name { get; set; }
 
         public HttpPostedFileBase Image { get; set; }
 
         public string ImageURL { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Merchandise Price is required")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "*Merchandise Price is required")]
         public decimal Price { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Merchandise Status is required")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "*Merchandise Status is required")]
         public string Status { get; set; }
     }
 }
