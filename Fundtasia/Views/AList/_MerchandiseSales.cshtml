@@ -1,0 +1,60 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model IPagedList<UserMerchandise>
+@{
+    var ao = new AjaxOptions
+    {
+        UpdateTargetId = "target",
+        LoadingElementId = "loader",
+        OnSuccess = "highlight"
+    };
+    string[] fields = { "Purchase Time", "Name", "Merchandise Name", "Size", "View" };
+    string sort = Request.Params["sort"];
+    string sortdir = Request.Params["sortdir"];
+    string keyword = Request.Params["keyword"];
+}
+<table class="table table-responsive-md text-nowrap">
+    <tr>
+        @foreach (var f in fields)
+        {
+            string d = "ASC";
+            string c = "";
+
+            if (f == sort)
+            {
+                d = sortdir == "DESC" ? "ASC" : "DESC";
+                c = sortdir;
+            }
+
+            <th>
+                @Ajax.ActionLink(f, null, new { sort = f, sortdir = d }, ao, new { @class = c })
+            </th>
+        }
+    </tr>
+    @foreach (var s in Model)
+    {
+        <tr>
+            <td>@s.PurchaseTime</td>
+            <td>@s.FullName</td>
+            <td>@s.Merchandise.Name</td>
+            <td>@s.Size</td>
+            <td><button class="btn btn-success text-white" data-get="/Admin/ViewMerchandiseSale/@s.Id">View</button></td>
+        </tr>
+    }
+</table>
+
+@{
+    var po = PagedListRenderOptions.ClassicPlusFirstAndLast;
+    po.LinkToFirstPageFormat = "First";
+    po.LinkToLastPageFormat = "Last";
+    po.LinkToPreviousPageFormat = "Previous";
+    po.LinkToNextPageFormat = "Next";
+}
+
+<div class="mx-auto">
+    @Html.PagedListPager(
+        Model,
+        p => $"?sort={sort}&sortdir={sortdir}&page={p}",
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(po, ao)
+    )
+</div>

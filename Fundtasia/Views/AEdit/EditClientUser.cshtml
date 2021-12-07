@@ -4,6 +4,12 @@
     ViewBag.Title = "Edit Client User";
 }
 
+@section breadcrumb{
+    <li class="breadcrumb-item">
+        @Model.Id
+    </li>
+}
+
 <link href="~/Content/UserList.css" rel="stylesheet" />
 
 <form action="" method="post" class="editUser">

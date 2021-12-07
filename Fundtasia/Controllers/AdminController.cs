@@ -32,7 +32,7 @@ namespace Fundtasia.Controllers
             return View();
         }
 
-        public ActionResult ReportDetails()
+        public ActionResult ReportDetails(string id)
         {
             if (!Request.IsAuthenticated)
             {
@@ -47,7 +47,10 @@ namespace Fundtasia.Controllers
                     return RedirectToAction("Index", "Home");
                 }
             }
-            return View();
+
+            var model = db.Reports.Find(id);
+
+            return View(model);
         }
 
         public ActionResult ViewProfile()
@@ -57,23 +60,92 @@ namespace Fundtasia.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            User loginUser = null;
+
             if (Session["UserSession"] != null)
             {
-                User loginUser = (User)Session["UserSession"];
+                loginUser = (User)Session["UserSession"];
                 if (String.Equals(loginUser.Role, "User"))
                 {
                     return RedirectToAction("Index", "Home");
                 }
             }
-            return View();
+
+            if (loginUser == null)
+            {
+                return RedirectToAction("LogIn", "UserAuth");
+
+            }
+
+            var model = new StaffProfileVM
+            {
+                Id = loginUser.Id,
+                Email = loginUser.Email,
+                Role = loginUser.Role,
+                FirstName = loginUser.FirstName,
+                LastName = loginUser.LastName,
+                Status = loginUser.Status,
+                LastLoginTime = loginUser.LastLoginTime,
+                LastLoginIP = loginUser.LastLoginIP
+            };
+
+            return View(model);
         }
 
-        public JsonResult GetEvents()
+        [HttpPost]
+        public ActionResult ViewProfile(StaffProfileVM model)
         {
-            using (DBEntities1 dc = new DBEntities1())
+            var s = db.Users.Find(model.Id);
+
+            if (s == null)
             {
-                var events = dc.Events.ToList();
-                return new JsonResult { Data = events, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                return RedirectToAction("Dashboard", "Admin");
+            }
+
+            if (ModelState.IsValid)
+            {
+                //If Email string is different with database
+                if (!String.Equals(s.Email, model.Email))
+                {
+                    //Check email exist in another record
+                    if (IsEmailExist(model.Email))
+                    {
+                        ModelState.AddModelError("EmailExist", "Email Already Exist");
+                        return View(model);
+                    }
+                    else
+                    {
+                        s.Email = model.Email;
+                    }
+                }
+                s.FirstName = model.FirstName;
+                s.LastName = model.LastName;
+                if (model.PasswordHash != null)
+                {
+                    s.PasswordHash = Crypto.Hash(model.PasswordHash);
+                }
+                db.SaveChanges();
+                return RedirectToAction("Dashboard", "Admin");
+            }
+
+            return View(model);
+        }
+
+        public ActionResult ViewMerchandiseSale(Guid id)
+        {
+            var model = db.UserMerchandises.Find(id);
+            return View(model);
+        }
+
+        [NonAction]
+        public bool IsEmailExist(string email)
+        {
+            //Bring DB to find the existing email
+            using (db)
+            {
+                //FirstOrDefault() only return one record
+                var v = db.Users.Where(s => s.Email == email).FirstOrDefault();
+                return v != null;
             }
         }
     }

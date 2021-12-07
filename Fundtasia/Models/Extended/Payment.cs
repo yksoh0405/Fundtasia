@@ -25,10 +25,19 @@ namespace Fundtasia.Models
         [Display(Name = "Expiry Date")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Expiry Date is required")]
         public DateTime ExpiryDate { get; set; }
-        
+
         [Required(AllowEmptyStrings = false, ErrorMessage = "CVV is required")]
         [RegularExpression(@"\d{3}", ErrorMessage = "Invalid CVV format.")]
         public string CVV { get; set; }
 
+    }
+
+    public class DonationPaymentVM
+    {
+        [Required(AllowEmptyStrings = false, ErrorMessage = "*Donation Amount is required")]
+        public decimal Amount { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "*Event Selection is required")]
+        public string EventId { get; set; }
     }
 }

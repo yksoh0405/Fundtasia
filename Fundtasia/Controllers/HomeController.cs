@@ -35,6 +35,118 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
+        public ActionResult DonationPayment()
+        {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (Session["UserSession"] != null)
+            {
+                User loginUser = (User)Session["UserSession"];
+                if (String.Equals(loginUser.Role, "User"))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
+            ViewBag.EventList = new SelectList(db.Events, "Id", "Title");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult DonationPayment(Donation model)
+        {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (Session["UserSession"] != null)
+            {
+                User loginUser = (User)Session["UserSession"];
+                model.UserId = loginUser.Id;
+                if (String.Equals(loginUser.Role, "User"))
+                {
+                    return RedirectToAction("Index", "Home");
+                } 
+            }
+
+            if (ModelState.IsValid)
+            {
+                model.Id = Guid.NewGuid();
+
+                var d = new Donation
+                {
+                    Id = model.Id,
+                    UserId = model.UserId,
+                    TimeDonated = DateTime.Now,
+                    Amount = model.Amount,
+                    EventId = model.EventId
+                };
+
+                db.Donations.Add(d);
+                db.SaveChanges();
+                return RedirectToAction("DonationReceipt", "Home");
+            }
+
+            ViewBag.EventList = new SelectList(db.Donations, "Id", "Title");
+            return View(model);
+        }
+
+        public ActionResult DonationReceipt(string sort = "Time Donated", string sortdir = "DESC", int page = 1, string keyword = "")
+        {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (Session["UserSession"] != null)
+            {
+                User loginUser = (User)Session["UserSession"];
+                if (String.Equals(loginUser.Role, "User"))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
+            Func<Donation, object> fn = d => d.Id;
+            switch (sort)
+            {
+                case "Id": fn = d => d.Id; break;
+                case "Donor": fn = d => d.User.FirstName; break;
+                case "Time Donated": fn = d => d.TimeDonated; break;
+                case "Amount": fn = d => d.Amount; break;
+                case "Event": fn = d => d.EventId; break;
+            }
+
+            var sorted = sortdir == "DESC" ? db.Donations.Where(s => s.User.FirstName.Contains(keyword)).OrderByDescending(fn) : db.Donations.Where(s => s.User.FirstName.Contains(keyword)).OrderBy(fn);
+
+            //Paging
+            if (page < 1)
+            {
+                return RedirectToAction(null, new { page = 1 });
+            }
+
+            var model = sorted.ToPagedList(page, 10);
+
+            if (model == null)
+            {
+                return View();
+            }
+
+            if (page > model.PageCount)
+            {
+                return RedirectToAction(null, new { page = model.PageCount });
+            }
+
+            //Ajax Request
+            if (Request.IsAjaxRequest()) return PartialView("_DonationReceipt", model);
+
+            return View(model);
+        }
+
         public ActionResult MerchandisePayment(string id)
         {
             var model = db.Merchandises.Find(id);
@@ -47,40 +159,19 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
-        public ActionResult DonationPayment()
-        {
-            ViewBag.EventList = new SelectList(db.Events, "Id", "Title");
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult DonationPayment(Donation model)
-        {
-            if (ModelState.IsValid)
-            {
-                model.TimeDonated = DateTime.Now;
-                db.Donations.Add(model);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.EventList = new SelectList(db.Donations, "Id", "Title");
-            return View(model);
-        }
-
         public ActionResult Receipt()
         {
             //pass img, price and name from merch payment
             return View();
         }
 
-        public ActionResult Event(string sort, string sortdir, int page = 1)
+        public ActionResult Event(string sort = "CreatedDate", string sortdir = "DESC", int page = 1)
         {
             Func<Event, object> fn = s => s.Id;
 
             switch (sort)
             {
-                case "CreatedTime": fn = s => s.CreatedDate; break;
+                case "CreatedDate": fn = s => s.CreatedDate; break;
                 case "Title": fn = s => s.Title; break;
                 case "View": fn = s => s.View; break;
             }

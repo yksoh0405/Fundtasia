@@ -2,18 +2,27 @@
 @using PagedList.Mvc
 @model IPagedList<User>
 @{
+    User loginUser = (User)Session["UserSession"];
     var ao = new AjaxOptions
     {
         UpdateTargetId = "target",
         LoadingElementId = "loader",
         OnSuccess = "highlight"
     };
-    string[] fields = { "First Name", "Last Name", "Verified", "Status", "Last Login Time", "Role", "Edit" };
+    string[] fields = null;
+    if (String.Equals(loginUser.Role, "Admin"))
+    {
+        fields = new string[] { "First Name", "Last Name", "Verified", "Status", "Last Login Time", "Role", "Edit" };
+    }
+    else
+    {
+        fields = new string[] { "First Name", "Last Name", "Verified", "Status", "Last Login Time", "Role" };
+    }
     string sort = Request.Params["sort"];
     string sortdir = Request.Params["sortdir"];
     string keyword = Request.Params["keyword"];
 }
-<table class="table text-nowrap">
+<table class="table table-responsive-md text-nowrap">
     <tr>
         @foreach (var f in fields)
         {
@@ -35,17 +44,24 @@
     {
         if (!String.Equals(s.Role, "User"))
         {
-            string verified = s.IsEmailVerified.ToString() == "True" ? "True" : "False";
-            string dateTime = s.LastLoginTime.ToString() == null ? "-" : s.LastLoginTime.ToString();
-            <tr>
-                <td>@s.FirstName</td>
-                <td>@s.LastName</td>
-                <td>@verified</td>
-                <td>@s.Status</td>
-                <td>@dateTime</td>
-                <td>@s.Role</td>
-                <td><button type="button" class="btn btn-success text-white" data-get="/AEdit/EditStaff/@s.Id">Edit</button></td>
-            </tr>
+            if (!String.Equals(s.Id, loginUser.Id))
+            {
+                string verified = s.IsEmailVerified.ToString() == "True" ? "True" : "False";
+                string dateTime = s.LastLoginTime.ToString() == null ? "-" : s.LastLoginTime.ToString();
+                <tr>
+                    <td>@s.FirstName</td>
+                    <td>@s.LastName</td>
+                    <td>@verified</td>
+                    <td>@s.Status</td>
+                    <td>@dateTime</td>
+                    <td>@s.Role</td>
+                    @if (String.Equals(loginUser.Role, "Admin"))
+                    {
+                        <td><button type="button" class="btn btn-success text-white" data-get="/AEdit/EditStaff/@s.Id">Edit</button></td>
+                    }
+                </tr>
+            }
+
         }
     }
 </table>

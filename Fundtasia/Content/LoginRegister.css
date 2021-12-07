@@ -50,12 +50,12 @@ input#registerBtn:hover, input#loginBtn:hover {
 
 #lastName-container {
     width: 47.5%;
-    float: left;
+    float: right;
 }
 
 #firstName-container {
     width: 47.5%;
-    float: right;
+    float: left;
 }
 
 .form-control:focus {

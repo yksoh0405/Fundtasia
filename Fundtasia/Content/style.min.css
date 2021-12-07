@@ -14117,13 +14117,13 @@ select.form-select.form-control-line {
 }
 
     .breadcrumb a {
-        color: rgba(0,0,0,0.5);
+        color: white;
         font-size: 14px;
         font-weight: 300
     }
 
         .breadcrumb a:hover {
-            color: #000
+            color: #ffb5ae;
         }
 
     .breadcrumb .breadcrumb-item.active a {
