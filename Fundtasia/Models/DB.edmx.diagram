@@ -5,19 +5,20 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="d69245650e6f4004b1f45fbd49d4cee1" Name="Diagram1">
-        <EntityTypeShape EntityType="DBModel.Donation" Width="1.5" PointX="6.375" PointY="9.75" />
-        <EntityTypeShape EntityType="DBModel.Event" Width="1.5" PointX="8.625" PointY="12.75" />
-        <EntityTypeShape EntityType="DBModel.Merchandise" Width="1.5" PointX="13.75" PointY="8" />
-        <EntityTypeShape EntityType="DBModel.Report" Width="1.5" PointX="6.375" PointY="6.875" />
-        <EntityTypeShape EntityType="DBModel.User" Width="1.5" PointX="8.625" PointY="7" />
-        <EntityTypeShape EntityType="DBModel.UserMerchandise" Width="1.5" PointX="11.125" PointY="7.125" />
+        <EntityTypeShape EntityType="DBModel.Donation" Width="1.5" PointX="3.875" PointY="2.875" />
+        <EntityTypeShape EntityType="DBModel.Event" Width="1.5" PointX="1.25" PointY="1.25" />
+        <EntityTypeShape EntityType="DBModel.Merchandise" Width="1.5" PointX="14.5" PointY="1.375" />
+        <EntityTypeShape EntityType="DBModel.Report" Width="1.5" PointX="4.5" PointY="6" />
+        <EntityTypeShape EntityType="DBModel.User" Width="1.5" PointX="6.375" PointY="1" />
+        <EntityTypeShape EntityType="DBModel.UserMerchandise" Width="1.5" PointX="10.5" PointY="1.25" />
+        <EntityTypeShape EntityType="DBModel.PasswordReset" Width="1.5" PointX="9.25" PointY="6" />
         <AssociationConnector Association="DBModel.FK_Donation_Event" />
         <AssociationConnector Association="DBModel.FK_Donation_User" />
         <AssociationConnector Association="DBModel.FK_Event_User" />
         <AssociationConnector Association="DBModel.FK_UserMerchandise_Merchandise" />
         <AssociationConnector Association="DBModel.FK_Table_TUser" />
+        <AssociationConnector Association="DBModel.FK_PasswordReset_User" />
         <AssociationConnector Association="DBModel.FK_UserMerchandise_User" />
-        <AssociationConnector Association="DBModel.UserEvent" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

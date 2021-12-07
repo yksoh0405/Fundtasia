@@ -18,7 +18,6 @@ namespace Fundtasia.Models
         public Event()
         {
             this.Donations = new HashSet<Donation>();
-            this.Users = new HashSet<User>();
         }
     
         public string Id { get; set; }
@@ -34,7 +33,5 @@ namespace Fundtasia.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Donation> Donations { get; set; }
         public virtual User User { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
     }
 }

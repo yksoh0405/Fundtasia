@@ -10,7 +10,7 @@
         OnSuccess = "highlight"
     };
     string[] fields = null;
-    if (String.Equals(loginUser.Role, "Admin"))
+    if (User.IsInRole("Admin"))
     {
         fields = new string[] { "First Name", "Last Name", "Verified", "Status", "Last Login Time", "Role", "Edit" };
     }
@@ -44,7 +44,7 @@
     {
         if (!String.Equals(s.Role, "User"))
         {
-            if (!String.Equals(s.Id, loginUser.Id))
+            if (!String.Equals(User.Identity.Name.ToString(), s.Id.ToString()))
             {
                 string verified = s.IsEmailVerified.ToString() == "True" ? "True" : "False";
                 string dateTime = s.LastLoginTime.ToString() == null ? "-" : s.LastLoginTime.ToString();
@@ -55,7 +55,7 @@
                     <td>@s.Status</td>
                     <td>@dateTime</td>
                     <td>@s.Role</td>
-                    @if (String.Equals(loginUser.Role, "Admin"))
+                    @if (User.IsInRole("Admin"))
                     {
                         <td><button type="button" class="btn btn-success text-white" data-get="/AEdit/EditStaff/@s.Id">Edit</button></td>
                     }

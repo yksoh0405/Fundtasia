@@ -66,8 +66,6 @@ namespace Fundtasia.Models
 
     public class CreateUserVM
     {
-        public Guid Id { get; set; }
-
         [Required(AllowEmptyStrings = false, ErrorMessage = "Last Name is required")]
         public string LastName { get; set; }
 
@@ -83,15 +81,10 @@ namespace Fundtasia.Models
         [MinLength(6, ErrorMessage = "Minimum 6 characters required")]
         public string PasswordHash { get; set; }
 
-        public Guid ActivationCode { get; set; }
-
         public bool IsEmailVerified { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "User role is required")]
         public string Role { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "User status is required")]
-        public string Status { get; set; }
     }
 
     public class UserEditVM

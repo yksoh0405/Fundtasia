@@ -17,46 +17,21 @@ namespace Fundtasia.Controllers
         DBEntities1 db = new DBEntities1();
 
         //This controller is used to handle the Create request from View to Model
+
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult CreateStaff()
         {
-            if (!Request.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            if (Session["UserSession"] != null)
-            {
-                User loginUser = (User)Session["UserSession"];
-                if (String.Equals(loginUser.Role, "User"))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
             return View();
         }
 
+        [Authorize(Roles = "Admin, Staff")]
         [HttpPost]
         public ActionResult CreateStaff(CreateUserVM model)
         {
-            if (!Request.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            if (Session["UserSession"] != null)
-            {
-                User loginUser = (User)Session["UserSession"];
-                if (String.Equals(loginUser.Role, "User"))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-
             if (ModelState.IsValid)
             {
                 // Check email exist
-                var isExist = IsEmailExist(model.Email);
-                if (isExist)
+                if (IsEmailExist(model.Email))
                 {
                     ModelState.AddModelError("EmailExist", "Email Already Exist");
                     return View(model);
@@ -64,28 +39,26 @@ namespace Fundtasia.Controllers
 
                 var newStaff = new User
                 {
-                    // Password Hash
-                    PasswordHash = Crypto.Hash(model.PasswordHash),
-
-                    // Activation Code
-                    ActivationCode = Guid.NewGuid(),
-
-                    // Bind Data
                     Id = Guid.NewGuid(),
-                    Role = model.Role,
-                    Status = "Active",
-                    LastName = model.LastName,
-                    FirstName = model.FirstName,
                     Email = model.Email,
-                    IsEmailVerified = model.IsEmailVerified
+                    Role = model.Role,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    PasswordHash = Crypto.Hash(model.PasswordHash),
+                    IsEmailVerified = model.IsEmailVerified,
+                    ActivationCode = Guid.NewGuid(),
+                    Status = "Active"
                 };
 
-                db.Users.Add(newStaff);
-                db.SaveChanges();
-
-                if (!newStaff.IsEmailVerified)
+                using (DBEntities1 da = new DBEntities1())
                 {
-                    SendVerificaionLinkEmail(newStaff.Email, newStaff.ActivationCode.ToString());
+                    da.Users.Add(newStaff);
+                    da.SaveChanges();
+
+                    if (!newStaff.IsEmailVerified)
+                    {
+                        SendVerificaionLinkEmail(newStaff.Email, newStaff.ActivationCode.ToString());
+                    }
                 }
 
                 return RedirectToAction("Staff", "AList");
@@ -96,39 +69,12 @@ namespace Fundtasia.Controllers
 
         public ActionResult CreateClientUser()
         {
-            if (!Request.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            if (Session["UserSession"] != null)
-            {
-                User loginUser = (User)Session["UserSession"];
-                if (String.Equals(loginUser.Role, "User"))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
             return View();
         }
 
         [HttpPost]
         public ActionResult CreateClientUser(CreateUserVM model)
         {
-            if (!Request.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            if (Session["UserSession"] != null)
-            {
-                User loginUser = (User)Session["UserSession"];
-                if (String.Equals(loginUser.Role, "User"))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-
             if (ModelState.IsValid)
             {
                 // Check email exist

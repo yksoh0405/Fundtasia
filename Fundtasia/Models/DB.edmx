@@ -39,12 +39,24 @@
           <Property Name="Price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'D:\TESTAREA\TEST U\FUNDTASIA\APP_DATA\DB.MDF.dbo.PasswordReset' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="PasswordReset">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="Code" />
+            <PropertyRef Name="TimeOver" />
+          </Key>
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Code" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TimeOver" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Report">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Title" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
@@ -63,16 +75,6 @@
           <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="LastLoginTime" Type="datetime" />
           <Property Name="LastLoginIP" Type="varchar" MaxLength="50" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'D:\TESTAREA\TEST U\FUNDTASIA\APP_DATA\DB.MDF.dbo.UserEvent' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="UserEvent">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="EventId" />
-          </Key>
-          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="EventId" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="UserMerchandise">
           <Key>
@@ -126,6 +128,18 @@ warning 6002: The table/view 'D:\TESTAREA\TEST U\FUNDTASIA\APP_DATA\DB.MDF.dbo.U
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PasswordReset_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="PasswordReset" Type="Self.PasswordReset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PasswordReset">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Table_TUser">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Report" Type="Self.Report" Multiplicity="*" />
@@ -135,30 +149,6 @@ warning 6002: The table/view 'D:\TESTAREA\TEST U\FUNDTASIA\APP_DATA\DB.MDF.dbo.U
             </Principal>
             <Dependent Role="Report">
               <PropertyRef Name="CreatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserEvent_Event">
-          <End Role="Event" Type="Self.Event" Multiplicity="1" />
-          <End Role="UserEvent" Type="Self.UserEvent" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Event">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserEvent">
-              <PropertyRef Name="EventId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserEvent_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="UserEvent" Type="Self.UserEvent" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserEvent">
-              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -193,11 +183,12 @@ warning 6002: The table/view 'D:\TESTAREA\TEST U\FUNDTASIA\APP_DATA\DB.MDF.dbo.U
           <EntitySet Name="Report" EntityType="Self.Report" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserMerchandise" EntityType="Self.UserMerchandise" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserEvent" EntityType="Self.UserEvent" store:Type="Tables" store:Schema="dbo">
+          <EntitySet Name="PasswordReset" EntityType="Self.PasswordReset" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [UserEvent].[UserId] AS [UserId], 
-    [UserEvent].[EventId] AS [EventId]
-    FROM [dbo].[UserEvent] AS [UserEvent]</DefiningQuery>
+    [PasswordReset].[UserId] AS [UserId], 
+    [PasswordReset].[Code] AS [Code], 
+    [PasswordReset].[TimeOver] AS [TimeOver]
+    FROM [dbo].[PasswordReset] AS [PasswordReset]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Donation_Event" Association="Self.FK_Donation_Event">
             <End Role="Event" EntitySet="Event" />
@@ -211,17 +202,13 @@ warning 6002: The table/view 'D:\TESTAREA\TEST U\FUNDTASIA\APP_DATA\DB.MDF.dbo.U
             <End Role="User" EntitySet="User" />
             <End Role="Event" EntitySet="Event" />
           </AssociationSet>
+          <AssociationSet Name="FK_PasswordReset_User" Association="Self.FK_PasswordReset_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="PasswordReset" EntitySet="PasswordReset" />
+          </AssociationSet>
           <AssociationSet Name="FK_Table_TUser" Association="Self.FK_Table_TUser">
             <End Role="User" EntitySet="User" />
             <End Role="Report" EntitySet="Report" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserEvent_Event" Association="Self.FK_UserEvent_Event">
-            <End Role="Event" EntitySet="Event" />
-            <End Role="UserEvent" EntitySet="UserEvent" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserEvent_User" Association="Self.FK_UserEvent_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="UserEvent" EntitySet="UserEvent" />
           </AssociationSet>
           <AssociationSet Name="FK_UserMerchandise_Merchandise" Association="Self.FK_UserMerchandise_Merchandise">
             <End Role="Merchandise" EntitySet="Merchandise" />
@@ -243,6 +230,7 @@ warning 6002: The table/view 'D:\TESTAREA\TEST U\FUNDTASIA\APP_DATA\DB.MDF.dbo.U
           <EntitySet Name="Reports" EntityType="DBModel.Report" />
           <EntitySet Name="Users" EntityType="DBModel.User" />
           <EntitySet Name="UserMerchandises" EntityType="DBModel.UserMerchandise" />
+          <EntitySet Name="PasswordResets" EntityType="DBModel.PasswordReset" />
           <AssociationSet Name="FK_Donation_Event" Association="DBModel.FK_Donation_Event">
             <End Role="Event" EntitySet="Events" />
             <End Role="Donation" EntitySet="Donations" />
@@ -263,13 +251,13 @@ warning 6002: The table/view 'D:\TESTAREA\TEST U\FUNDTASIA\APP_DATA\DB.MDF.dbo.U
             <End Role="User" EntitySet="Users" />
             <End Role="Report" EntitySet="Reports" />
           </AssociationSet>
+          <AssociationSet Name="FK_PasswordReset_User" Association="DBModel.FK_PasswordReset_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="PasswordReset" EntitySet="PasswordResets" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserMerchandise_User" Association="DBModel.FK_UserMerchandise_User">
             <End Role="User" EntitySet="Users" />
             <End Role="UserMerchandise" EntitySet="UserMerchandises" />
-          </AssociationSet>
-          <AssociationSet Name="UserEvent" Association="DBModel.UserEvent">
-            <End Role="Event" EntitySet="Events" />
-            <End Role="User" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Donation">
@@ -299,7 +287,6 @@ warning 6002: The table/view 'D:\TESTAREA\TEST U\FUNDTASIA\APP_DATA\DB.MDF.dbo.U
           <Property Name="Article" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Donations" Relationship="DBModel.FK_Donation_Event" FromRole="Event" ToRole="Donation" />
           <NavigationProperty Name="User" Relationship="DBModel.FK_Event_User" FromRole="Event" ToRole="User" />
-          <NavigationProperty Name="Users" Relationship="DBModel.UserEvent" FromRole="Event" ToRole="User" />
         </EntityType>
         <EntityType Name="Merchandise">
           <Key>
@@ -317,7 +304,7 @@ warning 6002: The table/view 'D:\TESTAREA\TEST U\FUNDTASIA\APP_DATA\DB.MDF.dbo.U
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CreatedBy" Type="Guid" Nullable="false" />
           <NavigationProperty Name="User" Relationship="DBModel.FK_Table_TUser" FromRole="Report" ToRole="User" />
@@ -340,8 +327,8 @@ warning 6002: The table/view 'D:\TESTAREA\TEST U\FUNDTASIA\APP_DATA\DB.MDF.dbo.U
           <NavigationProperty Name="Donations" Relationship="DBModel.FK_Donation_User" FromRole="User" ToRole="Donation" />
           <NavigationProperty Name="Events" Relationship="DBModel.FK_Event_User" FromRole="User" ToRole="Event" />
           <NavigationProperty Name="Reports" Relationship="DBModel.FK_Table_TUser" FromRole="User" ToRole="Report" />
+          <NavigationProperty Name="PasswordResets" Relationship="DBModel.FK_PasswordReset_User" FromRole="User" ToRole="PasswordReset" />
           <NavigationProperty Name="UserMerchandises" Relationship="DBModel.FK_UserMerchandise_User" FromRole="User" ToRole="UserMerchandise" />
-          <NavigationProperty Name="Events1" Relationship="DBModel.UserEvent" FromRole="User" ToRole="Event" />
         </EntityType>
         <EntityType Name="UserMerchandise">
           <Key>
@@ -360,6 +347,17 @@ warning 6002: The table/view 'D:\TESTAREA\TEST U\FUNDTASIA\APP_DATA\DB.MDF.dbo.U
           <Property Name="PostalCode" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="Merchandise" Relationship="DBModel.FK_UserMerchandise_Merchandise" FromRole="UserMerchandise" ToRole="Merchandise" />
           <NavigationProperty Name="User" Relationship="DBModel.FK_UserMerchandise_User" FromRole="UserMerchandise" ToRole="User" />
+        </EntityType>
+        <EntityType Name="PasswordReset">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="Code" />
+            <PropertyRef Name="TimeOver" />
+          </Key>
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="Code" Type="Guid" Nullable="false" />
+          <Property Name="TimeOver" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="DBModel.FK_PasswordReset_User" FromRole="PasswordReset" ToRole="User" />
         </EntityType>
         <Association Name="FK_Donation_Event">
           <End Type="DBModel.Event" Role="Event" Multiplicity="0..1" />
@@ -421,6 +419,18 @@ warning 6002: The table/view 'D:\TESTAREA\TEST U\FUNDTASIA\APP_DATA\DB.MDF.dbo.U
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PasswordReset_User">
+          <End Type="DBModel.User" Role="User" Multiplicity="1" />
+          <End Type="DBModel.PasswordReset" Role="PasswordReset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PasswordReset">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserMerchandise_User">
           <End Type="DBModel.User" Role="User" Multiplicity="1" />
           <End Type="DBModel.UserMerchandise" Role="UserMerchandise" Multiplicity="*" />
@@ -432,10 +442,6 @@ warning 6002: The table/view 'D:\TESTAREA\TEST U\FUNDTASIA\APP_DATA\DB.MDF.dbo.U
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
-        <Association Name="UserEvent">
-          <End Type="DBModel.Event" Role="Event" Multiplicity="*" />
-          <End Type="DBModel.User" Role="User" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -524,14 +530,15 @@ warning 6002: The table/view 'D:\TESTAREA\TEST U\FUNDTASIA\APP_DATA\DB.MDF.dbo.U
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="UserEvent" TypeName="DBModel.UserEvent" StoreEntitySet="UserEvent">
-            <EndProperty Name="User">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="Event">
-              <ScalarProperty Name="Id" ColumnName="EventId" />
-            </EndProperty>
-          </AssociationSetMapping>
+          <EntitySetMapping Name="PasswordResets">
+            <EntityTypeMapping TypeName="DBModel.PasswordReset">
+              <MappingFragment StoreEntitySet="PasswordReset">
+                <ScalarProperty Name="TimeOver" ColumnName="TimeOver" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

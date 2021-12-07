@@ -314,6 +314,9 @@
     <Compile Include="Models\Merchandise.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PasswordReset.cs">
+      <DependentUpon>DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Report.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
@@ -351,7 +354,6 @@
     <Content Include="Views\Admin\ReportDetails.cshtml" />
     <Content Include="Views\AList\Event.cshtml" />
     <Content Include="Views\Home\EventDetail.cshtml" />
-    <Content Include="Views\UserAuth\Register.cshtml" />
     <Content Include="Views\UserAuth\VerifyAccount.cshtml" />
     <Content Include="Views\AList\ClientUser.cshtml" />
     <Content Include="Views\AList\Staff.cshtml" />

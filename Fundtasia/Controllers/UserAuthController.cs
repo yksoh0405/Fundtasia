@@ -75,13 +75,16 @@ namespace Fundtasia.Controllers
                     ActivationCode = Guid.NewGuid(),
                     Status = "Active"
                 };
-                db.Users.Add(user);
-                db.SaveChanges();
+                using (DBEntities1 da = new DBEntities1())
+                {
+                    da.Users.Add(user);
+                    da.SaveChanges();
 
-                //Send email to user
-                SendVerificaionLinkEmail(user.Email, user.ActivationCode.ToString());
-                message = "You have complete to register an account in Fundtasia. The activation link has been sent to your email: " + user.Email;
-                Status = true;
+                    //Send email to user
+                    SendVerificaionLinkEmail(user.Email, user.ActivationCode.ToString());
+                    message = "You have complete to register an account in Fundtasia. The activation link has been sent to your email: " + user.Email;
+                    Status = true;
+                }
                 #endregion
             }
             else
@@ -145,6 +148,9 @@ namespace Fundtasia.Controllers
 
                 if (user != null && VerifyPassword(user.PasswordHash, login.PasswordHash))
                 {
+                    user.LastLoginTime = DateTime.Now;
+                    user.LastLoginIP = GetLocalIPAddress();
+                    db.SaveChanges();
                     SignIn(user.Id.ToString(), user.Role, login.RememberMe);
                     Session["UserSession"] = new User(user.Id, user.Email, user.Role, user.FirstName, user.LastName, user.Status, (DateTime)user.LastLoginTime, user.LastLoginIP);
 
@@ -174,7 +180,7 @@ namespace Fundtasia.Controllers
         {
             var iden = new ClaimsIdentity("AUTH");
 
-            iden.AddClaim(new Claim(ClaimTypes.Sid, id));
+            iden.AddClaim(new Claim(ClaimTypes.Name, id));
             iden.AddClaim(new Claim(ClaimTypes.Role, role));
 
             var prop = new AuthenticationProperties
