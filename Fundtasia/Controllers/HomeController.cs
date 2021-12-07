@@ -35,6 +35,7 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
+        [Authorize]
         public ActionResult DonationPayment()
         {
             if (!Request.IsAuthenticated)
@@ -56,6 +57,7 @@ namespace Fundtasia.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult DonationPayment(Donation model)
         {
             if (!Request.IsAuthenticated)
@@ -95,6 +97,7 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
+        [Authorize]
         public ActionResult DonationReceipt(string sort = "Time Donated", string sortdir = "DESC", int page = 1, string keyword = "")
         {
             if (!Request.IsAuthenticated)
@@ -244,6 +247,10 @@ namespace Fundtasia.Controllers
             var model = db.Events.Find(id);
             model.View = model.View + 1;
             db.SaveChanges();
+
+            var donation = db.Donations.Where(s => s.EventId.Contains(id));
+            ViewBag.TotalDonation = donation.Select(s => s.Amount).Sum();
+
             return View(model);
         }
     }

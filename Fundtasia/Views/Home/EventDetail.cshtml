@@ -44,49 +44,14 @@
                 <h3>Target: RM @Model.Target</h3>
             </div>
             <div class="col">
-                <i class="fas fa-eye"></i> @Model.View
+                <i class="fas fa-eye"></i> @Model.View 
             </div>
         </div>
         <div class="progress">
             @{
-                //TODO - Get sum of the donation
-                //ViewBag.TotalDonation
+                var totalDonation = (ViewBag.TotalDonation / Model.Target) * 100;
             }
-            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;"></div>
-        </div>
-    </div>
-</div>
-
-<div class="col-lg-12 mx-auto mt-5" id="target">
-    <div class="row">
-        <div class="col">
-            <h4>
-                @{
-                    //TODO - Get count of the user and event
-                    //ViewBag.UserEvent
-                }
-                123 People has
-                <i class="far fa-thumbs-up"></i>
-                this article
-            </h4>
-        </div>
-        <div class="col">
-            @if (!Request.IsAuthenticated)
-            {
-                <a href="#popup" class="view-speaker ts-image-popup" data-effect="mfp-zoom-in">
-                    <i class="far fa-heart"></i>
-                </a>
-            }
-            else
-            {
-                <button data-get="@Url.Action("EventDetail", "Home", new { id = Model.Id })" class="like">
-                    <i class="far fa-heart"></i>
-                </button>
-                <span>
-                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                    << &nbsp; &nbsp; &nbsp; Click here to like this page
-                </span>
-            }
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="@totalDonation" aria-valuemin="0" aria-valuemax="100" style="width: @totalDonation%;"></div>
         </div>
     </div>
 </div>

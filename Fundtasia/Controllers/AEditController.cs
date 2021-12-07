@@ -14,6 +14,7 @@ namespace Fundtasia.Controllers
         DBEntities1 db = new DBEntities1();
 
         // Edit Staff
+        [Authorize(Roles = "Admin")]
         public ActionResult EditStaff(Guid Id)
         {
             var m = db.Users.Find(Id);
@@ -36,6 +37,7 @@ namespace Fundtasia.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult EditStaff(UserEditVM model)
         {
             var s = db.Users.Find(model.Id);
@@ -60,6 +62,7 @@ namespace Fundtasia.Controllers
         }
 
         // Edit Client
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult EditClientUser(Guid Id)
         {
             var m = db.Users.Find(Id);
@@ -81,6 +84,7 @@ namespace Fundtasia.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult EditClientUser(ClientUserEditVM model)
         {
             var cu = db.Users.Find(model.Id);
@@ -104,6 +108,7 @@ namespace Fundtasia.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult EditEvent(string id)
         {
             var m = db.Events.Find(id);
@@ -126,6 +131,7 @@ namespace Fundtasia.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult EditEvent(EventEditVM model)
         {
             var m = db.Events.Find(model.Id);
@@ -166,6 +172,7 @@ namespace Fundtasia.Controllers
 
         // Edit Merchandise
         // GET: AEdit
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult EditMerchandise(string Id)
         {
             var m = db.Merchandises.Find(Id);
@@ -188,6 +195,7 @@ namespace Fundtasia.Controllers
 
         // POST: AEdit
         [HttpPost]
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult EditMerchandise(MerchandiseEditVM model)
         {
             // TODO

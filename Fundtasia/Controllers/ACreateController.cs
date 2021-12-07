@@ -67,13 +67,15 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult CreateClientUser()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin, Staff")]
         [HttpPost]
-        public ActionResult CreateClientUser(CreateUserVM model)
+        public ActionResult CreateClientUser(CreateClientUserVM model)
         {
             if (ModelState.IsValid)
             {
@@ -103,12 +105,15 @@ namespace Fundtasia.Controllers
                     IsEmailVerified = model.IsEmailVerified
                 };
 
-                db.Users.Add(newClientUser);
-                db.SaveChanges();
-
-                if (!newClientUser.IsEmailVerified)
+                using (DBEntities1 dc = new DBEntities1())
                 {
-                    SendVerificaionLinkEmail(newClientUser.Email, newClientUser.ActivationCode.ToString());
+                    dc.Users.Add(newClientUser);
+                    dc.SaveChanges();
+
+                    if (!newClientUser.IsEmailVerified)
+                    {
+                        SendVerificaionLinkEmail(newClientUser.Email, newClientUser.ActivationCode.ToString());
+                    }
                 }
 
                 return RedirectToAction("ClientUser", "AList");

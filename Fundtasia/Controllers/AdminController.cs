@@ -14,69 +14,26 @@ namespace Fundtasia.Controllers
         DBEntities1 db = new DBEntities1();
 
         // GET: Admin
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult Dashboard()
         {
-            if (!Request.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            if (Session["UserSession"] != null)
-            {
-                User loginUser = (User)Session["UserSession"];
-                if (String.Equals(loginUser.Role, "User"))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
             return View();
         }
 
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult ReportDetails(string id)
         {
-            if (!Request.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            if (Session["UserSession"] != null)
-            {
-                User loginUser = (User)Session["UserSession"];
-                if (String.Equals(loginUser.Role, "User"))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-
             var model = db.Reports.Find(id);
 
             return View(model);
         }
 
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult ViewProfile()
         {
-            if (!Request.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            User loginUser = null;
-
-            if (Session["UserSession"] != null)
-            {
-                loginUser = (User)Session["UserSession"];
-                if (String.Equals(loginUser.Role, "User"))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-
-            if (loginUser == null)
-            {
-                return RedirectToAction("LogIn", "UserAuth");
-
-            }
-
+            User userSession = (User)Session["UserSession"];
+            User loginUser = db.Users.Find(userSession.Id);
+            
             var model = new StaffProfileVM
             {
                 Id = loginUser.Id,
@@ -93,6 +50,7 @@ namespace Fundtasia.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult ViewProfile(StaffProfileVM model)
         {
             var s = db.Users.Find(model.Id);
@@ -125,12 +83,17 @@ namespace Fundtasia.Controllers
                     s.PasswordHash = Crypto.Hash(model.PasswordHash);
                 }
                 db.SaveChanges();
+
+                Session["UserSession"] = new User(s.Id, s.Email, s.Role, s.FirstName, s.LastName, s.Status, (DateTime)s.LastLoginTime, s.LastLoginIP);
+
+
                 return RedirectToAction("Dashboard", "Admin");
             }
 
             return View(model);
         }
 
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult ViewMerchandiseSale(Guid id)
         {
             var model = db.UserMerchandises.Find(id);
