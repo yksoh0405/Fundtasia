@@ -92,7 +92,7 @@
                             <li>
                                 @using (Ajax.BeginForm(null, null, ao, new { @class = "app-search d-none d-md-block me-3", role = "search" }))
                                 {
-                                    @Html.TextBox("keyword", null, new { autofocus = "", type = "search", placeholder = "Search", @class = "form-control mt-0" })
+                                    @Html.TextBox("keyword", null, new { autofocus = "", type = "search", placeholder = $"Search by {ViewBag.SearchPlaceholder}", @class = "form-control mt-0" })
                                     <a href="#" class="active">
                                         <i class="fa fa-search"></i>
                                     </a>
