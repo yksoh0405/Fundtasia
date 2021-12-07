@@ -40,4 +40,30 @@ namespace Fundtasia.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "*Event Selection is required")]
         public string EventId { get; set; }
     }
+
+    public class MerchandisePaymentVM
+    {
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Size is required")]
+        public string Size { get; set; }
+
+        [Display(Name = "Full Name")]
+        
+        public string FullName { get; set; }
+
+        [Display(Name = "Street Address")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Street Address is required")]
+        public string StreetAddress { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "State is required")]
+        public string State { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "City is required")]
+        [RegularExpression(@"[a-z][A-Z]", ErrorMessage = "Invalid {0} format.")]
+        public string City { get; set; }
+
+        [Display(Name = "Postal Code")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Postal Code is required")]
+        [RegularExpression(@"\d{5}", ErrorMessage = "Invalid Postal Code format.")]
+        public string PostalCode { get; set; }
+    }
 }

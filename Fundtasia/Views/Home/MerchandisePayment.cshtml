@@ -1,7 +1,9 @@
 ﻿@using Fundtasia
-@model Merchandise
+@model MerchandisePaymentVM
 @{
     ViewBag.Title = "Merchandise Payment";
+
+    IEnumerable<UserMerchandise> donation = ViewBag.UserMerchandise;
 }
 
 <!DOCTYPE html>
@@ -27,6 +29,18 @@
                             <h4 style="color: #9B0909">RM @Model.Price.00</h4>
                             <h4 class="card-title" style="min-height:50px;">@Model.Name</h4>
                             <h4>Size : </h4>
+                            <div>
+                                <label>@Html.RadioButtonFor(m => m.Size, "Available") Available </label>
+                            </div>
+                            <div>
+                                <label>@Html.RadioButtonFor(m => m.Size, "Available") Available </label>
+                            </div>
+                            <div>
+                                <label>@Html.RadioButtonFor(m => m.Size, "Available") Available </label>
+                            </div>
+                            <div>
+                                <label>@Html.RadioButtonFor(m => m.Size, "Available") Available </label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -51,6 +65,7 @@
             <div class="card" style="width: 28rem;">
                 <div class="card-body">
                     <h2 class="card-title">📫 Billing Address 📫</h2>
+
                     <h5>Full Name : </h5>
                     <input type="text" class="form-control" id="" placeholder="Full Name Here" autocomplete="off"><br />
                     <h5>Street Address : </h5>

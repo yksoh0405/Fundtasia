@@ -165,6 +165,7 @@
     <Content Include="Content\style.min.css" />
     <Content Include="Content\merchandiseAdmin.css" />
     <Content Include="Content\createMerch.css" />
+    <Content Include="Content\receipt.css" />
     <Content Include="Content\svg-with-js.css" />
     <Content Include="Content\svg-with-js.min.css" />
     <Content Include="Content\UserList.css" />
@@ -310,7 +311,6 @@
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Extended\Event.cs" />
-    <Compile Include="Models\Extended\MerchandisePayment.cs" />
     <Compile Include="Models\Extended\Payment.cs" />
     <Compile Include="Models\Extended\User.cs" />
     <Compile Include="Models\Extended\UserMerchandise.cs" />
@@ -382,6 +382,7 @@
     <Content Include="Views\Admin\ViewMerchandiseSale.cshtml" />
     <Content Include="Views\Home\DonationReceipt.cshtml" />
     <Content Include="Views\Home\_DonationReceipt.cshtml" />
+    <Content Include="Views\Home\_MerchandiseReceipt.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

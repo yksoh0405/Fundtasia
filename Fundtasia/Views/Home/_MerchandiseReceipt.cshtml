@@ -1,6 +1,6 @@
 ﻿@using PagedList
 @using PagedList.Mvc
-@model IPagedList<Donation>
+@model IPagedList<UserMerchandise>
 @{
     var ao = new AjaxOptions
     {
@@ -8,7 +8,7 @@
         LoadingElementId = "loader",
         OnSuccess = "highlight"
     };
-    string[] fields = { "Id", "Donor", "Time Donated", "Amount", "Event" };
+    string[] fields = { "Id" };
     string sort = Request.Params["sort"];
     string sortdir = Request.Params["sortdir"];
     string keyword = Request.Params["keyword"];
@@ -32,27 +32,43 @@
 {
     <div class="card">
         <div class="card-body">
-            <h2 class="card-title">🙏 <u>THANK YOU FOR DONATING!</u> 🙏</h2>
+            <h2 class="card-title">🙏 <u>THANK YOU FOR BUYING OUR MERCHANDISE!</u> 🙏</h2>
             <table class="receipt-table">
                 <tr>
-                    <td><u><b>Image of the Event</b><u></td>
-                    <img src="~/Images/Uploads/Event/@d.Event.CoverImage" style="height:300px; object-fit:cover;" />
+                <td><u><b>Image of the Merchandise</b><u></td>
+                <img src="~/Images/Uploads/Merchandise/@d.Merchandise.Image " style="height:300px; object-fit:cover;" />
                 </tr>
                 <tr>
                     <td>Name :</td>
                     <td><div class="receipt-align"><b>@d.User.FirstName @d.User.LastName</b></div></td>
                 </tr>
                 <tr>
-                    <td>Event Name :</td>
-                    <td><div class="receipt-align"><b>@d.Event.Title</b></div></td>
+                    <td>Merchandise Name :</td>
+                    <td><div class="receipt-align"><b>@d.Merchandise.Name</b></div></td>
                 </tr>
                 <tr>
-                    <td>Time Donated :</td>
-                    <td><div class="receipt-align"><b>@d.TimeDonated</b></div></td>
+                    <td>Merchandise Size :</td>
+                    <td><div class="receipt-align"><b>@d.Size</b></div></td>
+                </tr>
+                <tr>
+                    <td>Purchase Time :</td>
+                    <td><div class="receipt-align"><b>@d.PurchaseTime</b></div></td>
+                </tr>
+                <tr>
+                    <td>Delivery Address :</td>
+                    <td><div class="receipt-align"><b>@d.FullName</b></div></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><div class="receipt-align"><b>@d.StreetAddress</b></div></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><div class="receipt-align"><b>@d.PostalCode, @d.City, @d.State</b></div></td>
                 </tr>
                 <tr>
                     <td>Amount Donated :</td>
-                    <td><div class="receipt-align"><b><u>RM @d.Amount.00</u></b></div></td>
+                    <td><div class="receipt-align"><b><u>RM @d.Price.00</u></b></div></td>
                 </tr>
 
             </table>

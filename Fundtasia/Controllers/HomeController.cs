@@ -159,10 +159,52 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
-        public ActionResult Receipt()
+        public ActionResult MerchandiseReceipt(string sort = "Time Donated", string sortdir = "DESC", int page = 1, string keyword = "")
         {
-            //pass img, price and name from merch payment
-            return View();
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (Session["UserSession"] != null)
+            {
+                User loginUser = (User)Session["UserSession"];
+                if (String.Equals(loginUser.Role, "User"))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
+            Func<UserMerchandise, object> fn = d => d.Id;
+            switch (sort)
+            {
+                case "Id": fn = d => d.Id; break;
+            }
+
+            var sorted = sortdir == "DESC" ? db.UserMerchandises.Where(s => s.User.FirstName.Contains(keyword)).OrderByDescending(fn) : db.UserMerchandises.Where(s => s.User.FirstName.Contains(keyword)).OrderBy(fn);
+
+            //Paging
+            if (page < 1)
+            {
+                return RedirectToAction(null, new { page = 1 });
+            }
+
+            var model = sorted.ToPagedList(page, 10);
+
+            if (model == null)
+            {
+                return View();
+            }
+
+            if (page > model.PageCount)
+            {
+                return RedirectToAction(null, new { page = model.PageCount });
+            }
+
+            //Ajax Request
+            if (Request.IsAjaxRequest()) return PartialView("_MerchandiseReceipt", model);
+
+            return View(model);
         }
 
         public ActionResult Event(string sort = "CreatedDate", string sortdir = "DESC", int page = 1)
