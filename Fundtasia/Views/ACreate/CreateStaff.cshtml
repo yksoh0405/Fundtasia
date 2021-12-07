@@ -1,4 +1,4 @@
-﻿@model User
+﻿@model CreateUserVM
 
 @{
     ViewBag.Title = "Create Staff";
@@ -38,6 +38,14 @@
             <div>
                 <label id="staffRole">@Html.RadioButtonFor(s => s.Role, "Admin") Admin </label>
                 <label>@Html.RadioButtonFor(s => s.Role, "Staff", new { @checked = true }) Staff </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Email auto verified? </label>
+            <div>
+                <label id="emailVerification">@Html.RadioButtonFor(s => s.IsEmailVerified, "true", new { @checked = true }) Yes </label>
+                <label>@Html.RadioButtonFor(s => s.IsEmailVerified, "false") No </label>
             </div>
         </div>
 

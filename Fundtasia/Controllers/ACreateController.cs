@@ -36,7 +36,7 @@ namespace Fundtasia.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateStaff(User model)
+        public ActionResult CreateStaff(CreateUserVM model)
         {
             if (!Request.IsAuthenticated)
             {
@@ -62,19 +62,31 @@ namespace Fundtasia.Controllers
                     return View(model);
                 }
 
-                // Password hash
-                model.PasswordHash = Crypto.Hash(model.PasswordHash);
+                var newStaff = new User
+                {
+                    // Password Hash
+                    PasswordHash = Crypto.Hash(model.PasswordHash),
 
-                // Activation Code
-                model.ActivationCode = Guid.NewGuid();
+                    // Activation Code
+                    ActivationCode = Guid.NewGuid(),
 
-                // Bind data
-                model.Id = Guid.NewGuid();
-                model.IsEmailVerified = true;
-                model.Status = "Active";
+                    // Bind Data
+                    Id = Guid.NewGuid(),
+                    Role = model.Role,
+                    Status = "Active",
+                    LastName = model.LastName,
+                    FirstName = model.FirstName,
+                    Email = model.Email,
+                    IsEmailVerified = model.IsEmailVerified
+                };
 
-                db.Users.Add(model);
+                db.Users.Add(newStaff);
                 db.SaveChanges();
+
+                if (!newStaff.IsEmailVerified)
+                {
+                    SendVerificaionLinkEmail(newStaff.Email, newStaff.ActivationCode.ToString());
+                }
 
                 return RedirectToAction("Staff", "AList");
             }
@@ -101,7 +113,7 @@ namespace Fundtasia.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateClientUser(User model)
+        public ActionResult CreateClientUser(CreateUserVM model)
         {
             if (!Request.IsAuthenticated)
             {
@@ -127,23 +139,30 @@ namespace Fundtasia.Controllers
                     return View(model);
                 }
 
-                // Password hash
-                model.PasswordHash = Crypto.Hash(model.PasswordHash);
+                var newClientUser = new User
+                {
+                    // Password Hash
+                    PasswordHash = Crypto.Hash(model.PasswordHash),
 
-                // Activation Code
-                model.ActivationCode = Guid.NewGuid();
+                    // Activation Code
+                    ActivationCode = Guid.NewGuid(),
 
-                // Bind data
-                model.Id = Guid.NewGuid();
-                model.Role = "User";
-                model.Status = "Active";
+                    // Bind Data
+                    Id = Guid.NewGuid(),
+                    Role = "User",
+                    Status = "Active",
+                    LastName = model.LastName,
+                    FirstName = model.FirstName,
+                    Email = model.Email,
+                    IsEmailVerified = model.IsEmailVerified
+                };
 
-                db.Users.Add(model);
+                db.Users.Add(newClientUser);
                 db.SaveChanges();
 
-                if (!model.IsEmailVerified)
+                if (!newClientUser.IsEmailVerified)
                 {
-                    SendVerificaionLinkEmail(model.Email, model.ActivationCode.ToString());
+                    SendVerificaionLinkEmail(newClientUser.Email, newClientUser.ActivationCode.ToString());
                 }
 
                 return RedirectToAction("ClientUser", "AList");
@@ -253,7 +272,7 @@ namespace Fundtasia.Controllers
                 {
                     Id = model.Id,
                     Name = model.Name,
-                    Image = SaveMerchandisePhoto(model.ImageURL),   
+                    Image = SaveMerchandisePhoto(model.ImageURL),
                     Price = model.Price,
                     Status = model.Status
                 };
@@ -264,7 +283,7 @@ namespace Fundtasia.Controllers
 
                 return RedirectToAction("Merchandise", "AList");
             }
-            
+
             return View(model);
         }
 
