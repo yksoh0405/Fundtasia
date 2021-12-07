@@ -24,8 +24,9 @@ namespace Fundtasia.Controllers
 
             var model = new UserEditVM
             {
-                LastName = m.LastName,
+                Id = m.Id,
                 FirstName = m.FirstName,
+                LastName = m.LastName,
                 Email = m.Email,
                 Role = m.Role,
                 Status = m.Status
@@ -46,8 +47,8 @@ namespace Fundtasia.Controllers
 
             if (ModelState.IsValid)
             {
-                s.LastName = model.LastName;
                 s.FirstName = model.FirstName;
+                s.LastName = model.LastName;
                 s.Role = model.Role;
                 s.Status = model.Status;
                 db.SaveChanges();
@@ -69,6 +70,7 @@ namespace Fundtasia.Controllers
 
             var model = new ClientUserEditVM
             {
+                Id = m.Id,
                 LastName = m.LastName,
                 FirstName = m.FirstName,
                 Email = m.Email,
@@ -112,6 +114,7 @@ namespace Fundtasia.Controllers
 
             var model = new EventEditVM
             {
+                Id = m.Id,
                 Title = m.Title,
                 ImageURL = m.CoverImage,
                 Target = m.Target,

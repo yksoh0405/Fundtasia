@@ -191,7 +191,7 @@ namespace Fundtasia.Controllers
                                 Console.WriteLine(e);
                             }
 
-                            User userSession = new User(v.Id, v.Email, v.Role, v.FirstName, v.LastName);
+                            User userSession = new User(v.Id, v.Email, v.Role, v.FirstName, v.LastName, v.Status, (DateTime)v.LastLoginTime, v.LastLoginIP);
                             Session["UserSession"] = userSession;
                             return RedirectToAction("Index", "Home");
                         }

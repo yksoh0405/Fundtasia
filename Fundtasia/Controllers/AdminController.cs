@@ -32,7 +32,7 @@ namespace Fundtasia.Controllers
             return View();
         }
 
-        public ActionResult ReportDetails()
+        public ActionResult ReportDetails(string id)
         {
             if (!Request.IsAuthenticated)
             {
@@ -47,7 +47,10 @@ namespace Fundtasia.Controllers
                     return RedirectToAction("Index", "Home");
                 }
             }
-            return View();
+
+            var model = db.Reports.Find(id);
+
+            return View(model);
         }
 
         public ActionResult ViewProfile()
@@ -74,12 +77,23 @@ namespace Fundtasia.Controllers
 
             }
 
-            var model = db.Users.Find(loginUser.Id);
+            var model = new StaffProfileVM
+            {
+                Id = loginUser.Id,
+                Email = loginUser.Email,
+                Role = loginUser.Role,
+                FirstName = loginUser.FirstName,
+                LastName = loginUser.LastName,
+                Status = loginUser.Status,
+                LastLoginTime = loginUser.LastLoginTime,
+                LastLoginIP = loginUser.LastLoginIP
+            };
+
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult ViewProfile(User model)
+        public ActionResult ViewProfile(StaffProfileVM model)
         {
             var s = db.Users.Find(model.Id);
 
@@ -90,12 +104,14 @@ namespace Fundtasia.Controllers
 
             if (ModelState.IsValid)
             {
-                if (s.Email != model.Email)
+                //If Email string is different with database
+                if (!String.Equals(s.Email, model.Email))
                 {
+                    //Check email exist in another record
                     if (IsEmailExist(model.Email))
                     {
                         ModelState.AddModelError("EmailExist", "Email Already Exist");
-                        return View();
+                        return View(model);
                     }
                     else
                     {
@@ -109,6 +125,7 @@ namespace Fundtasia.Controllers
                     s.PasswordHash = Crypto.Hash(model.PasswordHash);
                 }
                 db.SaveChanges();
+                return RedirectToAction("Dashboard", "Admin");
             }
 
             return View(model);

@@ -62,18 +62,34 @@
                 <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
                     <!-- This menu button will be display if width <= 766px -->
                     <ul class="navbar-nav d-none d-md-block d-lg-none">
-                        <li class="nav-item">
+                        <li class="nav-item text-white">
+                            Text display here
                             <a class="nav-toggler nav-link waves-effect waves-light text-white" href="javascript:void(0)"><i class="fas fa-bars fa-times"></i></a>
                         </li>
                     </ul>
                     <!-- This bar will be hidden if width > 766px -->
+                    <ul class="navbar-nav d-lg-block">
+                        <li class="nav-item text-white ms-3">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item text-white">
+                                        @Html.ActionLink("Admin", "Dashboard", "Admin")
+                                    </li>
+                                    <li class="breadcrumb-item">
+                                        @Html.ActionLink((string)ViewBag.Title, "Dashboard", "Admin")
+                                    </li>
+                                    @RenderSection("breadcrumb", false)
+                                </ol>
+                            </nav>
+                        </li>
+                    </ul>
                     <ul class="navbar-nav ms-auto d-flex align-items-center">
                         <!-- Search bar -->
                         @* Only display this for AList controller *@
                         @RenderSection("searchBar", false)
                         @if (ViewContext.RouteData.Values["controller"].ToString() == "AList")
                         {
-                            <li class=" in">
+                            <li>
                                 @using (Ajax.BeginForm(null, null, ao, new { @class = "app-search d-none d-md-block me-3", role = "search" }))
                                 {
                                     @Html.TextBox("keyword", null, new { autofocus = "", type = "search", placeholder = "Search", @class = "form-control mt-0" })
@@ -83,8 +99,7 @@
                                 }
                             </li>
                         }
-
-                        <!-- Display staff / admin name -->
+                        <!-- View Profile -->
                         <li>
 
                             <a class="profile-pic" href="@Url.Action("ViewProfile", "Admin")">
@@ -156,7 +171,7 @@
                                 <span class="hide-menu">Report</span>
                             </a>
                         </li>
-                        <li class="text-center p-20 upgrade-btn">
+                        <li class="text-center p-20">
                             <button type="button" class="btn d-grid btn-danger text-white w-100" data-bs-toggle="modal" data-bs-target="#logOutModal">Log Out</button>
                         </li>
                     </ul>

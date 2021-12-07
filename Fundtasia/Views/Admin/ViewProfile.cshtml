@@ -1,4 +1,4 @@
-﻿@model User
+﻿@model StaffProfileVM
 @{
     ViewBag.Title = "Profile";
 }
@@ -9,13 +9,6 @@
             <div class="card-body">
                 @using (Html.BeginForm(null, null, FormMethod.Post))
                 {
-
-                    <div class="form-group mb-4">
-                        @Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "col-lg-6 col-md-12 p-3" })
-                        <div class="col-md-12 border-bottom p-0">
-                            @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control p-3 border-0", @readonly = "" } })
-                        </div>
-                    </div>
                     <div class="form-group mb-4">
                         @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "col-lg-6 col-md-12 p-3" })
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "col-lg-6 col-md-12 text-danger text-justify" })
@@ -46,6 +39,22 @@
                         @Html.ValidationMessageFor(model => model.PasswordHash, "", new { @class = "col-lg-6 col-md-12 text-danger text-justify" })
                         <div class="col-md-12 border-bottom p-0">
                             @Html.EditorFor(model => model.PasswordHash, new { htmlAttributes = new { @class = "form-control p-3 border-0" } })
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12">
+                                <div class="form-group mb-4">
+                                    @Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "col-lg-6 col-md-12 p-3" })
+                                    @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control p-3 border-top-0 border-start-0 border-end-0", @readonly = "" } })
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="form-group mb-4">
+                                    @Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "col-lg-6 col-md-12 p-3" })
+                                    @Html.EditorFor(model => model.Role, new { htmlAttributes = new { @class = "form-control p-3 border-top-0 border-start-0 border-end-0", @readonly = "" } })
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-12">

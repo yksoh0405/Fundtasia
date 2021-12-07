@@ -12,13 +12,16 @@ namespace Fundtasia.Models
         public string ConfirmPassword { get; set; }
 
 
-        public User(Guid Id, string Email, string Role, string FirstName, string LastName)
+        public User(Guid Id, string Email, string Role, string FirstName, string LastName, string Status, DateTime LastLoginTime, string LastLoginIP)
         {
             this.Id = Id;
             this.Email = Email;
             this.Role = Role;
             this.FirstName = FirstName;
             this.LastName = LastName;
+            this.Status = Status;
+            this.LastLoginTime = LastLoginTime;
+            this.LastLoginIP = LastLoginIP;
         }
     }
 
@@ -84,5 +87,28 @@ namespace Fundtasia.Models
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "User status is required")]
         public string Status { get; set; }
+    }
+
+    public class StaffProfileVM
+    {
+        public System.Guid Id { get; set; }
+        public string Role { get; set; }
+        public string PasswordHash { get; set; }
+        public string Status { get; set; }
+        public Nullable<System.DateTime> LastLoginTime { get; set; }
+        public string LastLoginIP { get; set; }
+
+        [Display(Name = "Email")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Email is required")]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
+
+        [Display(Name = "First Name")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "First name required")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Last Name")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Last name required")]
+        public string LastName { get; set; }
     }
 }

@@ -282,7 +282,6 @@
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Extended\Event.cs" />
-    <Compile Include="Models\Extended\Payment.cs" />
     <Compile Include="Models\Extended\User.cs" />
     <Compile Include="Models\Extended\UserLogin.cs" />
     <Compile Include="Models\Extended\UserMerchandise.cs" />
