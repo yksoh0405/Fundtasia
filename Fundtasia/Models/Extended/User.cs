@@ -6,12 +6,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Fundtasia.Models
 {
-    [MetadataType(typeof(UserMetadata))]
     public partial class User
     {
-        public string ConfirmPassword { get; set; }
-
-
         public User(Guid Id, string Email, string Role, string FirstName, string LastName, string Status, DateTime LastLoginTime, string LastLoginIP)
         {
             this.Id = Id;
@@ -25,10 +21,8 @@ namespace Fundtasia.Models
         }
     }
 
-    public class UserMetadata
+    public class SignUpVM
     {
-        public System.Guid Id { get; set; }
-
         [Display(Name = "Email")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Email is required")]
         [DataType(DataType.EmailAddress)]
@@ -50,8 +44,24 @@ namespace Fundtasia.Models
 
         [Display(Name = "Confirm Password")]
         [DataType(DataType.Password)]
+        [Compare("PasswordHash", ErrorMessage = "The confirm password should match with password")]
         public string ConfirmPassword { get; set; }
 
+    }
+
+    public class UserLogin
+    {
+        [Display(Name = "Email")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Email required")]
+        public string Email { get; set; }
+
+        [Display(Name = "Password")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Password required")]
+        [DataType(DataType.Password)]
+        public string PasswordHash { get; set; }
+
+        [Display(Name = "Remember Me")]
+        public bool RememberMe { get; set; }
     }
 
     public class CreateUserVM

@@ -1,4 +1,4 @@
-﻿@model User
+﻿@model SignUpVM
 @{
     ViewBag.Title = "Sign Up";
 }
@@ -20,7 +20,6 @@ else
 {
     using (Html.BeginForm())
     {
-        @Html.AntiForgeryToken()
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 

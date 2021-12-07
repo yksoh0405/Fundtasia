@@ -6,10 +6,11 @@ using System.Web.Mvc;
 using PagedList;
 using System.Net.Mail;
 using System.Net;
-using System.Web.Security;
 using Fundtasia.Models;
 using System.Net.Sockets;
 using System.Data.Entity.Validation;
+using System.Security.Claims;
+using Microsoft.Owin.Security;
 
 namespace Fundtasia.Controllers
 {
@@ -22,8 +23,9 @@ namespace Fundtasia.Controllers
         [HttpGet]
         public ActionResult SignUp()
         {
-            if (Request.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
+                //The user cannot come to signup page after login
                 return RedirectToAction("Index", "Home");
             }
             return View();
@@ -31,11 +33,11 @@ namespace Fundtasia.Controllers
 
         //Sign Up Post Action
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult SignUp([Bind(Exclude = "IsEmailVerified, ActivationCode")] User user)
+        public ActionResult SignUp(SignUpVM model)
         {
-            if (Request.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
+                //The user cannot come to signup page after login
                 return RedirectToAction("Index", "Home");
             }
             bool Status = false;
@@ -45,47 +47,41 @@ namespace Fundtasia.Controllers
             if (ModelState.IsValid)
             {
                 #region Check confirm password == password
-                if (user.PasswordHash != user.ConfirmPassword)
+                if (model.PasswordHash != model.ConfirmPassword)
                 {
                     ModelState.AddModelError("ConfirmPassword", "Confirm Password and Password does not match");
-                    return View(user);
+                    return View(model);
                 }
                 #endregion
 
                 #region Email is already exist
-                var isExist = IsEmailExist(user.Email);
-                if (isExist)
+                if (IsEmailExist(model.Email))
                 {
                     ModelState.AddModelError("EmailExist", "Email Already Exist");
-                    return View(user);
+                    return View(model);
                 }
                 #endregion
-
-                #region Generate activation code
-                user.ActivationCode = Guid.NewGuid();
-                #endregion
-
-                #region Password Hashing
-                user.PasswordHash = Crypto.Hash(user.PasswordHash);
-                user.ConfirmPassword = Crypto.Hash(user.ConfirmPassword);
-                #endregion
-                //Bind the data
-                user.Id = Guid.NewGuid();
-                user.IsEmailVerified = false;
-                user.Role = "User";
-                user.Status = "Active";
 
                 #region Save to DB
-                using (DBEntities1 da = new DBEntities1())
+                var user = new User
                 {
-                    da.Users.Add(user);
-                    da.SaveChanges();
+                    Id = Guid.NewGuid(),
+                    Email = model.Email,
+                    Role = "User",
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    PasswordHash = Crypto.Hash(model.PasswordHash),
+                    IsEmailVerified = false,
+                    ActivationCode = Guid.NewGuid(),
+                    Status = "Active"
+                };
+                db.Users.Add(user);
+                db.SaveChanges();
 
-                    //Send email to user
-                    SendVerificaionLinkEmail(user.Email, user.ActivationCode.ToString());
-                    message = "You have complete to register an account in Fundtasia. The activation link has been sent to your email: " + user.Email;
-                    Status = true;
-                }
+                //Send email to user
+                SendVerificaionLinkEmail(user.Email, user.ActivationCode.ToString());
+                message = "You have complete to register an account in Fundtasia. The activation link has been sent to your email: " + user.Email;
+                Status = true;
                 #endregion
             }
             else
@@ -95,7 +91,7 @@ namespace Fundtasia.Controllers
 
             ViewBag.Message = message;
             ViewBag.Status = Status;
-            return View(user);
+            return View(model);
         }
 
         [HttpGet]
@@ -141,84 +137,60 @@ namespace Fundtasia.Controllers
 
         //Login Post Action
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult LogIn(UserLogin login, string ReturnUrl = "")
         {
-            if (Request.IsAuthenticated)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Home");
-            }
-            string message = "";
-            //Verification
-            using (DBEntities1 da = new DBEntities1())
-            {
-                var v = da.Users.Where(s => s.Email == login.Email).FirstOrDefault();
-                if (v != null)
+                var user = db.Users.Where(s => s.Email == login.Email).FirstOrDefault();
+
+                if (user != null && VerifyPassword(user.PasswordHash, login.PasswordHash))
                 {
-                    //Force user to verify their email
-                    if (!v.IsEmailVerified)
-                    {
-                        ViewBag.Message = "Please verify your email first";
-                        return View();
-                    }
+                    SignIn(user.Id.ToString(), user.Role, login.RememberMe);
+                    Session["UserSession"] = new User(user.Id, user.Email, user.Role, user.FirstName, user.LastName, user.Status, (DateTime)user.LastLoginTime, user.LastLoginIP);
 
-                    //Continue compare the password string
-                    if (string.Compare(Crypto.Hash(login.PasswordHash), v.PasswordHash) == 0)
+                    if (ReturnUrl == "")
                     {
-                        int timeout = login.RememberMe ? 525600 : 20; //525600 min = 1 year
-                        //Set cookies
-                        var ticket = new FormsAuthenticationTicket(v.Id.ToString(), login.RememberMe, timeout);
-                        string encrypted = FormsAuthentication.Encrypt(ticket);
-                        var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypted);
-                        cookie.Expires = DateTime.Now.AddMinutes(timeout);
-                        cookie.HttpOnly = true;
-                        Response.Cookies.Add(cookie);
-
-                        if (Url.IsLocalUrl(ReturnUrl))
-                        {
-                            return Redirect(ReturnUrl);
-                        }
-                        else
-                        {
-                            try
-                            {
-                                v.LastLoginTime = DateTime.Now;
-                                v.LastLoginIP = GetLocalIPAddress();
-                                da.SaveChanges();
-                            }
-                            catch (DbEntityValidationException e)
-                            {
-                                Console.WriteLine(e);
-                            }
-
-                            User userSession = new User(v.Id, v.Email, v.Role, v.FirstName, v.LastName, v.Status, (DateTime)v.LastLoginTime, v.LastLoginIP);
-                            Session["UserSession"] = userSession;
-                            return RedirectToAction("Index", "Home");
-                        }
-                    }
-                    else
-                    {
-                        message = "Invalid credential provided";
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 else
                 {
-                    message = "Invalid credential provided";
+                    ModelState.AddModelError("Password", "Email and password not matched");
                 }
             }
-            ViewBag.Message = message;
-            return View();
+            return View(login);
         }
 
         //Log Out
-        [Authorize]
-        [HttpPost]
         public ActionResult Logout()
         {
             //Clear the session
-            FormsAuthentication.SignOut();
-            Session["UserSession"] = null;
+            Request.GetOwinContext().Authentication.SignOut();
+            Session.Remove("UserSession");
             return RedirectToAction("LogIn", "UserAuth");
+        }
+
+        private void SignIn(string id, string role, bool rememberMe)
+        {
+            var iden = new ClaimsIdentity("AUTH");
+
+            iden.AddClaim(new Claim(ClaimTypes.Sid, id));
+            iden.AddClaim(new Claim(ClaimTypes.Role, role));
+
+            var prop = new AuthenticationProperties
+            {
+                IsPersistent = rememberMe
+            };
+
+            Request.GetOwinContext().Authentication.SignIn(prop, iden);
+        }
+
+        private bool VerifyPassword(string hash, string password)
+        {
+            bool status = false;
+            password = Crypto.Hash(password);
+            status = String.Compare(hash, password) == 0 ? true : false;
+            return status;
         }
 
         public ActionResult ForgotPassword()
@@ -230,13 +202,9 @@ namespace Fundtasia.Controllers
             return View();
         }
 
-        //View Client User Profile(Dun allow staff and admin come here to view profile, if they do so RTA("ViewProfile", "ADetail"))
+        [Authorize(Roles = "User")]
         public ActionResult ViewProfile()
         {
-            if (!Request.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
             return View();
         }
 

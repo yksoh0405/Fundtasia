@@ -54,7 +54,7 @@
                             <li class="nav-item dropdown">
                                 <a href="#"> Account <i class="fa fa-angle-down"></i></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    @if (!Request.IsAuthenticated)
+                                    @if (!User.Identity.IsAuthenticated)
                                     {
                                         <li>@Html.ActionLink("Sign Up", "SignUp", "UserAuth")</li>
                                         <li>@Html.ActionLink("Log In", "LogIn", "UserAuth")</li>
@@ -65,11 +65,11 @@
                                         try
                                         {
                                             User userSession = (User)Session["UserSession"];
-                                            if (String.Equals(userSession.Role, "User"))
+                                            if (User.IsInRole("User"))
                                             {
-                                                <li>@Html.ActionLink(userSession.FirstName, "ViewProfile", "UserAuth", new { user = userSession.Id })</li>
+                                                <li>@Html.ActionLink(userSession.FirstName, "ViewProfile", "UserAuth", null, new { user = userSession.Id })</li>
                                             }
-                                            else
+                                            else if(User.IsInRole("Admin") || User.IsInRole("Staff"))
                                             {
                                                 <li>@Html.ActionLink("Dashboard", "Dashboard", "Admin")</li>
                                             }
@@ -82,8 +82,9 @@
                                         }
                                         catch (Exception)
                                         {
-                                            FormsAuthentication.SignOut();
-                                            Session["UserSession"] = null;
+                                            //If got error, then force logout
+                                            Request.GetOwinContext().Authentication.SignOut();
+                                            Session.Remove("UserSession");
                                             <li>@Html.ActionLink("Sign Up", "SignUp", "UserAuth")</li>
                                             <li>@Html.ActionLink("Log In", "LogIn", "UserAuth")</li>
                                             <li>@Html.ActionLink("Forgot Password", "ForgotPassword", "UserAuth")</li>

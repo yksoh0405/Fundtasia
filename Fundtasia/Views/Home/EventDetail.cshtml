@@ -7,6 +7,19 @@
     };
 }
 
+@section head{
+    <style>
+        .like {
+            border: none;
+            background-color: inherit;
+            padding: 14px, 28px;
+            font-size: 16px;
+            cursor: pointer;
+            display: inline-block;
+        }
+    </style>
+}
+
 <div class="row">
     <div class="col-lg-8 mx-auto">
         <h2 class="section-title text-center">@Model.Title</h2>
@@ -61,14 +74,18 @@
             @if (!Request.IsAuthenticated)
             {
                 <a href="#popup" class="view-speaker ts-image-popup" data-effect="mfp-zoom-in">
-                    <i class="far fa-thumbs-up"></i> Like
+                    <i class="far fa-heart"></i>
                 </a>
             }
             else
             {
-                <a href="@Url.Action("EventDetail", "Home", new { id = Model.Id })" class="view-speaker ts-image-popup" data-effect="mfp-zoom-in">
-                    <i class="far fa-thumbs-up"></i> Like
-                </a>
+                <button data-get="@Url.Action("EventDetail", "Home", new { id = Model.Id })" class="like">
+                    <i class="far fa-heart"></i>
+                </button>
+                <span>
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    << &nbsp; &nbsp; &nbsp; Click here to like this page
+                </span>
             }
         </div>
     </div>
@@ -87,9 +104,11 @@
     <div id="popup" class="container ts-speaker-popup mfp-hide">
         <div class="p-5">
             <h3 class="text-center">Seems like you havent login your account yet</h3>
-            <div class="mx-auto">
-                @Html.ActionLink("Sign Up", "SignUp", "UserAuth", null, new { @class = "btn" })
-                @Html.ActionLink("Log In", "LogIn", "UserAuth", null, new { @class = "btn" })
+            <div class="row">
+                <div class="d-grid col-6 mx-auto text-center mx-3">
+                    @Html.ActionLink("Sign Up", "SignUp", "UserAuth", null, new { @class = "btn" })
+                    @Html.ActionLink("Log In", "LogIn", "UserAuth", null, new { @class = "btn" })
+                </div>
             </div>
         </div>
     </div>
