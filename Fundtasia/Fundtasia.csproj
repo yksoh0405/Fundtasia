@@ -280,6 +280,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AEditController.cs" />
     <Compile Include="Controllers\AListController.cs" />
+    <Compile Include="Models\Extended\DonationPayment.cs" />
     <Compile Include="Models\Extended\Merchandise.cs" />
     <Compile Include="Controllers\UserAuthController.cs" />
     <Compile Include="Crypto.cs" />
@@ -309,6 +310,8 @@
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Extended\Event.cs" />
+    <Compile Include="Models\Extended\MerchandisePayment.cs" />
+    <Compile Include="Models\Extended\Payment.cs" />
     <Compile Include="Models\Extended\User.cs" />
     <Compile Include="Models\Extended\UserMerchandise.cs" />
     <Compile Include="Models\Merchandise.cs">
