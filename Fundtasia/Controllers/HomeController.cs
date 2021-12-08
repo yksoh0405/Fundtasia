@@ -72,7 +72,7 @@ namespace Fundtasia.Controllers
                 if (String.Equals(loginUser.Role, "User"))
                 {
                     return RedirectToAction("Index", "Home");
-                } 
+                }
             }
 
             if (ModelState.IsValid)
@@ -150,19 +150,74 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
-        public ActionResult MerchandisePayment(string id)
+        public ActionResult MerchandisePayment(string Id)
         {
-            var model = db.Merchandises.Find(id);
-
-            if (model == null)
+            if (!Request.IsAuthenticated)
             {
-                return RedirectToAction("Receipt");
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (Session["UserSession"] != null)
+            {
+                User loginUser = (User)Session["UserSession"];
+                if (String.Equals(loginUser.Role, "User"))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
+            ViewBag.merchandise = db.Merchandises.Find(Id);
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult MerchandisePayment(MerchandisePaymentVM model)
+        {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (Session["UserSession"] != null)
+            {
+                User loginUser = (User)Session["UserSession"];
+                model.UserId = loginUser.Id;
+                if (String.Equals(loginUser.Role, "User"))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
+            if (ModelState.IsValid)
+            {
+                var merchandise = db.Merchandises.Find(model.MerchandiseId);
+
+                var d = new UserMerchandise
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = model.UserId,
+                    MerchandiseId = merchandise.Id,
+                    Price = merchandise.Price,
+                    PurchaseTime = DateTime.Now,
+                    Size = model.Size,
+                    FullName = model.FullName,
+                    StreetAddress = model.StreetAddress,
+                    State = model.State,
+                    City = model.City,
+                    PostalCode = model.PostalCode
+                };
+
+                db.UserMerchandises.Add(d);
+                db.SaveChanges();
+
+                return RedirectToAction("MerchandiseReceipt", "Home");
             }
 
             return View(model);
         }
 
-        public ActionResult MerchandiseReceipt(string sort = "Time Donated", string sortdir = "DESC", int page = 1, string keyword = "")
+        public ActionResult MerchandiseReceipt(string sort = "Purchase Time", string sortdir = "DESC", int page = 1, string keyword = "")
         {
             if (!Request.IsAuthenticated)
             {
@@ -181,7 +236,7 @@ namespace Fundtasia.Controllers
             Func<UserMerchandise, object> fn = d => d.Id;
             switch (sort)
             {
-                case "Id": fn = d => d.Id; break;
+                case "Purchase Time": fn = d => d.PurchaseTime; break;
             }
 
             var sorted = sortdir == "DESC" ? db.UserMerchandises.Where(s => s.User.FirstName.Contains(keyword)).OrderByDescending(fn) : db.UserMerchandises.Where(s => s.User.FirstName.Contains(keyword)).OrderBy(fn);
@@ -240,7 +295,7 @@ namespace Fundtasia.Controllers
 
         public ActionResult EventDetail(string id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return RedirectToAction("Event", "Home");
             }
