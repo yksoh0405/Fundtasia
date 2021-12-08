@@ -64,7 +64,6 @@ namespace Fundtasia.Models
         public string State { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "City is required")]
-        [RegularExpression(@"^[A-Za-z ]+$", ErrorMessage = "Invalid {0} format.")]
         public string City { get; set; }
 
         [Display(Name = "Postal Code")]

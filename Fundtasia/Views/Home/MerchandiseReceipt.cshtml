@@ -1,8 +1,65 @@
-﻿@{
+﻿@model UserMerchandise
+@{
     ViewBag.Title = "Merchandise Receipt";
 }
 
 
-<div id="target">
-    @Html.Partial("_MerchandiseReceipt")
+
+
+@section head{
+    <link href="~/Content/receipt.css" rel="stylesheet" />
+}
+
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title">🙏 <u>THANK YOU FOR BUYING OUR MERCHANDISE!</u> 🙏</h2>
+        <table class="receipt-table">
+            <tr>
+                <td>
+                    <img src="~/Images/Uploads/Merchandise/@Model.Merchandise.Image" style="height:300px; object-fit:cover;" />
+                </td>
+            </tr>
+            <tr>
+                <td>Name :</td>
+                <td><div class="receipt-align"><b>@Model.User.FirstName @Model.User.LastName</b></div></td>
+            </tr>
+            <tr>
+                <td>Merchandise Name :</td>
+                <td><div class="receipt-align"><b>@Model.Merchandise.Name</b></div></td>
+            </tr>
+            <tr>
+                <td>Merchandise Size :</td>
+                <td><div class="receipt-align"><b>@Model.Size</b></div></td>
+            </tr>
+            <tr>
+                <td>Purchase Time :</td>
+                <td><div class="receipt-align"><b>@Model.PurchaseTime</b></div></td>
+            </tr>
+            <tr>
+                <td>Delivery Address :</td>
+                <td><div class="receipt-align"><b>@Model.FullName</b></div></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><div class="receipt-align"><b>@Model.StreetAddress</b></div></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><div class="receipt-align"><b>@Model.PostalCode, @Model.City, @Model.State</b></div></td>
+            </tr>
+            <tr>
+                <td>Amount Donated :</td>
+                <td><div class="receipt-align"><b><u>RM @Model.Price.00</u></b></div></td>
+            </tr>
+
+        </table>
+    </div>
 </div>
+
+
+<br />
+<form action="~/Home/Donation">
+    <input type="submit" value="Back to Donation Page" class="button-normal" />
+</form>
+<br />
+<br />
