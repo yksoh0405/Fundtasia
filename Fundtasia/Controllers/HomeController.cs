@@ -10,6 +10,7 @@ using System.Web.Security;
 using Fundtasia.Models;
 using System.Net.Sockets;
 using System.Dynamic;
+using System.Data.Entity.Validation;
 
 namespace Fundtasia.Controllers
 {
@@ -26,11 +27,6 @@ namespace Fundtasia.Controllers
 
         public ActionResult Donation()
         {
-            if (!Request.IsAuthenticated)
-            {
-                RedirectToAction("Index", "Home");
-            }
-
             var model = db.Merchandises;
             return View(model);
         }
@@ -38,20 +34,6 @@ namespace Fundtasia.Controllers
         [Authorize]
         public ActionResult DonationPayment()
         {
-            if (!Request.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            if (Session["UserSession"] != null)
-            {
-                User loginUser = (User)Session["UserSession"];
-                if (String.Equals(loginUser.Role, "User"))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-
             ViewBag.EventList = new SelectList(db.Events, "Id", "Title");
             return View();
         }
@@ -60,29 +42,15 @@ namespace Fundtasia.Controllers
         [Authorize]
         public ActionResult DonationPayment(Donation model)
         {
-            if (!Request.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            if (Session["UserSession"] != null)
-            {
-                User loginUser = (User)Session["UserSession"];
-                model.UserId = loginUser.Id;
-                if (String.Equals(loginUser.Role, "User"))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-
             if (ModelState.IsValid)
             {
+                User loginUser = (User)Session["UserSession"];
                 model.Id = Guid.NewGuid();
 
                 var d = new Donation
                 {
                     Id = model.Id,
-                    UserId = model.UserId,
+                    UserId = loginUser.Id,
                     TimeDonated = DateTime.Now,
                     Amount = model.Amount,
                     EventId = model.EventId
@@ -98,105 +66,32 @@ namespace Fundtasia.Controllers
         }
 
         [Authorize]
-        public ActionResult DonationReceipt(string sort = "Time Donated", string sortdir = "DESC", int page = 1, string keyword = "")
+        public ActionResult DonationReceipt()
         {
-            if (!Request.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            if (Session["UserSession"] != null)
-            {
-                User loginUser = (User)Session["UserSession"];
-                if (String.Equals(loginUser.Role, "User"))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-
-            Func<Donation, object> fn = d => d.Id;
-            switch (sort)
-            {
-                case "Id": fn = d => d.Id; break;
-                case "Donor": fn = d => d.User.FirstName; break;
-                case "Time Donated": fn = d => d.TimeDonated; break;
-                case "Amount": fn = d => d.Amount; break;
-                case "Event": fn = d => d.EventId; break;
-            }
-
-            var sorted = sortdir == "DESC" ? db.Donations.Where(s => s.User.FirstName.Contains(keyword)).OrderByDescending(fn) : db.Donations.Where(s => s.User.FirstName.Contains(keyword)).OrderBy(fn);
-
-            //Paging
-            if (page < 1)
-            {
-                return RedirectToAction(null, new { page = 1 });
-            }
-
-            var model = sorted.ToPagedList(page, 10);
-
-            if (model == null)
-            {
-                return View();
-            }
-
-            if (page > model.PageCount)
-            {
-                return RedirectToAction(null, new { page = model.PageCount });
-            }
-
-            //Ajax Request
-            if (Request.IsAjaxRequest()) return PartialView("_DonationReceipt", model);
-
+            Func<Donation, object> fn = d => d.TimeDonated;
+            var model = db.Donations.OrderByDescending(fn).FirstOrDefault();
             return View(model);
         }
 
+        [Authorize]
         public ActionResult MerchandisePayment(string Id)
         {
-            if (!Request.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            if (Session["UserSession"] != null)
-            {
-                User loginUser = (User)Session["UserSession"];
-                if (String.Equals(loginUser.Role, "User"))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-
             ViewBag.merchandise = db.Merchandises.Find(Id);
             return View();
         }
 
-        [HttpPost]
         [Authorize]
+        [HttpPost]
         public ActionResult MerchandisePayment(MerchandisePaymentVM model)
         {
-            if (!Request.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            if (Session["UserSession"] != null)
-            {
-                User loginUser = (User)Session["UserSession"];
-                model.UserId = loginUser.Id;
-                if (String.Equals(loginUser.Role, "User"))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-
             if (ModelState.IsValid)
             {
                 var merchandise = db.Merchandises.Find(model.MerchandiseId);
-
+                User loginUser = (User)Session["UserSession"];
                 var d = new UserMerchandise
                 {
                     Id = Guid.NewGuid(),
-                    UserId = model.UserId,
+                    UserId = loginUser.Id,
                     MerchandiseId = merchandise.Id,
                     Price = merchandise.Price,
                     PurchaseTime = DateTime.Now,
@@ -208,62 +103,21 @@ namespace Fundtasia.Controllers
                     PostalCode = model.PostalCode
                 };
 
-                using (DBEntities1 dc = new DBEntities1())
+                using (DBEntities1 da = new DBEntities1())
                 {
-                    dc.UserMerchandises.Add(d);
-                    dc.SaveChanges();
+                    da.UserMerchandises.Add(d);
+                    da.SaveChanges();
                 }
-
-                return RedirectToAction("MerchandiseReceipt", "Home");
+                return RedirectToAction("MerchandiseReceipt", "Home", new { Id = d.Id });
             }
+
             return View(model);
         }
 
-        public ActionResult MerchandiseReceipt(string sort = "Purchase Time", string sortdir = "DESC", int page = 1, string keyword = "")
+        [Authorize]
+        public ActionResult MerchandiseReceipt(Guid Id)
         {
-            if (!Request.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            if (Session["UserSession"] != null)
-            {
-                User loginUser = (User)Session["UserSession"];
-                if (String.Equals(loginUser.Role, "User"))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-
-            Func<UserMerchandise, object> fn = d => d.Id;
-            switch (sort)
-            {
-                case "Purchase Time": fn = d => d.PurchaseTime; break;
-            }
-
-            var sorted = sortdir == "DESC" ? db.UserMerchandises.Where(s => s.User.FirstName.Contains(keyword)).OrderByDescending(fn) : db.UserMerchandises.Where(s => s.User.FirstName.Contains(keyword)).OrderBy(fn);
-
-            //Paging
-            if (page < 1)
-            {
-                return RedirectToAction(null, new { page = 1 });
-            }
-
-            var model = sorted.ToPagedList(page, 10);
-
-            if (model == null)
-            {
-                return View();
-            }
-
-            if (page > model.PageCount)
-            {
-                return RedirectToAction(null, new { page = model.PageCount });
-            }
-
-            //Ajax Request
-            if (Request.IsAjaxRequest()) return PartialView("_MerchandiseReceipt", model);
-
+            var model = db.UserMerchandises.Find(Id);
             return View(model);
         }
 

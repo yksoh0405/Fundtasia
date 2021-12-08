@@ -13,8 +13,8 @@ namespace Fundtasia
             var option = new CookieAuthenticationOptions
             {
                 AuthenticationType = "AUTH", //Id of authentication
-                LoginPath = new PathString("/Account/Login"),
-                LogoutPath = new PathString("/Account/Logout")
+                LoginPath = new PathString("/UserAuth/LogIn"),
+                LogoutPath = new PathString("/UserAuth/Logout")
             };
 
             app.UseCookieAuthentication(option);
