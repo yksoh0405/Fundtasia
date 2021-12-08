@@ -218,16 +218,16 @@ namespace Fundtasia.Controllers
             {
                 if (IsEmailExist(fgtPwdVM.Email))
                 {
-                    var model = db.Users.Where(s => s.Email == fgtPwdVM.Email).FirstOrDefault();
+                    var model = db.Users.FirstOrDefault(s => s.Email.Contains(fgtPwdVM.Email));
 
                     // Add the verification time
-                    var current = DateTime.Now.AddMinutes(5);
+                    var endTime = DateTime.Now.AddMinutes(10);
 
                     var fgtPwd = new PasswordReset
                     {
                         UserId = model.Id,
                         Code = resetCode,
-                        TimeOver = current
+                        TimeOver = endTime
                     };
 
                     db.PasswordResets.Add(fgtPwd);
@@ -236,7 +236,8 @@ namespace Fundtasia.Controllers
                     var subject = "Password Reset Request";
                     var body = "Hi " + model.FirstName + ", <br/> You recently requested to reset your password for your account. Click the link below to reset it. " +
                          " <br/><br/><a href='" + link + "'>" + link + "</a> <br/><br/>" +
-                         "If you did not request a password reset, please ignore this email or reply to let us know.<br/><br/> Thank you";
+                         "If you did not request a password reset, please ignore this email or reply to let us know.<br/><br/> Thank you" +
+                         "<br/><br/>Ps. this link will be disabled after " + endTime;
 
                     SendEmail(model.Email, body, subject);
 

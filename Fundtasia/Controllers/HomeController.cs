@@ -304,7 +304,11 @@ namespace Fundtasia.Controllers
             db.SaveChanges();
 
             var donation = db.Donations.Where(s => s.EventId.Contains(id));
-            ViewBag.TotalDonation = donation.Select(s => s.Amount).Sum();
+            
+            if (db.Donations.FirstOrDefault(s => s.EventId.Contains(id)) != null)
+            {
+                ViewBag.TotalDonation = donation.Select(s => s.Amount).Sum();
+            }
 
             return View(model);
         }

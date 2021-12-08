@@ -123,6 +123,7 @@ namespace Fundtasia.Controllers
         }
 
         //Create Event Action
+        [Authorize(Roles = "Admin, Staff")]
         [HttpGet]
         public ActionResult CreateEvent()
         {
@@ -142,6 +143,7 @@ namespace Fundtasia.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin, Staff")]
         [HttpPost]
         public ActionResult CreateEvent(EventInsertVM model)
         {
@@ -198,11 +200,13 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult CreateMerchandise()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin, Staff")]
         [HttpPost]
         public ActionResult CreateMerchandise(MerchandiseInsertVM model)
         {
@@ -238,43 +242,20 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult CreateReport()
         {
-            if (!Request.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            if (Session["UserSession"] != null)
-            {
-                User loginUser = (User)Session["UserSession"];
-                if (String.Equals(loginUser.Role, "User"))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
             return View();
         }
 
+        [Authorize(Roles = "Admin, Staff")]
         [HttpPost]
         public ActionResult CreateReport(Report model)
         {
-            if (!Request.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            if (Session["UserSession"] != null)
-            {
-                User loginUser = (User)Session["UserSession"];
-                if (String.Equals(loginUser.Role, "User"))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
             return View();
         }
 
+        [NonAction]
         private string ValidatePhoto(HttpPostedFileBase f)
         {
             var reType = new Regex(@"^image\/(jpeg|png)$", RegexOptions.IgnoreCase);
@@ -296,6 +277,7 @@ namespace Fundtasia.Controllers
             return null;
         }
 
+        [NonAction]
         private string SaveEventPhoto(HttpPostedFileBase f)
         {
             //Generate Unique Id
@@ -311,6 +293,7 @@ namespace Fundtasia.Controllers
             return name;
         }
 
+        [NonAction]
         private string SaveMerchandisePhoto(HttpPostedFileBase f)
         {
             //Generate Unique Id
