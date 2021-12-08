@@ -15,11 +15,11 @@
                 <h2 class="card-title">💰 Donation Amount 💰</h2>
                 <h5 class="card-title">Enter the amount:</h5>
                 @Html.TextBoxFor(d => d.Amount, new { @class = "form-control", autocomplete = "off", placeholder = "Enter here" })
-                @Html.ValidationMessageFor(d => d.Amount)
+                @Html.ValidationMessageFor(d => d.Amount, "", new { @class = "error-msg" })
                 <br />
                 <h5 class="card-title">Select Event:</h5>
                 @Html.DropDownListFor(d => d.EventId, (SelectList)ViewBag.EventList, "-- Select One --", new { @class = "form-control" })
-                @Html.ValidationMessageFor(d => d.EventId)
+                @Html.ValidationMessageFor(d => d.EventId, "", new { @class = "error-msg" })
             </div>
         </div>
 

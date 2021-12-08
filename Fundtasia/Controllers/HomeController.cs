@@ -10,6 +10,7 @@ using System.Web.Security;
 using Fundtasia.Models;
 using System.Net.Sockets;
 using System.Dynamic;
+using System.Data.Entity.Validation;
 
 namespace Fundtasia.Controllers
 {
@@ -172,7 +173,7 @@ namespace Fundtasia.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult MerchandisePayment(MerchandisePaymentVM model)
+        public ActionResult MerchandisePayment(MerchPaymentVM model)
         {
             if (!Request.IsAuthenticated)
             {
@@ -193,7 +194,7 @@ namespace Fundtasia.Controllers
             {
                 var merchandise = db.Merchandises.Find(model.MerchandiseId);
 
-                var d = new UserMerchandise
+                var um = new UserMerchandise
                 {
                     Id = Guid.NewGuid(),
                     UserId = model.UserId,
@@ -208,8 +209,9 @@ namespace Fundtasia.Controllers
                     PostalCode = model.PostalCode
                 };
 
-                db.UserMerchandises.Add(d);
+                db.UserMerchandises.Add(um);
                 db.SaveChanges();
+
 
                 return RedirectToAction("MerchandiseReceipt", "Home");
             }
