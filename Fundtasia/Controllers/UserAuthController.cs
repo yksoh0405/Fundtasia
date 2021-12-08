@@ -126,7 +126,6 @@ namespace Fundtasia.Controllers
             return View();
         }
 
-
         //Login Action
         [HttpGet]
         public ActionResult LogIn()
@@ -207,6 +206,83 @@ namespace Fundtasia.Controllers
             }
             return View();
         }
+
+        [HttpPost]
+        public ActionResult ForgotPassword(ForgotPasswordVM fgtPwdVM)
+        {
+            Guid resetCode = Guid.NewGuid();
+            var verifyUrl = "/UserAuth/ResetPassword/" + resetCode;
+            var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
+
+            if (ModelState.IsValid)
+            {
+                if (IsEmailExist(fgtPwdVM.Email))
+                {
+                    var model = db.Users.Where(s => s.Email == fgtPwdVM.Email).FirstOrDefault();
+
+                    // Add the verification time
+                    var current = DateTime.Now.AddMinutes(5);
+
+                    var fgtPwd = new PasswordReset
+                    {
+                        UserId = model.Id,
+                        Code = resetCode,
+                        TimeOver = current
+                    };
+
+                    db.PasswordResets.Add(fgtPwd);
+                    db.SaveChanges();
+
+                    var subject = "Password Reset Request";
+                    var body = "Hi " + model.FirstName + ", <br/> You recently requested to reset your password for your account. Click the link below to reset it. " +
+                         " <br/><br/><a href='" + link + "'>" + link + "</a> <br/><br/>" +
+                         "If you did not request a password reset, please ignore this email or reply to let us know.<br/><br/> Thank you";
+
+                    SendEmail(model.Email, body, subject);
+
+                    ViewBag.Message = "Reset password link has been sent to your email id.";
+                }
+                else
+                {
+                    ViewBag.Message = "User doesn't exists.";
+                    return View();
+                }
+            }
+
+            return View();
+        }
+
+        private void SendEmail(string emailAddress, string body, string subject)
+        {
+            using (MailMessage mm = new MailMessage("fundtasia1101@gmail.com", emailAddress))
+            {
+                mm.Subject = subject;
+                mm.Body = body;
+
+                mm.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+                smtp.EnableSsl = true;
+                NetworkCredential NetworkCred = new NetworkCredential("fundtasia1101@gmail.com", "lkwefecbllzpgmea");
+                smtp.UseDefaultCredentials = true;
+                smtp.Credentials = NetworkCred;
+                smtp.Port = 587;
+                smtp.Send(mm);
+
+            }
+        }
+
+        //public ActionResult ResetPassword(string id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return RedirectToAction("Index", "Home");
+        //    }
+
+
+
+        //    return View();
+        //}
 
         [Authorize(Roles = "User")]
         public ActionResult ViewProfile()
