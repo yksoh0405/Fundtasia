@@ -14,22 +14,6 @@ namespace Fundtasia.Models
 
     public class PaymentMetadata
     {
-        [Display(Name = "Name on card")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Name on card is required")]
-        public string Name { get; set; }
-
-        [Display(Name = "Card Number")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Card Number is required")]
-        public string CardNumber { get; set; }
-
-        [Display(Name = "Expiry Date")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Expiry Date is required")]
-        public DateTime ExpiryDate { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "CVV is required")]
-        [RegularExpression(@"\d{3}", ErrorMessage = "Invalid CVV format.")]
-        public string CVV { get; set; }
-
     }
 
     public class DonationPaymentVM
@@ -41,7 +25,7 @@ namespace Fundtasia.Models
         public string EventId { get; set; }
     }
 
-    public class MerchandisePaymentVM
+    public class MerchPaymentVM
     {
         public System.Guid UserId { get; set; }
 
@@ -64,7 +48,7 @@ namespace Fundtasia.Models
         public string State { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "City is required")]
-        [RegularExpression(@"^[A-Za-z ]+$", ErrorMessage = "Invalid {0} format.")]
+        [RegularExpression(@"^[A-Za-z ]+$", ErrorMessage = "Invalid City format.")]
         public string City { get; set; }
 
         [Display(Name = "Postal Code")]
