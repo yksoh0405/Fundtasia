@@ -43,11 +43,17 @@ namespace Fundtasia.Models
 
     public class MerchandisePaymentVM
     {
+        public System.Guid UserId { get; set; }
+
+        public string MerchandiseId { get; set; }
+
+        public decimal Price { get; set; }
+
         [Required(AllowEmptyStrings = false, ErrorMessage = "Size is required")]
         public string Size { get; set; }
 
         [Display(Name = "Full Name")]
-        
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Full name is required")]
         public string FullName { get; set; }
 
         [Display(Name = "Street Address")]
@@ -58,7 +64,7 @@ namespace Fundtasia.Models
         public string State { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "City is required")]
-        [RegularExpression(@"[a-z][A-Z]", ErrorMessage = "Invalid {0} format.")]
+        [RegularExpression(@"^[A-Za-z ]+$", ErrorMessage = "Invalid {0} format.")]
         public string City { get; set; }
 
         [Display(Name = "Postal Code")]

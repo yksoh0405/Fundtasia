@@ -8,7 +8,7 @@
         LoadingElementId = "loader",
         OnSuccess = "highlight"
     };
-    string[] fields = { "Id" };
+    string[] fields = { "Purchase Time" };
     string sort = Request.Params["sort"];
     string sortdir = Request.Params["sortdir"];
     string keyword = Request.Params["keyword"];
@@ -35,8 +35,8 @@
             <h2 class="card-title">🙏 <u>THANK YOU FOR BUYING OUR MERCHANDISE!</u> 🙏</h2>
             <table class="receipt-table">
                 <tr>
-                <td><u><b>Image of the Merchandise</b><u></td>
-                <img src="~/Images/Uploads/Merchandise/@d.Merchandise.Image " style="height:300px; object-fit:cover;" />
+                    <td><u><b>Image of the Merchandise</b><u></td>
+                    <img src="~/Images/Uploads/Merchandise/@d.Merchandise.Image " style="height:300px; object-fit:cover;" />
                 </tr>
                 <tr>
                     <td>Name :</td>
