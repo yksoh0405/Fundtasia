@@ -28,7 +28,7 @@ namespace Fundtasia.Controllers
         {
             if (!Request.IsAuthenticated)
             {
-                RedirectToAction("LogIn", "UserAuth");
+                RedirectToAction("Index", "Home");
             }
 
             var model = db.Merchandises;
@@ -170,8 +170,8 @@ namespace Fundtasia.Controllers
             return View();
         }
 
-        [Authorize]
         [HttpPost]
+        [Authorize]
         public ActionResult MerchandisePayment(MerchandisePaymentVM model)
         {
             if (!Request.IsAuthenticated)
@@ -208,12 +208,14 @@ namespace Fundtasia.Controllers
                     PostalCode = model.PostalCode
                 };
 
-                db.UserMerchandises.Add(d);
-                db.SaveChanges();
+                using (DBEntities1 dc = new DBEntities1())
+                {
+                    dc.UserMerchandises.Add(d);
+                    dc.SaveChanges();
+                }
 
                 return RedirectToAction("MerchandiseReceipt", "Home");
             }
-
             return View(model);
         }
 

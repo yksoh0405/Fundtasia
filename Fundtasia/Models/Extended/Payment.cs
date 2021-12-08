@@ -47,29 +47,25 @@ namespace Fundtasia.Models
 
         public string MerchandiseId { get; set; }
 
-        public decimal Price { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Size is required")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Size is required")]
         public string Size { get; set; }
 
-        [Display(Name = "Full Name")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Full name is required")]
+        //[Display(Name = "Full Name")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Full name is required")]
         public string FullName { get; set; }
 
-        [Display(Name = "Street Address")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Street Address is required")]
+        //[Display(Name = "Street Address")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Street Address is required")]
         public string StreetAddress { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "State is required")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "State is required")]
         public string State { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "City is required")]
-        [RegularExpression(@"^[A-Za-z ]+$", ErrorMessage = "Invalid {0} format.")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "City is required")]
         public string City { get; set; }
 
-        [Display(Name = "Postal Code")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Postal Code is required")]
-        [RegularExpression(@"\d{5}", ErrorMessage = "Invalid Postal Code format.")]
+        //[Display(Name = "Postal Code")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Postal Code is required")]
         public string PostalCode { get; set; }
     }
 }
