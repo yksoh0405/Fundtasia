@@ -45,13 +45,17 @@
                 <div class="card-body">
                     <h2 class="card-title">💳 Card Details 💳</h2>
                     <h5>Name : </h5>
-                    <input type="text" class="form-control" id="" placeholder="Name on Card" autocomplete="off"><br />
+                    @Html.TextBoxFor(d => d.Name, new { @class = "form-control", autocomplete = "off", placeholder = "Name here" })
+                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "error-msg" })
                     <h5>Card Number : </h5>
-                    <input type="text" class="form-control" id="" placeholder="0000 0000 0000 0000" autocomplete="off"><br />
+                    @Html.TextBoxFor(d => d.CardNumber, new { @class = "form-control", autocomplete = "off", placeholder = "Card Number here" })
+                    @Html.ValidationMessageFor(m => m.CardNumber, "", new { @class = "error-msg" })
                     <h5>Expiry Date : </h5>
-                    <input type="text" class="form-control" id="" placeholder="(MM/YY)" autocomplete="off"><br />
+                    @Html.TextBoxFor(d => d.ExpiryDate, new { @class = "form-control", autocomplete = "off", placeholder = "Expiry Date here" })
+                    @Html.ValidationMessageFor(m => m.ExpiryDate, "", new { @class = "error-msg" })
                     <h5>CVV : </h5>
-                    <input type="text" class="form-control" id="" placeholder="CVV" autocomplete="off"><br />
+                    @Html.TextBoxFor(d => d.CVV, new { @class = "form-control", autocomplete = "off", placeholder = "CVV here" })
+                    @Html.ValidationMessageFor(m => m.CVV, "", new { @class = "error-msg" })
                 </div>
             </div>
         </div>
@@ -67,7 +71,23 @@
                     @Html.TextBoxFor(d => d.StreetAddress, new { @class = "form-control", autocomplete = "off", placeholder = "Street Address here" })
                     @Html.ValidationMessageFor(d => d.StreetAddress, "", new { @class = "error-msg" })
                     <h5>State : </h5>
-                    @Html.DropDownListFor(d => d.State, new SelectList(Enum.GetValues(typeof(State))), "-- Select One--", new { @class = "form-control" })
+                    @Html.DropDownListFor(d => d.State,
+                                       new List<SelectListItem>
+                                                {
+                                                   new SelectListItem { Value = "JH" , Text = "Johor"  },
+                                                   new SelectListItem { Value = "KD" , Text = "Kedah" },
+                                                   new SelectListItem { Value = "KT" , Text = "Kelantan"},
+                                                   new SelectListItem { Value = "MK" , Text = "Malacca"  },
+                                                   new SelectListItem { Value = "NS" , Text = "Negeri Sembilan" },
+                                                   new SelectListItem { Value = "PN" , Text = "Penang"  },
+                                                   new SelectListItem { Value = "PR" , Text = "Perak" },
+                                                   new SelectListItem { Value = "PL" , Text = "Perlis"},
+                                                   new SelectListItem { Value = "SB" , Text = "Sabah"  },
+                                                   new SelectListItem { Value = "SW" , Text = "Sarawak" },
+                                                   new SelectListItem { Value = "SG" , Text = "Selangor"},
+                                                   new SelectListItem { Value = "TR" , Text = "Terengganu"}
+                                                }, new { @class = "form-control" })
+
                     @Html.ValidationMessageFor(d => d.State, "", new { @class = "error-msg" })
                     <h5>City : </h5>
                     @Html.TextBoxFor(d => d.City, new { @class = "form-control", autocomplete = "off", placeholder = "City here" })

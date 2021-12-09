@@ -129,7 +129,6 @@ namespace Fundtasia.Controllers
                 db.UserMerchandises.Add(um);
                 db.SaveChanges();
 
-
                 return RedirectToAction("MerchandiseReceipt", "Home", new { Id = um.Id });
             }
 
