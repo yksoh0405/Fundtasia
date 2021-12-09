@@ -165,39 +165,7 @@ namespace Fundtasia.Controllers
             }
             return View(login);
         }
-
-        //Log Out
-        public ActionResult Logout()
-        {
-            //Clear the session
-            Request.GetOwinContext().Authentication.SignOut();
-            Session.Remove("UserSession");
-            return RedirectToAction("LogIn", "UserAuth");
-        }
-
-        private void SignIn(string id, string role, bool rememberMe)
-        {
-            var iden = new ClaimsIdentity("AUTH");
-
-            iden.AddClaim(new Claim(ClaimTypes.Name, id));
-            iden.AddClaim(new Claim(ClaimTypes.Role, role));
-
-            var prop = new AuthenticationProperties
-            {
-                IsPersistent = rememberMe
-            };
-
-            Request.GetOwinContext().Authentication.SignIn(prop, iden);
-        }
-
-        private bool VerifyPassword(string hash, string password)
-        {
-            bool status = false;
-            password = Crypto.Hash(password);
-            status = String.Compare(hash, password) == 0 ? true : false;
-            return status;
-        }
-
+        
         public ActionResult ForgotPassword()
         {
             if (Request.IsAuthenticated)
@@ -218,7 +186,7 @@ namespace Fundtasia.Controllers
             {
                 if (IsEmailExist(fgtPwdVM.Email))
                 {
-                    var model = db.Users.FirstOrDefault(s => s.Email.Contains(fgtPwdVM.Email));
+                    User model = db.Users.Where(s => s.Email == fgtPwdVM.Email).FirstOrDefault();
 
                     // Add the verification time
                     var endTime = DateTime.Now.AddMinutes(10);
@@ -251,6 +219,39 @@ namespace Fundtasia.Controllers
             }
 
             return View();
+        }
+
+
+        //Log Out
+        public ActionResult Logout()
+        {
+            //Clear the session
+            Request.GetOwinContext().Authentication.SignOut();
+            Session.Remove("UserSession");
+            return RedirectToAction("LogIn", "UserAuth");
+        }
+
+        private void SignIn(string id, string role, bool rememberMe)
+        {
+            var iden = new ClaimsIdentity("AUTH");
+
+            iden.AddClaim(new Claim(ClaimTypes.Name, id));
+            iden.AddClaim(new Claim(ClaimTypes.Role, role));
+
+            var prop = new AuthenticationProperties
+            {
+                IsPersistent = rememberMe
+            };
+
+            Request.GetOwinContext().Authentication.SignIn(prop, iden);
+        }
+
+        private bool VerifyPassword(string hash, string password)
+        {
+            bool status = false;
+            password = Crypto.Hash(password);
+            status = String.Compare(hash, password) == 0 ? true : false;
+            return status;
         }
 
         private void SendEmail(string emailAddress, string body, string subject)

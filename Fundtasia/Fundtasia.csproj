@@ -312,6 +312,7 @@
     </Compile>
     <Compile Include="Models\Extended\Event.cs" />
     <Compile Include="Models\Extended\Payment.cs" />
+    <Compile Include="Models\Extended\Report.cs" />
     <Compile Include="Models\Extended\ResetPassword.cs" />
     <Compile Include="Models\Extended\User.cs" />
     <Compile Include="Models\Extended\UserMerchandise.cs" />
@@ -382,8 +383,10 @@
     <Content Include="Views\AList\_MerchandiseSales.cshtml" />
     <Content Include="Views\Admin\ViewMerchandiseSale.cshtml" />
     <Content Include="Views\Home\DonationReceipt.cshtml" />
-    <Content Include="Views\Home\_MerchandiseReceipt.cshtml" />
     <Content Include="Views\UserAuth\ResetPassword.cshtml" />
+    <Content Include="Views\ACreate\CreateReport.cshtml" />
+    <Content Include="Views\Home\_MerchandiseReceipt.cshtml" />
+    <Content Include="Views\Home\_DonationReceipt.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

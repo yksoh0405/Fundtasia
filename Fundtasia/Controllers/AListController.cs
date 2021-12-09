@@ -262,7 +262,7 @@ namespace Fundtasia.Controllers
         }
 
         [Authorize(Roles = "Admin, Staff")]
-        public ActionResult Report(string sort = "Created Date", string sortdir = "ASC", int page = 1, string keyword = "")
+        public ActionResult Report(string sort = "Created Date", string sortdir = "DESC", int page = 1, string keyword = "")
         {
             keyword = keyword.Trim();
 

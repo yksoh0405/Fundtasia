@@ -13,11 +13,7 @@ namespace Fundtasia.Models
 
     public class UserMerchandiseMetadata
     {
-
-        public System.Guid Id { get; set; }
-        public System.Guid UserId { get; set; }
         public string MerchandiseId { get; set; }
-        public decimal Price { get; set; }
         public System.DateTime PurchaseTime { get; set; }
         public string Size { get; set; }
 
