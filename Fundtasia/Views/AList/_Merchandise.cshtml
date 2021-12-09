@@ -43,7 +43,7 @@
                 <div class="card text-center">
                     <img src="~/Images/Uploads/Merchandise/@m.Image" class="img-fluid" style="height: 400px"/>
                     <div class="card-body">
-                        <h4 style="color: #9B0909">RM @m.Price.00</h4>
+                        <h4 style="color: #9B0909">RM @m.Price.ToString("F")</h4>
                         <h4 class="card-title mname" style="min-height:50px;">@m.Name</h4>
                         <button type="button" class="edit-btn" data-get="/AEdit/EditMerchandise/@m.Id">Edit</button>
                     </div>

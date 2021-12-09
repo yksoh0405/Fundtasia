@@ -186,7 +186,7 @@ namespace Fundtasia.Controllers
             Func<Donation, object> fn = d => d.Id;
             switch (sort)
             {
-                case "Id": fn = d => d.Id; break;
+                case "Transaction ID": fn = d => d.Id; break;
                 case "Donor": fn = d => d.User.FirstName; break;
                 case "Time Donated": fn = d => d.TimeDonated; break;
                 case "Amount": fn = d => d.Amount; break;

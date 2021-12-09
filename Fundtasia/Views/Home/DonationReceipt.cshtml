@@ -10,8 +10,9 @@
         <h2 class="card-title">🙏 <u>THANK YOU FOR DONATING!</u> 🙏</h2>
         <table class="receipt-table">
             <tr>
-                <td><u><b>Image of the Event</b><u></td>
-                <img src="~/Images/Uploads/Event/@Model.Event.CoverImage" style="height:300px; object-fit:cover;" />
+                <td>
+                    <img src="~/Images/Uploads/Event/@Model.Event.CoverImage" style="height:300px; object-fit:cover;" />
+                </td>
             </tr>
             <tr>
                 <td>Name :</td>
@@ -27,7 +28,7 @@
             </tr>
             <tr>
                 <td>Amount Donated :</td>
-                <td><div class="receipt-align"><b><u>RM @Model.Amount</u></b></div></td>
+                <td><div class="receipt-align"><b><u>RM @Model.Amount.ToString("F")</u></b></div></td>
             </tr>
 
         </table>

@@ -58,12 +58,12 @@ namespace Fundtasia.Controllers
             }
             if (ModelState.IsValid)
             {
-                model.Id = Guid.NewGuid();
+                User loginUser = (User)Session["UserSession"];
 
                 var d = new Donation
                 {
-                    Id = model.Id,
-                    UserId = model.UserId,
+                    Id = Guid.NewGuid(),
+                    UserId = loginUser.Id,
                     TimeDonated = DateTime.Now,
                     Amount = model.Amount,
                     EventId = model.EventId
@@ -181,7 +181,7 @@ namespace Fundtasia.Controllers
             db.SaveChanges();
 
             var donation = db.Donations.Where(s => s.EventId.Contains(id));
-            
+
             if (db.Donations.FirstOrDefault(s => s.EventId.Contains(id)) != null)
             {
                 ViewBag.TotalDonation = donation.Select(s => s.Amount).Sum();

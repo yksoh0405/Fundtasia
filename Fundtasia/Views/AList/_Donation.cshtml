@@ -8,7 +8,7 @@
         LoadingElementId = "loader",
         OnSuccess = "highlight"
     };
-    string[] fields = { "Id", "Donor", "Time Donated", "Amount", "Event" };
+    string[] fields = { "Transaction ID", "Donor", "Time Donated", "Amount", "Event" };
     string sort = Request.Params["sort"];
     string sortdir = Request.Params["sortdir"];
     string keyword = Request.Params["keyword"];
@@ -41,7 +41,7 @@
                 <td>@d.Id</td>
                 <td>@d.User.FirstName @d.User.LastName</td>
                 <td>@d.TimeDonated</td>
-                <td>@d.Amount</td>
+                <td>RM @d.Amount.ToString("F")</td>
                 <td>@d.Event.Title</td>
             </tr>
         }
