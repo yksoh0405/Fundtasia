@@ -60,7 +60,7 @@ namespace Fundtasia.Controllers
                         SendVerificaionLinkEmail(newStaff.Email, newStaff.ActivationCode.ToString());
                     }
                 }
-
+                TempData["Info"] = "Staff added.";
                 return RedirectToAction("Staff", "AList");
             }
 
@@ -115,7 +115,7 @@ namespace Fundtasia.Controllers
                         SendVerificaionLinkEmail(newClientUser.Email, newClientUser.ActivationCode.ToString());
                     }
                 }
-
+                TempData["Info"] = "Client User added.";
                 return RedirectToAction("ClientUser", "AList");
             }
 
@@ -166,7 +166,7 @@ namespace Fundtasia.Controllers
 
                 db.Events.Add(e);
                 db.SaveChanges();
-                TempData["Message"] = "Event created";
+                TempData["Info"] = "Event added.";
                 return RedirectToAction("Event", "AList");
             }
             return View(model);
@@ -247,6 +247,7 @@ namespace Fundtasia.Controllers
 
                 db.Reports.Add(r);
                 db.SaveChanges();
+                TempData["Info"] = "Report added.";
                 return RedirectToAction("Report", "AList");
             }
             return View();

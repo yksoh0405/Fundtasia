@@ -85,7 +85,7 @@ namespace Fundtasia.Controllers
                 db.SaveChanges();
 
                 Session["UserSession"] = new User(s.Id, s.Email, s.Role, s.FirstName, s.LastName, s.Status, (DateTime)s.LastLoginTime, s.LastLoginIP);
-
+                TempData["Info"] = $"{s.FirstName} data saved.";
                 return RedirectToAction("Dashboard", "Admin");
             }
 
