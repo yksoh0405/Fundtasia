@@ -214,7 +214,6 @@ namespace Fundtasia.Controllers
                         var fgtPwd = new PasswordReset
                         {
                             UserId = model.Id,
-                            Code = resetCode,
                             TimeOver = endTime
                         };
 
