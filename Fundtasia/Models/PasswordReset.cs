@@ -14,8 +14,8 @@ namespace Fundtasia.Models
     
     public partial class PasswordReset
     {
+        public System.Guid Id { get; set; }
         public System.Guid UserId { get; set; }
-        public System.Guid Code { get; set; }
         public System.DateTime TimeOver { get; set; }
     
         public virtual User User { get; set; }
