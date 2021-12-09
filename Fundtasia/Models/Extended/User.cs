@@ -185,19 +185,21 @@ namespace Fundtasia.Models
     
     public class ClientUserChangePassword
     {
+        public System.Guid Id { get; set; }
+
         [Display(Name = "Current Password")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Current Password is required")]
-        [DataType(DataType.EmailAddress)]
+        [DataType(DataType.Password)]
         public string Current { get; set; }
 
         [Display(Name = "New Password")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "New Password is required")]
-        [DataType(DataType.EmailAddress)]
+        [DataType(DataType.Password)]
         public string New { get; set; }
 
         [Display(Name = "Confirm Password")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Confirm Password is required")]
-        [DataType(DataType.EmailAddress)]
+        [DataType(DataType.Password)]
         [Compare("New")]
         public string Confirm { get; set; }
     }
