@@ -388,30 +388,25 @@ namespace Fundtasia.Controllers
 
         [Authorize(Roles = "User")]
         [HttpPost]
-        public ActionResult ResetPassword(ClientUserChangePassword newPwd)
+        public ActionResult ResetPassword(ClientUserChangePassword model)
         {
-            // Get user record of the current user
-            var user = db.Users.Where(s => s.Id == newPwd.Id).FirstOrDefault();
-
-            // OR if password not matches
-            if (user == null || ComparePassword(user.PasswordHash, newPwd.Current) == false)
+            using (DBEntities1 da = new DBEntities1())
             {
-                ModelState.AddModelError("Current", "Current Password not matched.");
+                var s = da.Users.Find(model.Id);
+
+                if (ModelState.IsValid)
+                {
+                    if (s.PasswordHash == model.Current)
+                    {
+                        s.PasswordHash = Crypto.Hash(model.New);
+                        da.SaveChanges();
+                    }
+
+                    return RedirectToAction("ViewProfile", "UserAuth");
+                };
             }
 
-            if (ModelState.IsValid)
-            {
-                string hash = HashPassword(newPwd.New);
-
-                // Update user password
-                user.PasswordHash = hash;
-
-                db.SaveChanges();
-
-                return RedirectToAction("ViewProfile", "Home");
-            }
-
-            return View(newPwd);
+            return View(model);
         }
 
         [NonAction]
