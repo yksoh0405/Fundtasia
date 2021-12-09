@@ -67,10 +67,10 @@
                     @Html.TextBoxFor(d => d.StreetAddress, new { @class = "form-control", autocomplete = "off", placeholder = "Street Address here" })
                     @Html.ValidationMessageFor(d => d.StreetAddress, "", new { @class = "error-msg" })
                     <h5>State : </h5>
-                    @Html.TextBoxFor(d => d.State, new { @class = "form-control", autocomplete = "off", placeholder = "State here" })
+                    @Html.DropDownListFor(d => d.State, new SelectList(Enum.GetValues(typeof(State))), "-- Select One--", new { @class = "form-control" })
                     @Html.ValidationMessageFor(d => d.State, "", new { @class = "error-msg" })
                     <h5>City : </h5>
-                    @Html.TextBoxFor(d => d.City, new { @class = "form-control", autocomplete = "off", placeholder = "City here"})
+                    @Html.TextBoxFor(d => d.City, new { @class = "form-control", autocomplete = "off", placeholder = "City here" })
                     @Html.ValidationMessageFor(d => d.City, "", new { @class = "error-msg" })
                     <h5>Postal Code : </h5>
                     @Html.TextBoxFor(d => d.PostalCode, new { @class = "form-control", autocomplete = "off", placeholder = "XXXXX" })
