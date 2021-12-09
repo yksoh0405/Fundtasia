@@ -1,5 +1,5 @@
 ﻿@using Fundtasia
-@model MerchandisePaymentVM
+@model MerchPaymentVM
 @{
     ViewBag.Title = "Merchandise Payment";
 
@@ -35,6 +35,7 @@
                             <div>
                                 <label>@Html.RadioButtonFor(m => m.Size, "XL") XL </label>
                             </div>
+                            @Html.ValidationMessageFor(m => m.Size, "", new { @class = "error-msg" })
                         </div>
                     </div>
                 </div>
@@ -61,19 +62,19 @@
                     <h2 class="card-title">📫 Billing Address 📫</h2>
                     <h5>Full Name : </h5>
                     @Html.TextBoxFor(d => d.FullName, new { @class = "form-control", autocomplete = "off", placeholder = "Full Name here" })
-                    @Html.ValidationMessageFor(d => d.FullName)
+                    @Html.ValidationMessageFor(d => d.FullName, "", new { @class = "error-msg" })
                     <h5>Street Address : </h5>
                     @Html.TextBoxFor(d => d.StreetAddress, new { @class = "form-control", autocomplete = "off", placeholder = "Street Address here" })
-                    @Html.ValidationMessageFor(d => d.StreetAddress)
+                    @Html.ValidationMessageFor(d => d.StreetAddress, "", new { @class = "error-msg" })
                     <h5>State : </h5>
                     @Html.TextBoxFor(d => d.State, new { @class = "form-control", autocomplete = "off", placeholder = "State here" })
-                    @Html.ValidationMessageFor(d => d.State)
+                    @Html.ValidationMessageFor(d => d.State, "", new { @class = "error-msg" })
                     <h5>City : </h5>
-                    @Html.TextBoxFor(d => d.City, new { @class = "form-control", autocomplete = "off", placeholder = "City here" })
-                    @Html.ValidationMessageFor(d => d.City)
+                    @Html.TextBoxFor(d => d.City, new { @class = "form-control", autocomplete = "off", placeholder = "City here"})
+                    @Html.ValidationMessageFor(d => d.City, "", new { @class = "error-msg" })
                     <h5>Postal Code : </h5>
                     @Html.TextBoxFor(d => d.PostalCode, new { @class = "form-control", autocomplete = "off", placeholder = "XXXXX" })
-                    @Html.ValidationMessageFor(d => d.PostalCode)
+                    @Html.ValidationMessageFor(d => d.PostalCode, "", new { @class = "error-msg" })
                 </div>
             </div>
 

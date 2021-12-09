@@ -165,6 +165,62 @@ namespace Fundtasia.Controllers
             }
             return View(login);
         }
+        
+        public ActionResult ForgotPassword()
+        {
+            if (Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ForgotPassword(ForgotPasswordVM fgtPwdVM)
+        {
+            Guid resetCode = Guid.NewGuid();
+            var verifyUrl = "/UserAuth/ResetPassword/" + resetCode;
+            var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
+
+            if (ModelState.IsValid)
+            {
+                if (IsEmailExist(fgtPwdVM.Email))
+                {
+                    User model = db.Users.Where(s => s.Email == fgtPwdVM.Email).FirstOrDefault();
+
+                    // Add the verification time
+                    var endTime = DateTime.Now.AddMinutes(10);
+
+                    var fgtPwd = new PasswordReset
+                    {
+                        UserId = model.Id,
+                        Code = resetCode,
+                        TimeOver = endTime
+                    };
+
+                    db.PasswordResets.Add(fgtPwd);
+                    db.SaveChanges();
+
+                    var subject = "Password Reset Request";
+                    var body = "Hi " + model.FirstName + ", <br/> You recently requested to reset your password for your account. Click the link below to reset it. " +
+                         " <br/><br/><a href='" + link + "'>" + link + "</a> <br/><br/>" +
+                         "If you did not request a password reset, please ignore this email or reply to let us know.<br/><br/> Thank you" +
+                         "<br/><br/>Ps. this link will be disabled after " + endTime;
+
+                    SendEmail(model.Email, body, subject);
+
+                    ViewBag.Message = "Reset password link has been sent to your email id.";
+                }
+                else
+                {
+                    ViewBag.Message = "User doesn't exists.";
+                    return View();
+                }
+            }
+
+            return View();
+        }
+
 
         //Log Out
         public ActionResult Logout()
@@ -196,60 +252,6 @@ namespace Fundtasia.Controllers
             password = Crypto.Hash(password);
             status = String.Compare(hash, password) == 0 ? true : false;
             return status;
-        }
-
-        public ActionResult ForgotPassword()
-        {
-            if (Request.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult ForgotPassword(ForgotPasswordVM fgtPwdVM)
-        {
-            Guid resetCode = Guid.NewGuid();
-            var verifyUrl = "/UserAuth/ResetPassword/" + resetCode;
-            var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
-
-            if (ModelState.IsValid)
-            {
-                if (IsEmailExist(fgtPwdVM.Email))
-                {
-                    var model = db.Users.Where(s => s.Email == fgtPwdVM.Email).FirstOrDefault();
-
-                    // Add the verification time
-                    var current = DateTime.Now.AddMinutes(5);
-
-                    var fgtPwd = new PasswordReset
-                    {
-                        UserId = model.Id,
-                        Code = resetCode,
-                        TimeOver = current
-                    };
-
-                    db.PasswordResets.Add(fgtPwd);
-                    db.SaveChanges();
-
-                    var subject = "Password Reset Request";
-                    var body = "Hi " + model.FirstName + ", <br/> You recently requested to reset your password for your account. Click the link below to reset it. " +
-                         " <br/><br/><a href='" + link + "'>" + link + "</a> <br/><br/>" +
-                         "If you did not request a password reset, please ignore this email or reply to let us know.<br/><br/> Thank you";
-
-                    SendEmail(model.Email, body, subject);
-
-                    ViewBag.Message = "Reset password link has been sent to your email id.";
-                }
-                else
-                {
-                    ViewBag.Message = "User doesn't exists.";
-                    return View();
-                }
-            }
-
-            return View();
         }
 
         private void SendEmail(string emailAddress, string body, string subject)

@@ -123,43 +123,17 @@ namespace Fundtasia.Controllers
         }
 
         //Create Event Action
+        [Authorize(Roles = "Admin, Staff")]
         [HttpGet]
         public ActionResult CreateEvent()
         {
-            if (!Request.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            if (Session["UserSession"] != null)
-            {
-                User loginUser = (User)Session["UserSession"];
-                if (String.Equals(loginUser.Role, "User"))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
             return View();
         }
 
+        [Authorize(Roles = "Admin, Staff")]
         [HttpPost]
         public ActionResult CreateEvent(EventInsertVM model)
         {
-            if (!Request.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            if (Session["UserSession"] != null)
-            {
-                User loginUser = (User)Session["UserSession"];
-                model.UserId = loginUser.Id;
-                if (String.Equals(loginUser.Role, "User"))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-
             string err = ValidatePhoto(model.CoverImage);
 
             if (err != null)
@@ -198,11 +172,13 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult CreateMerchandise()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin, Staff")]
         [HttpPost]
         public ActionResult CreateMerchandise(MerchandiseInsertVM model)
         {
@@ -238,43 +214,45 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult CreateReport()
         {
-            if (!Request.IsAuthenticated)
+            User loginUser = (User)Session["UserSession"];
+            var model = new ReportInsertVM
             {
-                return RedirectToAction("Index", "Home");
-            }
-
-            if (Session["UserSession"] != null)
-            {
-                User loginUser = (User)Session["UserSession"];
-                if (String.Equals(loginUser.Role, "User"))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-            return View();
+                Title = $"{DateTime.Now.Date} Daily Sales Report",
+                CreatedDate = DateTime.Now,
+                CreatedBy = loginUser.Id
+            };
+            return View(model);
         }
 
+        [Authorize(Roles = "Admin, Staff")]
         [HttpPost]
         public ActionResult CreateReport(Report model)
         {
-            if (!Request.IsAuthenticated)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Home");
-            }
+                //Generate Id
+                int m = (db.Reports.Count()) + 1;
+                string id = $"R{m}";
 
-            if (Session["UserSession"] != null)
-            {
-                User loginUser = (User)Session["UserSession"];
-                if (String.Equals(loginUser.Role, "User"))
+                var r = new Report
                 {
-                    return RedirectToAction("Index", "Home");
-                }
+                    Id = id,
+                    Title = model.Title,
+                    CreatedDate = model.CreatedDate,
+                    CreatedBy = model.CreatedBy
+                };
+
+                db.Reports.Add(r);
+                db.SaveChanges();
+                return RedirectToAction("Report", "AList");
             }
             return View();
         }
 
+        [NonAction]
         private string ValidatePhoto(HttpPostedFileBase f)
         {
             var reType = new Regex(@"^image\/(jpeg|png)$", RegexOptions.IgnoreCase);
@@ -296,6 +274,7 @@ namespace Fundtasia.Controllers
             return null;
         }
 
+        [NonAction]
         private string SaveEventPhoto(HttpPostedFileBase f)
         {
             //Generate Unique Id
@@ -311,6 +290,7 @@ namespace Fundtasia.Controllers
             return name;
         }
 
+        [NonAction]
         private string SaveMerchandisePhoto(HttpPostedFileBase f)
         {
             //Generate Unique Id

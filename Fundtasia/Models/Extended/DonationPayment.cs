@@ -14,11 +14,6 @@ namespace Fundtasia.Models.Extended
 
     public class DonationPaymentMetadata
     {
-
-        public System.Guid Id { get; set; }
-        public System.Guid UserId { get; set; }
-        public System.DateTime TimeDonated { get; set; }
-
         [Required(AllowEmptyStrings = false, ErrorMessage = "Donation amount is required")]
         public decimal Amount { get; set; }
 

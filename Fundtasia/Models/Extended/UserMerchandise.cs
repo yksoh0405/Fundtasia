@@ -13,11 +13,7 @@ namespace Fundtasia.Models
 
     public class UserMerchandiseMetadata
     {
-
-        public System.Guid Id { get; set; }
-        public System.Guid UserId { get; set; }
         public string MerchandiseId { get; set; }
-        public decimal Price { get; set; }
         public System.DateTime PurchaseTime { get; set; }
         public string Size { get; set; }
 
@@ -34,7 +30,7 @@ namespace Fundtasia.Models
         public string State { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "City is required")]
-        [RegularExpression(@"[a-z][A-Z]", ErrorMessage = "Invalid {0} format.")]
+        [RegularExpression(@"^[A-Za-z ]+$", ErrorMessage = "Invalid City format.")]
         public string City { get; set; }
 
         [Display(Name = "Postal Code")]

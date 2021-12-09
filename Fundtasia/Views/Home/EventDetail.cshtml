@@ -49,9 +49,19 @@
         </div>
         <div class="progress">
             @{
-                var totalDonation = (ViewBag.TotalDonation / Model.Target) * 100;
+                var totalDonation = 0.00;
+                var progress = 0.00;
+                if (ViewBag.TotalDonation != null)
+                {
+                    totalDonation = (double)(ViewBag.TotalDonation / Model.Target) * 100;
+                    progress = totalDonation;
+                    if(progress > 100)
+                    {
+                        progress = 100;
+                    }
+                }
             }
-            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="@totalDonation" aria-valuemin="0" aria-valuemax="100" style="width: @totalDonation%;"></div>
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="@progress" aria-valuemin="0" aria-valuemax="100" style="width: @progress%;"></div>
         </div>
     </div>
 </div>

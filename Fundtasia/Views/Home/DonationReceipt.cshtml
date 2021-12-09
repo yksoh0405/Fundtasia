@@ -1,7 +1,42 @@
 ﻿@{
     ViewBag.Title = "Donation Receipt";
 }
+@section head{
+    <link href="~/Content/receipt.css" rel="stylesheet" />
+}
 
-<div id="target">
-    @Html.Partial("_DonationReceipt")
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title">🙏 <u>THANK YOU FOR DONATING!</u> 🙏</h2>
+        <table class="receipt-table">
+            <tr>
+                <td>
+                    <img src="~/Images/Uploads/Event/@Model.Event.CoverImage" style="height:300px; object-fit:cover;" />
+                </td>
+            </tr>
+            <tr>
+                <td>Name :</td>
+                <td><div class="receipt-align"><b>@Model.User.LastName @Model.User.FirstName</b></div></td>
+            </tr>
+            <tr>
+                <td>Event Name :</td>
+                <td><div class="receipt-align"><b>@Model.Event.Title</b></div></td>
+            </tr>
+            <tr>
+                <td>Time Donated :</td>
+                <td><div class="receipt-align"><b>@Model.TimeDonated</b></div></td>
+            </tr>
+            <tr>
+                <td>Amount Donated :</td>
+                <td><div class="receipt-align"><b><u>RM @Model.Amount.ToString("F")</u></b></div></td>
+            </tr>
+
+        </table>
+    </div>
 </div>
+
+
+<br />
+<button class="btn button-normal" data-get="/Home/Donation">Back to Donation Page</button>
+<br />
+<br />
