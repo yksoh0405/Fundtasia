@@ -93,6 +93,7 @@ namespace Fundtasia.Controllers
                 return RedirectToAction("LogIn", "UserAuth");
             }
 
+            ViewBag.EventList = new SelectList(db.Events, "Id", "Title");
             ViewBag.merchandise = db.Merchandises.Find(Id);
             return View();
         }

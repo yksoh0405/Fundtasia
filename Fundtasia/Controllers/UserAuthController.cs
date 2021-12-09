@@ -11,6 +11,7 @@ using System.Net.Sockets;
 using System.Data.Entity.Validation;
 using System.Security.Claims;
 using Microsoft.Owin.Security;
+using Microsoft.AspNet.Identity;
 
 namespace Fundtasia.Controllers
 {
@@ -18,6 +19,9 @@ namespace Fundtasia.Controllers
     {
         //This controller is used to handle the user authentication
         DBEntities1 db = new DBEntities1();
+
+        // Initialize password hasher
+        PasswordHasher ph = new PasswordHasher();
 
         //Sign Up Action
         [HttpGet]
@@ -376,6 +380,40 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "User")]
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "User")]
+        [HttpPost]
+        public ActionResult ResetPassword(ClientUserChangePassword newPwd)
+        {
+            // Get user record of the current user
+            var user = db.Users.Where(s => s.Id == newPwd.Id).FirstOrDefault();
+
+            // OR if password not matches
+            if (user == null || ComparePassword(user.PasswordHash, newPwd.Current) == false)
+            {
+                ModelState.AddModelError("Current", "Current Password not matched.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                string hash = HashPassword(newPwd.New);
+
+                // Update user password
+                user.PasswordHash = hash;
+
+                db.SaveChanges();
+
+                return RedirectToAction("ViewProfile", "Home");
+            }
+
+            return View(newPwd);
+        }
+
         [NonAction]
         public bool IsEmailExist(string email)
         {
@@ -438,5 +476,19 @@ namespace Fundtasia.Controllers
             }
             throw new Exception("No network adapters with an IPv4 address in the system!");
         }
+
+        private string HashPassword(string password)
+        {
+            // Return hashed password
+            return ph.HashPassword(password);
+        }
+
+        private bool ComparePassword(string hash, string password)
+        {
+            // Verify hashed password (true or false)
+            return ph.VerifyHashedPassword(hash, password)
+                   == PasswordVerificationResult.Success;
+        }
+
     }
 }

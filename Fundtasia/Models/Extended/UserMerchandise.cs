@@ -17,7 +17,6 @@ namespace Fundtasia.Models
         public System.DateTime PurchaseTime { get; set; }
         public string Size { get; set; }
 
-
         [Display(Name = "Full Name")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Full Name is required")]
         public string FullName { get; set; }
@@ -37,5 +36,11 @@ namespace Fundtasia.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "Postal Code is required")]
         [RegularExpression(@"\d{5}", ErrorMessage = "Invalid Postal Code format.")]
         public string PostalCode { get; set; }
+    }
+
+    public enum State
+    {
+        Johor, Kedah, Kelantan, KualaLumpur, Labuan, Malacca, NegeriSembilan, Pahang, 
+        Penang, Perak, Perlis, Putrajaya, Sabah, Sarawak, Selangor, Terengganu
     }
 }
