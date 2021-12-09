@@ -93,7 +93,7 @@ namespace Fundtasia.Controllers
             }
             else
             {
-                message = "Invalide Request";
+                message = "Invalid Request";
             }
 
             ViewBag.Message = message;
@@ -200,6 +200,9 @@ namespace Fundtasia.Controllers
             var verifyUrl = "/UserAuth/ResetPassword/" + resetCode;
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
 
+            bool Status = false;
+            string message = "";
+
             if (ModelState.IsValid)
             {
                 if (IsEmailExist(fgtPwdVM.Email))
@@ -213,6 +216,7 @@ namespace Fundtasia.Controllers
 
                         var fgtPwd = new PasswordReset
                         {
+                            Id = resetCode,
                             UserId = model.Id,
                             TimeOver = endTime
                         };
@@ -228,83 +232,21 @@ namespace Fundtasia.Controllers
 
                         SendEmail(model.Email, body, subject);
 
-                        ViewBag.Message = "Reset password link has been sent to your email id.";
+                        message = "The reset password link has sent to your email: " + model.Email;
+                        Status = true;
                     }
                 }
                 else
                 {
-                    ViewBag.Message = "User doesn't exists.";
+                    ModelState.AddModelError("ErrorMessage", "User doesn't exists.");
                     return View();
                 }
             }
 
+            ViewBag.Message = message;
+            ViewBag.Status = Status;
             return View();
         }
-
-
-        //Log Out
-        public ActionResult Logout()
-        {
-            //Clear the session
-            Request.GetOwinContext().Authentication.SignOut();
-            Session.Remove("UserSession");
-            return RedirectToAction("LogIn", "UserAuth");
-        }
-
-        private void SignIn(string id, string role, bool rememberMe)
-        {
-            var iden = new ClaimsIdentity("AUTH");
-
-            iden.AddClaim(new Claim(ClaimTypes.Name, id));
-            iden.AddClaim(new Claim(ClaimTypes.Role, role));
-
-            var prop = new AuthenticationProperties
-            {
-                IsPersistent = rememberMe
-            };
-
-            Request.GetOwinContext().Authentication.SignIn(prop, iden);
-        }
-
-        private bool VerifyPassword(string hash, string password)
-        {
-            bool status = false;
-            password = Crypto.Hash(password);
-            status = String.Compare(hash, password) == 0 ? true : false;
-            return status;
-        }
-
-        private void SendEmail(string emailAddress, string body, string subject)
-        {
-            using (MailMessage mm = new MailMessage("fundtasia1101@gmail.com", emailAddress))
-            {
-                mm.Subject = subject;
-                mm.Body = body;
-
-                mm.IsBodyHtml = true;
-                SmtpClient smtp = new SmtpClient();
-                smtp.Host = "smtp.gmail.com";
-                smtp.EnableSsl = true;
-                NetworkCredential NetworkCred = new NetworkCredential("fundtasia1101@gmail.com", "lkwefecbllzpgmea");
-                smtp.UseDefaultCredentials = true;
-                smtp.Credentials = NetworkCred;
-                smtp.Port = 587;
-                smtp.Send(mm);
-
-            }
-        }
-
-        //public ActionResult ResetPassword(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return RedirectToAction("Index", "Home");
-        //    }
-
-
-
-        //    return View();
-        //}
 
         [Authorize(Roles = "User")]
         public ActionResult ViewProfile()
@@ -380,25 +322,32 @@ namespace Fundtasia.Controllers
         }
 
         [Authorize(Roles = "User")]
-        public ActionResult ResetPassword()
+        public ActionResult ChangePassword()
         {
             return View();
         }
 
         [Authorize(Roles = "User")]
         [HttpPost]
-        public ActionResult ResetPassword(ClientUserChangePassword model)
+        public ActionResult ChangePassword(ClientUserChangePassword model)
         {
+            User loginUser = (User)Session["UserSession"];
             using (DBEntities1 da = new DBEntities1())
             {
-                var s = da.Users.Find(model.Id);
+                var s = da.Users.Find(loginUser.Id);
 
                 if (ModelState.IsValid)
                 {
-                    if (s.PasswordHash == model.Current)
+                    if (s.PasswordHash == Crypto.Hash(model.Current))
                     {
                         s.PasswordHash = Crypto.Hash(model.New);
                         da.SaveChanges();
+                    }
+                    else
+                    {
+
+                        ModelState.AddModelError("ErrorMessage", "Wrong password");
+                        return View();
                     }
 
                     return RedirectToAction("ViewProfile", "UserAuth");
@@ -407,6 +356,123 @@ namespace Fundtasia.Controllers
 
             return View(model);
         }
+
+        public ActionResult ResetPassword(Guid Id)
+        {
+            var model = db.PasswordResets.Find(Id);
+            ViewBag.PasswordReset = model;
+            if (DateTime.Now > model.TimeOver)
+            {
+                ViewBag.Message = $"Being sorry that the link being expired at <strong>{model.TimeOver}</strong>, please try again.";
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ResetPassword(ClientUserResetPassword model)
+        {
+            bool Status = false;
+            string message = "";
+            if (ModelState.IsValid)
+            {
+
+                #region Check confirm password == password
+                if (model.New != model.Confirm)
+                {
+                    ModelState.AddModelError("ErrorMessage", "Confirm Password and Password does not match");
+                    return View(model);
+                }
+                #endregion
+
+                #region
+                var passwordReset = db.PasswordResets.Find(model.Id);
+
+                using (DBEntities1 da = new DBEntities1())
+                {
+                    var user = da.Users.Find(passwordReset.UserId);
+
+                    user.PasswordHash = Crypto.Hash(model.New);
+                    da.SaveChanges();
+                    message = "You have complete to reset your password!";
+                    Status = true;
+                    return RedirectToAction("Index", "Home");
+                }
+                #endregion
+            }
+            else
+            {
+                message = "Invalid Request";
+            }
+
+            ViewBag.Message = message;
+            ViewBag.Status = Status;
+            return View(model);
+        }
+
+        //Log Out
+        public ActionResult Logout()
+        {
+            //Clear the session
+            Request.GetOwinContext().Authentication.SignOut();
+            Session.Remove("UserSession");
+            return RedirectToAction("LogIn", "UserAuth");
+        }
+
+        private void SignIn(string id, string role, bool rememberMe)
+        {
+            var iden = new ClaimsIdentity("AUTH");
+
+            iden.AddClaim(new Claim(ClaimTypes.Name, id));
+            iden.AddClaim(new Claim(ClaimTypes.Role, role));
+
+            var prop = new AuthenticationProperties
+            {
+                IsPersistent = rememberMe
+            };
+
+            Request.GetOwinContext().Authentication.SignIn(prop, iden);
+        }
+
+        private bool VerifyPassword(string hash, string password)
+        {
+            bool status = false;
+            password = Crypto.Hash(password);
+            status = String.Compare(hash, password) == 0 ? true : false;
+            return status;
+        }
+
+        private void SendEmail(string emailAddress, string body, string subject)
+        {
+            using (MailMessage mm = new MailMessage("fundtasia1101@gmail.com", emailAddress))
+            {
+                mm.Subject = subject;
+                mm.Body = body;
+
+                mm.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+                smtp.EnableSsl = true;
+                NetworkCredential NetworkCred = new NetworkCredential("fundtasia1101@gmail.com", "lkwefecbllzpgmea");
+                smtp.UseDefaultCredentials = true;
+                smtp.Credentials = NetworkCred;
+                smtp.Port = 587;
+                smtp.Send(mm);
+
+            }
+        }
+
+        //public ActionResult ResetPassword(string id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return RedirectToAction("Index", "Home");
+        //    }
+
+
+
+        //    return View();
+        //}
 
         [NonAction]
         public bool IsEmailExist(string email)

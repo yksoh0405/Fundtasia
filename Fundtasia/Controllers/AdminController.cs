@@ -33,7 +33,7 @@ namespace Fundtasia.Controllers
         {
             User userSession = (User)Session["UserSession"];
             User loginUser = db.Users.Find(userSession.Id);
-            
+
             var model = new StaffProfileVM
             {
                 Id = loginUser.Id,
@@ -53,40 +53,43 @@ namespace Fundtasia.Controllers
         [Authorize(Roles = "Admin, Staff")]
         public ActionResult ViewProfile(StaffProfileVM model)
         {
-            var s = db.Users.Find(model.Id);
-
-            if (s == null)
+            using (DBEntities1 da = new DBEntities1())
             {
-                return RedirectToAction("Dashboard", "Admin");
-            }
+                var s = db.Users.Find(model.Id);
 
-            if (ModelState.IsValid)
-            {
-                //If Email string is different with database
-                if (!String.Equals(s.Email, model.Email))
+                if (s == null)
                 {
-                    //Check email exist in another record
-                    if (IsEmailExist(model.Email))
-                    {
-                        ModelState.AddModelError("EmailExist", "Email Already Exist");
-                        return View(model);
-                    }
-                    else
-                    {
-                        s.Email = model.Email;
-                    }
+                    return RedirectToAction("Dashboard", "Admin");
                 }
-                s.FirstName = model.FirstName;
-                s.LastName = model.LastName;
-                if (model.PasswordHash != null)
-                {
-                    s.PasswordHash = Crypto.Hash(model.PasswordHash);
-                }
-                db.SaveChanges();
 
-                Session["UserSession"] = new User(s.Id, s.Email, s.Role, s.FirstName, s.LastName, s.Status, (DateTime)s.LastLoginTime, s.LastLoginIP);
-                TempData["Info"] = $"{s.FirstName} data saved.";
-                return RedirectToAction("Dashboard", "Admin");
+                if (ModelState.IsValid)
+                {
+                    //If Email string is different with database
+                    if (!String.Equals(s.Email, model.Email))
+                    {
+                        //Check email exist in another record
+                        if (IsEmailExist(model.Email))
+                        {
+                            ModelState.AddModelError("EmailExist", "Email Already Exist");
+                            return View(model);
+                        }
+                        else
+                        {
+                            s.Email = model.Email;
+                        }
+                    }
+                    s.FirstName = model.FirstName;
+                    s.LastName = model.LastName;
+                    if (model.PasswordHash != null)
+                    {
+                        s.PasswordHash = Crypto.Hash(model.PasswordHash);
+                    }
+                    da.SaveChanges();
+
+                    Session["UserSession"] = new User(s.Id, s.Email, s.Role, s.FirstName, s.LastName, s.Status, (DateTime)s.LastLoginTime, s.LastLoginIP);
+                    TempData["Info"] = $"{s.FirstName} data saved.";
+                    return RedirectToAction("Dashboard", "Admin");
+                }
             }
 
             return View(model);
