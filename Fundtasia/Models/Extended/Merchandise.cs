@@ -31,6 +31,7 @@ namespace Fundtasia.Models
         public string Id { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "*Merchandise Name is required")]
+        [RegularExpression(@"^[A-Za-z ]+$", ErrorMessage = "*Invalid Name format.")]
         [StringLength(150)]
         public string Name { get; set; }
 
@@ -38,6 +39,8 @@ namespace Fundtasia.Models
         public HttpPostedFileBase ImageURL { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "*Merchandise Price is required")]
+        [RegularExpression(@"^[0-9]*$", ErrorMessage = "Invalid Price format.")]
+        [Range(1, 50000, ErrorMessage = "Price must be between 1 to 1,000")]
         public decimal Price { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "*Merchandise Status is required")]
@@ -49,6 +52,7 @@ namespace Fundtasia.Models
         public string Id { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "*Merchandise Name is required")]
+        [RegularExpression(@"^[A-Za-z ]+$", ErrorMessage = "Invalid Name format.")]
         public string Name { get; set; }
 
         public HttpPostedFileBase Image { get; set; }
@@ -56,6 +60,8 @@ namespace Fundtasia.Models
         public string ImageURL { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "*Merchandise Price is required")]
+        [RegularExpression(@"^[0-9]*$", ErrorMessage = "Invalid Price format.")]
+        [Range(1, 50000, ErrorMessage = "Price must be between 1 to 1,000")]
         public decimal Price { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "*Merchandise Status is required")]

@@ -19,6 +19,7 @@ namespace Fundtasia.Models
 
         [Display(Name = "Full Name")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Full Name is required")]
+        [RegularExpression(@"^[A-Za-z ]+$", ErrorMessage = "Invalid Full Name format.")]
         public string FullName { get; set; }
 
         [Display(Name = "Street Address")]
@@ -36,11 +37,5 @@ namespace Fundtasia.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "Postal Code is required")]
         [RegularExpression(@"\d{5}", ErrorMessage = "Invalid Postal Code format.")]
         public string PostalCode { get; set; }
-    }
-
-    public enum State
-    {
-        Johor, Kedah, Kelantan, KualaLumpur, Labuan, Malacca, NegeriSembilan, Pahang, 
-        Penang, Perak, Perlis, Putrajaya, Sabah, Sarawak, Selangor, Terengganu
     }
 }

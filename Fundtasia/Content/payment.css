@@ -30,3 +30,7 @@ input.donate-submit {
 .error-msg {
     color: red;
 }
+
+h5 {
+    margin-top: 15px;
+}

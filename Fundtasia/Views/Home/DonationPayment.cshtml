@@ -27,13 +27,17 @@
             <div class="card-body">
                 <h2 class="card-title">💳 Card Details 💳</h2>
                 <h5>Name : </h5>
-                <input type="text" class="form-control" id="" placeholder="Name on Card" required><br />
+                @Html.TextBoxFor(d => d.Name, new { @class = "form-control", autocomplete = "off", placeholder = "Name here" })
+                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "error-msg" })
                 <h5>Card Number : </h5>
-                <input type="text" class="form-control" id="" placeholder="0000 0000 0000 0000" required><br />
+                @Html.TextBoxFor(d => d.CardNumber, new { @class = "form-control", autocomplete = "off", placeholder = "Card Number here" })
+                @Html.ValidationMessageFor(m => m.CardNumber, "", new { @class = "error-msg" })
                 <h5>Expiry Date : </h5>
-                <input type="text" class="form-control" id="" placeholder="(MM/YY)" required><br />
+                @Html.TextBoxFor(d => d.ExpiryDate, new { @class = "form-control", autocomplete = "off", placeholder = "Expiry Date here" })
+                @Html.ValidationMessageFor(m => m.ExpiryDate, "", new { @class = "error-msg" })
                 <h5>CVV : </h5>
-                <input type="text" class="form-control" id="" placeholder="CVV" required><br />
+                @Html.TextBoxFor(d => d.CVV, new { @class = "form-control", autocomplete = "off", placeholder = "CVV here" })
+                @Html.ValidationMessageFor(m => m.CVV, "", new { @class = "error-msg" })
             </div>
         </div>
 
