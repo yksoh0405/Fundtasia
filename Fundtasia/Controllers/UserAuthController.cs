@@ -147,25 +147,39 @@ namespace Fundtasia.Controllers
 
                 if (user != null && VerifyPassword(user.PasswordHash, login.PasswordHash))
                 {
-                    user.LastLoginTime = DateTime.Now;
-                    user.LastLoginIP = GetLocalIPAddress();
-                    db.SaveChanges();
-                    SignIn(user.Id.ToString(), user.Role, login.RememberMe);
-                    Session["UserSession"] = new User(user.Id, user.Email, user.Role, user.FirstName, user.LastName, user.Status, (DateTime)user.LastLoginTime, user.LastLoginIP);
-
-                    if (ReturnUrl == "")
+                    if (String.Equals(user.Status, "Active"))
                     {
-                        return RedirectToAction("Index", "Home");
+                        if (user.IsEmailVerified == true)
+                        {
+                            user.LastLoginTime = DateTime.Now;
+                            user.LastLoginIP = GetLocalIPAddress();
+                            db.SaveChanges();
+                            SignIn(user.Id.ToString(), user.Role, login.RememberMe);
+                            Session["UserSession"] = new User(user.Id, user.Email, user.Role, user.FirstName, user.LastName, user.Status, (DateTime)user.LastLoginTime, user.LastLoginIP);
+
+                            if (ReturnUrl == "")
+                            {
+                                return RedirectToAction("Index", "Home");
+                            }
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("Error", "Please verify your account in email");
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Error", "This account has been deactivated");
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError("Password", "Email and password not matched");
+                    ModelState.AddModelError("Error", "Email and password not matched");
                 }
             }
             return View(login);
         }
-        
+
         public ActionResult ForgotPassword()
         {
             if (Request.IsAuthenticated)
@@ -186,30 +200,33 @@ namespace Fundtasia.Controllers
             {
                 if (IsEmailExist(fgtPwdVM.Email))
                 {
-                    User model = db.Users.Where(s => s.Email == fgtPwdVM.Email).FirstOrDefault();
-
-                    // Add the verification time
-                    var endTime = DateTime.Now.AddMinutes(10);
-
-                    var fgtPwd = new PasswordReset
+                    using (DBEntities1 da = new DBEntities1())
                     {
-                        UserId = model.Id,
-                        Code = resetCode,
-                        TimeOver = endTime
-                    };
+                        var model = da.Users.Where(s => s.Email == fgtPwdVM.Email).FirstOrDefault();
 
-                    db.PasswordResets.Add(fgtPwd);
-                    db.SaveChanges();
+                        // Add the verification time
+                        var endTime = DateTime.Now.AddMinutes(10);
 
-                    var subject = "Password Reset Request";
-                    var body = "Hi " + model.FirstName + ", <br/> You recently requested to reset your password for your account. Click the link below to reset it. " +
-                         " <br/><br/><a href='" + link + "'>" + link + "</a> <br/><br/>" +
-                         "If you did not request a password reset, please ignore this email or reply to let us know.<br/><br/> Thank you" +
-                         "<br/><br/>Ps. this link will be disabled after " + endTime;
+                        var fgtPwd = new PasswordReset
+                        {
+                            UserId = model.Id,
+                            Code = resetCode,
+                            TimeOver = endTime
+                        };
 
-                    SendEmail(model.Email, body, subject);
+                        da.PasswordResets.Add(fgtPwd);
+                        da.SaveChanges();
 
-                    ViewBag.Message = "Reset password link has been sent to your email id.";
+                        var subject = "Password Reset Request";
+                        var body = "Hi " + model.FirstName + ", <br/> You recently requested to reset your password for your account. Click the link below to reset it. " +
+                             " <br/><br/><a href='" + link + "'>" + link + "</a> <br/><br/>" +
+                             "If you did not request a password reset, please ignore this email or reply to let us know.<br/><br/> Thank you" +
+                             "<br/><br/>Ps. this link will be disabled after " + endTime;
+
+                        SendEmail(model.Email, body, subject);
+
+                        ViewBag.Message = "Reset password link has been sent to your email id.";
+                    }
                 }
                 else
                 {
@@ -329,31 +346,34 @@ namespace Fundtasia.Controllers
 
         [Authorize(Roles = "User")]
         [HttpPost]
-        public ActionResult ChangeEmail(ClientUserChangeEmail email)
+        public ActionResult ChangeEmail(ClientUserChangeEmail model)
         {
-            var s = db.Users.Find(email.Id);
-
-            if (ModelState.IsValid)
+            using (DBEntities1 da = new DBEntities1())
             {
-                //Check email exist in another record
-                if (IsEmailExist(email.NewEmail))
+                var s = da.Users.Find(model.Id);
+
+                if (ModelState.IsValid)
                 {
-                    ModelState.AddModelError("EmailExist", "Email Already Exist");
-                    return View(email);
-                }
-                else
-                {
-                    s.Email = email.NewEmail;
-                }
+                    //Check email exist in another record
+                    if (IsEmailExist(model.NewEmail))
+                    {
+                        ModelState.AddModelError("EmailExist", "Email Already Exist");
+                        return View(model);
+                    }
+                    else
+                    {
+                        s.Email = model.NewEmail;
+                        da.SaveChanges();
+                    }
 
-                db.SaveChanges();
 
-                Session["UserSession"] = new User(s.Id, s.Email, s.Role, s.FirstName, s.LastName, s.Status, (DateTime)s.LastLoginTime, s.LastLoginIP);
+                    Session["UserSession"] = new User(s.Id, s.Email, s.Role, s.FirstName, s.LastName, s.Status, (DateTime)s.LastLoginTime, s.LastLoginIP);
 
-                return RedirectToAction("ViewProfile", "Home");
+                    return RedirectToAction("ViewProfile", "UserAuth");
+                };
             }
 
-            return View(email);
+            return View(model);
         }
 
         [NonAction]

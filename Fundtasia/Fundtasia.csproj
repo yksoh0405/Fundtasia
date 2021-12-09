@@ -281,6 +281,12 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AEditController.cs" />
     <Compile Include="Controllers\AListController.cs" />
+    <Compile Include="Models\Donation.cs">
+      <DependentUpon>DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Event.cs">
+      <DependentUpon>DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Extended\DonationPayment.cs" />
     <Compile Include="Models\Extended\Merchandise.cs" />
     <Compile Include="Controllers\UserAuthController.cs" />
@@ -303,12 +309,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DB.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Donation.cs">
-      <DependentUpon>DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Event.cs">
-      <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Extended\Event.cs" />
     <Compile Include="Models\Extended\Payment.cs" />

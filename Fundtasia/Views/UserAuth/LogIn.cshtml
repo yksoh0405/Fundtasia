@@ -12,6 +12,12 @@
     @Html.AntiForgeryToken()
 
 <div class="row">
+    <div class="col-lg-8 mx-auto mb-3">
+        @Html.ValidationMessage("Error", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(model => model.PasswordHash, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger" })
+    </div>
     <div class="col-lg-8 mx-auto">
         <div class="form-group">
             <h5>@Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "" })</h5>
@@ -37,14 +43,9 @@
                 <input type="submit" name="loginBtn" value="Login" id="loginBtn" />
             </div>
         </div>
-        
 
-        
-    </div>
-    <div class="col-lg-8 mx-auto">
-        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-        @Html.ValidationMessageFor(model => model.PasswordHash, "", new { @class = "text-danger" })
-        @Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger" })
+
+
     </div>
 </div>
 
