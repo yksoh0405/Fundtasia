@@ -19,8 +19,8 @@ namespace Fundtasia.Models
         {
             this.Donations = new HashSet<Donation>();
             this.Events = new HashSet<Event>();
-            this.Reports = new HashSet<Report>();
             this.PasswordResets = new HashSet<PasswordReset>();
+            this.Reports = new HashSet<Report>();
             this.UserMerchandises = new HashSet<UserMerchandise>();
         }
     
@@ -41,9 +41,9 @@ namespace Fundtasia.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Event> Events { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Report> Reports { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PasswordReset> PasswordResets { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Report> Reports { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserMerchandise> UserMerchandises { get; set; }
     }
