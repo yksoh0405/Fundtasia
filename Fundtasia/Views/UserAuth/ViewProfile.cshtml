@@ -1,5 +1,36 @@
-﻿@model User 
+﻿@model UserProfileVM
+
 @{
     ViewBag.Title = "View Profile";
 }
 
+@section head{
+    <link href="~/Content/LoginRegister.css" rel="stylesheet" />
+}
+
+<form action="" method="post" id="loginForm" class="form-control" enctype="multipart/form-data">
+    <div class="row">
+        <div id="userName-container" class="form-group col-lg-12 col-md-8">
+            <div id="firstName-container">
+                <h5>@Html.Label("firstName", "FirstName")</h5>
+                @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", id = "viewProf", @readonly = "readonly" })
+            </div>
+            <div id="lastName-container">
+                <h5>@Html.Label("lastName", "LastName")</h5>
+                @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", id = "viewProf", @readonly = "readonly" })
+            </div>
+        </div>
+
+        <div class="form-group col-lg-12 col-md-8">
+            <h5>@Html.Label("email", "Email Address")</h5>
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", id = "viewProf", @readonly = "readonly" })
+        </div>
+    </div>
+
+    <br />
+
+    <div id="editUserBtn">
+        @Html.ActionLink("Change Email", "ChangeEmail", "UserAuth", new { @class = "edit-btn", @type = "button" })&nbsp;&nbsp;&nbsp;
+        @Html.ActionLink("Change Password", "ChangePassword", "UserAuth", new { @class = "edit-btn", @type = "button" })
+    </div>
+</form>

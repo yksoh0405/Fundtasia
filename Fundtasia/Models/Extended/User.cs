@@ -164,4 +164,41 @@ namespace Fundtasia.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "Last name required")]
         public string LastName { get; set; }
     }
+
+    public class UserProfileVM
+    {
+        public string LastName { get; set; }
+        public string FirstName { get; set; }
+        public string Email { get; set; }
+    }
+
+    public class ClientUserChangeEmail
+    {
+        public System.Guid Id { get; set; }
+        public string Email { get; set; }
+
+        [Display(Name = "New Email Address")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Email is required")]
+        [DataType(DataType.EmailAddress)]
+        public string NewEmail { get; set; }
+    }
+    
+    public class ClientUserChangePassword
+    {
+        [Display(Name = "Current Password")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Current Password is required")]
+        [DataType(DataType.EmailAddress)]
+        public string Current { get; set; }
+
+        [Display(Name = "New Password")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "New Password is required")]
+        [DataType(DataType.EmailAddress)]
+        public string New { get; set; }
+
+        [Display(Name = "Confirm Password")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Confirm Password is required")]
+        [DataType(DataType.EmailAddress)]
+        [Compare("New")]
+        public string Confirm { get; set; }
+    }
 }

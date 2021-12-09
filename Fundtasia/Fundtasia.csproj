@@ -384,6 +384,7 @@
     <Content Include="Views\Home\DonationReceipt.cshtml" />
     <Content Include="Views\Home\_MerchandiseReceipt.cshtml" />
     <Content Include="Views\UserAuth\ResetPassword.cshtml" />
+    <Content Include="Views\UserAuth\ChangeEmail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

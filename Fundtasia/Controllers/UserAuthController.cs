@@ -287,7 +287,71 @@ namespace Fundtasia.Controllers
         [Authorize(Roles = "User")]
         public ActionResult ViewProfile()
         {
-            return View();
+            User userSession = (User)Session["UserSession"];
+            User loginUser = db.Users.Find(userSession.Id);
+
+            if (loginUser == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var model = new UserProfileVM
+            {
+                LastName = loginUser.LastName,
+                FirstName = loginUser.FirstName,
+                Email = loginUser.Email
+            };
+
+            return View(model);
+        }
+
+        [Authorize(Roles = "User")]
+        public ActionResult ChangeEmail()
+        {
+            User userSession = (User)Session["UserSession"];
+            User loginUser = db.Users.Find(userSession.Id);
+
+            if (loginUser == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var model = new ClientUserChangeEmail
+            {
+                Id = loginUser.Id,
+                Email = loginUser.Email
+            };
+
+            return View(model);
+        }
+
+        [Authorize(Roles = "User")]
+        [HttpPost]
+        public ActionResult ChangeEmail(ClientUserChangeEmail email)
+        {
+            var s = db.Users.Find(email.Id);
+
+            if (ModelState.IsValid)
+            {
+                //Check email exist in another record
+                if (IsEmailExist(email.NewEmail))
+                {
+                    ModelState.AddModelError("EmailExist", "Email Already Exist");
+                    return View(email);
+                }
+                else
+                {
+                    s.Email = email.NewEmail;
+                }
+
+                db.SaveChanges();
+
+                Session["UserSession"] = new User(s.Id, s.Email, s.Role, s.FirstName, s.LastName, s.Status, (DateTime)s.LastLoginTime, s.LastLoginIP);
+
+                return RedirectToAction("ViewProfile", "Home");
+            }
+
+            return View(email);
         }
 
         [NonAction]

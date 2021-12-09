@@ -86,7 +86,6 @@ namespace Fundtasia.Controllers
 
                 Session["UserSession"] = new User(s.Id, s.Email, s.Role, s.FirstName, s.LastName, s.Status, (DateTime)s.LastLoginTime, s.LastLoginIP);
 
-
                 return RedirectToAction("Dashboard", "Admin");
             }
 
