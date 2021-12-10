@@ -27,11 +27,6 @@ namespace Fundtasia.Controllers
 
         public ActionResult Donation()
         {
-            if (!Request.IsAuthenticated)
-            {
-                RedirectToAction("LogIn", "UserAuth");
-            }
-
             var model = db.Merchandises;
 
             return View(model);
@@ -40,11 +35,6 @@ namespace Fundtasia.Controllers
         [Authorize]
         public ActionResult DonationPayment()
         {
-            if (!Request.IsAuthenticated)
-            {
-                return RedirectToAction("LogIn", "UserAuth");
-            }
-
             ViewBag.EventList = new SelectList(db.Events, "Id", "Title");
             return View();
         }
@@ -53,10 +43,6 @@ namespace Fundtasia.Controllers
         [Authorize]
         public ActionResult DonationPayment(Donation model)
         {
-            if (!Request.IsAuthenticated)
-            {
-                return RedirectToAction("LogIn", "UserAuth");
-            }
             if (ModelState.IsValid)
             {
                 User loginUser = (User)Session["UserSession"];
@@ -89,9 +75,9 @@ namespace Fundtasia.Controllers
         [Authorize]
         public ActionResult MerchandisePayment(string Id)
         {
-            if (!Request.IsAuthenticated)
+            if (Id == null)
             {
-                return RedirectToAction("LogIn", "UserAuth");
+                return RedirectToAction("Donation", "Home");
             }
 
             ViewBag.EventList = new SelectList(db.Events, "Id", "Title");
@@ -103,11 +89,6 @@ namespace Fundtasia.Controllers
         [Authorize]
         public ActionResult MerchandisePayment(MerchPaymentVM model)
         {
-            if (!Request.IsAuthenticated)
-            {
-                return RedirectToAction("LogIn", "UserAuth");
-            }
-
             if (ModelState.IsValid)
             {
                 var merchandise = db.Merchandises.Find(model.MerchandiseId);
@@ -140,6 +121,8 @@ namespace Fundtasia.Controllers
         public ActionResult MerchandiseReceipt(Guid Id)
         {
             var model = db.UserMerchandises.Find(Id);
+            Dictionary<string, string> state = State();
+            model.State = state[model.State];
             return View(model);
         }
 
@@ -189,6 +172,26 @@ namespace Fundtasia.Controllers
             }
 
             return View(model);
+        }
+
+        public Dictionary<string, string> State()
+        {
+            Dictionary<string, string> state = new Dictionary<string, string>(){
+                {"JH", "Johor"},
+                {"KD", "Kedah"},
+                {"KT", "Kelantan"},
+                {"MK", "Malacca"},
+                {"NS", "Negeri Sembilan"},
+                {"PH", "Pahang"},
+                {"PN", "Penang"},
+                {"PR", "Perak"},
+                {"PL", "Perlis"},
+                {"SB", "Sabah"},
+                {"SW", "Sarawak"},
+                {"SG", "Selangor"},
+                {"TR", "Terengganu"}
+            };
+            return state;
         }
     }
 }

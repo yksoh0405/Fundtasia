@@ -22,18 +22,18 @@
                             <h4 style="color: #9B0909">RM @merchandise.Price.00</h4>
                             @Html.TextBoxFor(d => d.MerchandiseId, new { @Value = merchandise.Id, autocomplete = "off", hidden = "" })
                             <h4 class="card-title" style="min-height:50px;">@merchandise.Name</h4>
-                            <h4>Size : </h4>
-                            <div>
-                                <label>@Html.RadioButtonFor(m => m.Size, "S") S </label>
+                            <h4 class="text-left">Size : </h4>
+                            <div class="text-left">
+                                <label class="w-100">@Html.RadioButtonFor(m => m.Size, "S") S </label>
                             </div>
-                            <div>
-                                <label>@Html.RadioButtonFor(m => m.Size, "M") M </label>
+                            <div class="text-left">
+                                <label class="w-100">@Html.RadioButtonFor(m => m.Size, "M") M </label>
                             </div>
-                            <div>
-                                <label>@Html.RadioButtonFor(m => m.Size, "L") L </label>
+                            <div class="text-left">
+                                <label class="w-100">@Html.RadioButtonFor(m => m.Size, "L") L </label>
                             </div>
-                            <div>
-                                <label>@Html.RadioButtonFor(m => m.Size, "XL") XL </label>
+                            <div class="text-left">
+                                <label class="w-100">@Html.RadioButtonFor(m => m.Size, "XL") XL </label>
                             </div>
                             @Html.ValidationMessageFor(m => m.Size, "", new { @class = "error-msg" })
                         </div>

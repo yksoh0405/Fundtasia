@@ -12,7 +12,7 @@
     string[] fields = null;
     if (User.IsInRole("Admin"))
     {
-        fields = new string[] { "First Name", "Last Name", "Verified", "Status", "Last Login Time", "Role", "Edit" };
+        fields = new string[] { "First Name", "Last Name", "Verified", "Status", "Last Login Time", "Last Login IP", "Role", "Edit" };
     }
     else
     {
@@ -54,6 +54,7 @@
                     <td>@verified</td>
                     <td>@s.Status</td>
                     <td>@dateTime</td>
+                    <td>@s.LastLoginIP</td>
                     <td>@s.Role</td>
                     @if (User.IsInRole("Admin"))
                     {
