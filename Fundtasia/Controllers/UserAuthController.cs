@@ -12,6 +12,8 @@ using System.Data.Entity.Validation;
 using System.Security.Claims;
 using Microsoft.Owin.Security;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Fundtasia.Controllers
 {
@@ -44,6 +46,16 @@ namespace Fundtasia.Controllers
                 //The user cannot come to signup page after login
                 return RedirectToAction("Index", "Home");
             }
+
+            var response = Request["g-recaptcha-response"];
+            string secretKey = "6LfWMJAdAAAAAENljxVJ8cYTIwjKiBnZmrLRaehm";
+            var client = new WebClient();
+            var result = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secretKey, response));
+            var obj = JObject.Parse(result);
+            var status = (bool)obj.SelectToken("success");
+
+            ViewBag.Message = status ? "Google reCAPTCHA validation success!" : "Google reCAPTCHA validation failed, please try again";
+
             bool Status = false;
             string message = "";
 

@@ -69,6 +69,7 @@ else
                     @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", required = "" } })
                 </div>
             </div>
+            <div class="g-recaptcha" data-sitekey="6LfWMJAdAAAAACtZjCdRVfxfUFHODt2GYhjO_4e_"></div>
         </div>
 
         <input type="submit" name="registerBtn" value="Register" id="registerBtn" />
@@ -86,4 +87,7 @@ else
     }
 }
 
-
+@section foot {
+    <script src='https://www.google.com/recaptcha/api.js' type="text/javascript"></script>
+    
+    }
