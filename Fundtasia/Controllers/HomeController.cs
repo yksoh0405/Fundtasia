@@ -33,6 +33,7 @@ namespace Fundtasia.Controllers
             }
 
             var model = db.Merchandises;
+
             return View(model);
         }
 

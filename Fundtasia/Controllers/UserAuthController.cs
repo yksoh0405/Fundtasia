@@ -47,20 +47,13 @@ namespace Fundtasia.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var response = Request["g-recaptcha-response"];
-            string secretKey = "6LfWMJAdAAAAAENljxVJ8cYTIwjKiBnZmrLRaehm";
-            var client = new WebClient();
-            var result = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secretKey, response));
-            var obj = JObject.Parse(result);
-            var status = (bool)obj.SelectToken("success");
-
-            ViewBag.Message = status ? "Google reCAPTCHA validation success!" : "Google reCAPTCHA validation failed, please try again";
+            CaptchaResponse response = ValidateCaptcha(Request["g-recaptcha-response"]);
 
             bool Status = false;
             string message = "";
 
             //Model Validation
-            if (ModelState.IsValid)
+            if (response.Success && ModelState.IsValid)
             {
                 #region Check confirm password == password
                 if (model.PasswordHash != model.ConfirmPassword)
@@ -103,6 +96,11 @@ namespace Fundtasia.Controllers
                 }
                 #endregion
             }
+            else if(!response.Success)
+            {
+                ModelState.AddModelError("Error", "Please complete the reCAPTCHA.");
+                return View(model);
+            }
             else
             {
                 message = "Invalid Request";
@@ -111,6 +109,14 @@ namespace Fundtasia.Controllers
             ViewBag.Message = message;
             ViewBag.Status = Status;
             return View(model);
+        }
+
+        public static CaptchaResponse ValidateCaptcha(string response)
+        {
+            string secret = System.Web.Configuration.WebConfigurationManager.AppSettings["recaptchaPrivateKey"];
+            var client = new WebClient();
+            var jsonResult = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secret, response));
+            return JsonConvert.DeserializeObject<CaptchaResponse>(jsonResult.ToString());
         }
 
         [HttpGet]

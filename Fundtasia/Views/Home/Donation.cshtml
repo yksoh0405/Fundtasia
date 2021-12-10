@@ -57,18 +57,21 @@
 
         @foreach (var m in Model) //will display data from Admin Merchandise
         {
-            <div class="col-sm-6 mt-4">
-                <div class="card">
-                    <img src="~/Images/Uploads/Merchandise/@m.Image" style="height:500px"/>
-                    <div class="card-body">
-                        <p>RM @m.Price.00</p>
-                        <h4 class="card-title">@m.Name</h4>
-                        <form method="get" action="~/Home/MerchandisePayment?Id=@m.Id">
-                            <input type="submit" value="Purchase" id="submitBtn" class="button-normal" data-get="/Home/MerchandisePayment?Id=@m.Id" /> @*After submit, will pass this data to Payment*@
-                        </form>
+            if (String.Equals(m.Status, "Available"))
+            {
+                <div class="col-sm-6 mt-4">
+                    <div class="card">
+                        <img src="~/Images/Uploads/Merchandise/@m.Image" style="height:500px"/>
+                        <div class="card-body">
+                            <p>RM @m.Price.00</p>
+                            <h4 class="card-title">@m.Name</h4>
+                            <form method="get" action="~/Home/MerchandisePayment?Id=@m.Id">
+                                <input type="submit" value="Purchase" id="submitBtn" class="button-normal" data-get="/Home/MerchandisePayment?Id=@m.Id" /> @*After submit, will pass this data to Payment*@
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         }
     </div>
 </div>

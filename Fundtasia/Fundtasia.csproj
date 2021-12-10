@@ -281,6 +281,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AEditController.cs" />
     <Compile Include="Controllers\AListController.cs" />
+    <Compile Include="Controllers\CaptchaResponse.cs" />
     <Compile Include="Models\Donation.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
