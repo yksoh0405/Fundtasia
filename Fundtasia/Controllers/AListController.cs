@@ -28,6 +28,7 @@ namespace Fundtasia.Controllers
                 case "Verified": fn = s => s.IsEmailVerified; break;
                 case "Status": fn = s => s.Status; break;
                 case "Last Login Time": fn = s => s.LastLoginTime; break;
+                case "Last Login IP": fn = s => s.LastLoginIP; break;
                 case "Role": fn = s => s.Role; break;
             }
 
@@ -262,48 +263,6 @@ namespace Fundtasia.Controllers
 
             //Ajax Request
             if (Request.IsAjaxRequest()) return PartialView("_MerchandiseSales", model);
-
-            return View(model);
-        }
-
-        [Authorize(Roles = "Admin, Staff")]
-        public ActionResult Report(string sort = "Created Date", string sortdir = "DESC", int page = 1, string keyword = "")
-        {
-            keyword = keyword.Trim();
-
-            //Sorting
-            Func<Report, object> fn = s => s.Id;
-
-            switch (sort)
-            {
-                case "Id": fn = s => s.Id; break;
-                case "Title": fn = s => s.Title; break;
-                case "Created Date": fn = s => s.CreatedDate; break;
-                case "Created By": fn = s => s.User.LastName; break;
-            }
-
-            var sorted = sortdir == "DESC" ? db.Reports.Where(s => s.Title.Contains(keyword)).OrderByDescending(fn) : db.Reports.Where(s => s.Title.Contains(keyword)).OrderBy(fn);
-
-            //Paging
-            if (page < 1)
-            {
-                return RedirectToAction(null, new { page = 1 });
-            }
-
-            var model = sorted.ToPagedList(page, 10);
-
-            if (model == null)
-            {
-                return View();
-            }
-
-            if (page > model.PageCount)
-            {
-                return RedirectToAction(null, new { page = model.PageCount });
-            }
-
-            //Ajax Request
-            if (Request.IsAjaxRequest()) return PartialView("_Report", model);
 
             return View(model);
         }

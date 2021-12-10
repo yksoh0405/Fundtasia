@@ -22,9 +22,6 @@ namespace Fundtasia.Controllers
         //This controller is used to handle the user authentication
         DBEntities1 db = new DBEntities1();
 
-        // Initialize password hasher
-        PasswordHasher ph = new PasswordHasher();
-
         //Sign Up Action
         [HttpGet]
         public ActionResult SignUp()
@@ -284,6 +281,8 @@ namespace Fundtasia.Controllers
                 Email = loginUser.Email
             };
 
+            ViewBag.Donation = db.Donations.Where(s => s.UserId == userSession.Id);
+
             return View(model);
         }
 
@@ -480,18 +479,6 @@ namespace Fundtasia.Controllers
             }
         }
 
-        //public ActionResult ResetPassword(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return RedirectToAction("Index", "Home");
-        //    }
-
-
-
-        //    return View();
-        //}
-
         [NonAction]
         public bool IsEmailExist(string email)
         {
@@ -554,19 +541,5 @@ namespace Fundtasia.Controllers
             }
             throw new Exception("No network adapters with an IPv4 address in the system!");
         }
-
-        private string HashPassword(string password)
-        {
-            // Return hashed password
-            return ph.HashPassword(password);
-        }
-
-        private bool ComparePassword(string hash, string password)
-        {
-            // Verify hashed password (true or false)
-            return ph.VerifyHashedPassword(hash, password)
-                   == PasswordVerificationResult.Success;
-        }
-
     }
 }

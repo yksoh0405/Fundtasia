@@ -5,19 +5,17 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="d69245650e6f4004b1f45fbd49d4cee1" Name="Diagram1">
-        <EntityTypeShape EntityType="DBModel.Donation" Width="1.5" PointX="1.375" PointY="4.25" />
-        <EntityTypeShape EntityType="DBModel.Event" Width="1.5" PointX="7.25" PointY="5.5" />
+        <EntityTypeShape EntityType="DBModel.Donation" Width="1.5" PointX="11.375" PointY="0.5" />
+        <EntityTypeShape EntityType="DBModel.Event" Width="1.5" PointX="8" PointY="0.5" />
         <EntityTypeShape EntityType="DBModel.Merchandise" Width="1.5" PointX="0.5" PointY="0.5" />
-        <EntityTypeShape EntityType="DBModel.PasswordReset" Width="1.5" PointX="10.5" PointY="0.5" />
-        <EntityTypeShape EntityType="DBModel.Report" Width="1.5" PointX="10.625" PointY="3.375" />
-        <EntityTypeShape EntityType="DBModel.User" Width="1.5" PointX="7.25" PointY="0.5" />
-        <EntityTypeShape EntityType="DBModel.UserMerchandise" Width="1.5" PointX="3.625" PointY="0.5" />
+        <EntityTypeShape EntityType="DBModel.PasswordReset" Width="1.5" PointX="0.5" PointY="3.625" />
+        <EntityTypeShape EntityType="DBModel.User" Width="1.5" PointX="5.625" PointY="0.5" />
+        <EntityTypeShape EntityType="DBModel.UserMerchandise" Width="1.5" PointX="2.875" PointY="0.5" />
         <AssociationConnector Association="DBModel.FK_Donation_Event" />
         <AssociationConnector Association="DBModel.FK_Donation_User" />
         <AssociationConnector Association="DBModel.FK_Event_User" />
         <AssociationConnector Association="DBModel.FK_UserMerchandise_Merchandise" />
         <AssociationConnector Association="DBModel.FK_PasswordReset_User" />
-        <AssociationConnector Association="DBModel.FK_Table_TUser" />
         <AssociationConnector Association="DBModel.FK_UserMerchandise_User" />
       </Diagram>
     </edmx:Diagrams>

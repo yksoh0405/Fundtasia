@@ -21,14 +21,6 @@ namespace Fundtasia.Controllers
         }
 
         [Authorize(Roles = "Admin, Staff")]
-        public ActionResult ReportDetails(string id)
-        {
-            var model = db.Reports.Find(id);
-
-            return View(model);
-        }
-
-        [Authorize(Roles = "Admin, Staff")]
         public ActionResult ViewProfile()
         {
             User userSession = (User)Session["UserSession"];
@@ -99,6 +91,8 @@ namespace Fundtasia.Controllers
         public ActionResult ViewMerchandiseSale(Guid id)
         {
             var model = db.UserMerchandises.Find(id);
+            Dictionary<string, string> state = State();
+            model.State = state[model.State];
             return View(model);
         }
 
@@ -112,6 +106,26 @@ namespace Fundtasia.Controllers
                 var v = db.Users.Where(s => s.Email == email).FirstOrDefault();
                 return v != null;
             }
+        }
+
+        public Dictionary<string, string> State()
+        {
+            Dictionary<string, string> state = new Dictionary<string, string>(){
+                {"JH", "Johor"},
+                {"KD", "Kedah"},
+                {"KT", "Kelantan"},
+                {"MK", "Malacca"},
+                {"NS", "Negeri Sembilan"},
+                {"PH", "Pahang"},
+                {"PN", "Penang"},
+                {"PR", "Perak"},
+                {"PL", "Perlis"},
+                {"SB", "Sabah"},
+                {"SW", "Sarawak"},
+                {"SG", "Selangor"},
+                {"TR", "Terengganu"}
+            };
+            return state;
         }
     }
 }

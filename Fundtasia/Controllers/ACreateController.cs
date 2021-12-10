@@ -214,45 +214,6 @@ namespace Fundtasia.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "Admin, Staff")]
-        public ActionResult CreateReport()
-        {
-            User loginUser = (User)Session["UserSession"];
-            var model = new ReportInsertVM
-            {
-                Title = $"{DateTime.Now.Date} Daily Sales Report",
-                CreatedDate = DateTime.Now,
-                CreatedBy = loginUser.Id
-            };
-            return View(model);
-        }
-
-        [Authorize(Roles = "Admin, Staff")]
-        [HttpPost]
-        public ActionResult CreateReport(Report model)
-        {
-            if (ModelState.IsValid)
-            {
-                //Generate Id
-                int m = (db.Reports.Count()) + 1;
-                string id = $"R{m}";
-
-                var r = new Report
-                {
-                    Id = id,
-                    Title = model.Title,
-                    CreatedDate = model.CreatedDate,
-                    CreatedBy = model.CreatedBy
-                };
-
-                db.Reports.Add(r);
-                db.SaveChanges();
-                TempData["Info"] = "Report added.";
-                return RedirectToAction("Report", "AList");
-            }
-            return View();
-        }
-
         [NonAction]
         private string ValidatePhoto(HttpPostedFileBase f)
         {

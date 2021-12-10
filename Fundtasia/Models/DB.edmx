@@ -47,15 +47,6 @@
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="TimeOver" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="Report">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Title" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
-        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
@@ -136,18 +127,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Table_TUser">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="Report" Type="Self.Report" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Report">
-              <PropertyRef Name="CreatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UserMerchandise_Merchandise">
           <End Role="Merchandise" Type="Self.Merchandise" Multiplicity="1" />
           <End Role="UserMerchandise" Type="Self.UserMerchandise" Multiplicity="*" />
@@ -177,7 +156,6 @@
           <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Merchandise" EntityType="Self.Merchandise" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PasswordReset" EntityType="Self.PasswordReset" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Report" EntityType="Self.Report" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserMerchandise" EntityType="Self.UserMerchandise" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Donation_Event" Association="Self.FK_Donation_Event">
@@ -195,10 +173,6 @@
           <AssociationSet Name="FK_PasswordReset_User" Association="Self.FK_PasswordReset_User">
             <End Role="User" EntitySet="User" />
             <End Role="PasswordReset" EntitySet="PasswordReset" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Table_TUser" Association="Self.FK_Table_TUser">
-            <End Role="User" EntitySet="User" />
-            <End Role="Report" EntitySet="Report" />
           </AssociationSet>
           <AssociationSet Name="FK_UserMerchandise_Merchandise" Association="Self.FK_UserMerchandise_Merchandise">
             <End Role="Merchandise" EntitySet="Merchandise" />
@@ -218,7 +192,6 @@
           <EntitySet Name="Events" EntityType="DBModel.Event" />
           <EntitySet Name="Merchandises" EntityType="DBModel.Merchandise" />
           <EntitySet Name="PasswordResets" EntityType="DBModel.PasswordReset" />
-          <EntitySet Name="Reports" EntityType="DBModel.Report" />
           <EntitySet Name="Users" EntityType="DBModel.User" />
           <EntitySet Name="UserMerchandises" EntityType="DBModel.UserMerchandise" />
           <AssociationSet Name="FK_Donation_Event" Association="DBModel.FK_Donation_Event">
@@ -240,10 +213,6 @@
           <AssociationSet Name="FK_PasswordReset_User" Association="DBModel.FK_PasswordReset_User">
             <End Role="User" EntitySet="Users" />
             <End Role="PasswordReset" EntitySet="PasswordResets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Table_TUser" Association="DBModel.FK_Table_TUser">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Report" EntitySet="Reports" />
           </AssociationSet>
           <AssociationSet Name="FK_UserMerchandise_User" Association="DBModel.FK_UserMerchandise_User">
             <End Role="User" EntitySet="Users" />
@@ -298,16 +267,6 @@
           <Property Name="TimeOver" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="User" Relationship="DBModel.FK_PasswordReset_User" FromRole="PasswordReset" ToRole="User" />
         </EntityType>
-        <EntityType Name="Report">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreatedBy" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="DBModel.FK_Table_TUser" FromRole="Report" ToRole="User" />
-        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
@@ -326,7 +285,6 @@
           <NavigationProperty Name="Donations" Relationship="DBModel.FK_Donation_User" FromRole="User" ToRole="Donation" />
           <NavigationProperty Name="Events" Relationship="DBModel.FK_Event_User" FromRole="User" ToRole="Event" />
           <NavigationProperty Name="PasswordResets" Relationship="DBModel.FK_PasswordReset_User" FromRole="User" ToRole="PasswordReset" />
-          <NavigationProperty Name="Reports" Relationship="DBModel.FK_Table_TUser" FromRole="User" ToRole="Report" />
           <NavigationProperty Name="UserMerchandises" Relationship="DBModel.FK_UserMerchandise_User" FromRole="User" ToRole="UserMerchandise" />
         </EntityType>
         <EntityType Name="UserMerchandise">
@@ -407,18 +365,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Table_TUser">
-          <End Type="DBModel.User" Role="User" Multiplicity="1" />
-          <End Type="DBModel.Report" Role="Report" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Report">
-              <PropertyRef Name="CreatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UserMerchandise_User">
           <End Type="DBModel.User" Role="User" Multiplicity="1" />
           <End Type="DBModel.UserMerchandise" Role="UserMerchandise" Multiplicity="*" />
@@ -479,16 +425,6 @@
               <MappingFragment StoreEntitySet="PasswordReset">
                 <ScalarProperty Name="TimeOver" ColumnName="TimeOver" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Reports">
-            <EntityTypeMapping TypeName="DBModel.Report">
-              <MappingFragment StoreEntitySet="Report">
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
