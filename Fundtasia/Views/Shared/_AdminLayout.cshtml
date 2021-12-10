@@ -76,7 +76,7 @@
                                         @Html.ActionLink("Admin", "Dashboard", "Admin")
                                     </li>
                                     <li class="breadcrumb-item">
-                                        @Html.ActionLink((string)ViewBag.Title, "Dashboard", "Admin")
+                                        <a href="#">@ViewBag.Title</a>
                                     </li>
                                     @RenderSection("breadcrumb", false)
                                 </ol>

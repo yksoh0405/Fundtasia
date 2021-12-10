@@ -54,7 +54,7 @@ namespace Fundtasia.Controllers
                 s.Role = model.Role;
                 s.Status = model.Status;
                 db.SaveChanges();
-
+                TempData["Info"] = "Staff edited";
                 return RedirectToAction("Staff", "AList");
             }
 
@@ -100,7 +100,7 @@ namespace Fundtasia.Controllers
                 cu.FirstName = model.FirstName;
                 cu.Status = model.Status;
                 db.SaveChanges();
-
+                TempData["Info"] = "Client User edited";
                 return RedirectToAction("ClientUser", "AList");
             }
 
@@ -164,6 +164,7 @@ namespace Fundtasia.Controllers
                 m.YouTubeLink = model.YouTubeLink;
                 m.Article = model.Article;
                 db.SaveChanges();
+                TempData["Info"] = "Event edited";
                 return RedirectToAction("Event", "AList");
             }
             model.ImageURL = m.CoverImage;

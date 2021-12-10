@@ -29,11 +29,11 @@ namespace Fundtasia.Models
         public string Email { get; set; }
 
         [Display(Name = "First Name")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "First name required")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "First Name required")]
         public string FirstName { get; set; }
 
         [Display(Name = "Last Name")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Last name required")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Last Name required")]
         public string LastName { get; set; }
 
         [Display(Name = "Password")]
@@ -43,6 +43,7 @@ namespace Fundtasia.Models
         public string PasswordHash { get; set; }
 
         [Display(Name = "Confirm Password")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Confirm Password is required")]
         [DataType(DataType.Password)]
         [Compare("PasswordHash", ErrorMessage = "The confirm password should match with password")]
         public string ConfirmPassword { get; set; }
@@ -191,6 +192,22 @@ namespace Fundtasia.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "Current Password is required")]
         [DataType(DataType.Password)]
         public string Current { get; set; }
+
+        [Display(Name = "New Password")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "New Password is required")]
+        [DataType(DataType.Password)]
+        public string New { get; set; }
+
+        [Display(Name = "Confirm Password")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Confirm Password is required")]
+        [DataType(DataType.Password)]
+        [Compare("New")]
+        public string Confirm { get; set; }
+    }
+
+    public class ClientUserResetPassword
+    {
+        public System.Guid Id { get; set; }
 
         [Display(Name = "New Password")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "New Password is required")]

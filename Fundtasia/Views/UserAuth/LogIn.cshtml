@@ -12,10 +12,16 @@
     @Html.AntiForgeryToken()
 
 <div class="row">
-    <div class="col-lg-8 mx-auto mb-3">
+    <div class="col-lg-8 mx-auto">
         @Html.ValidationMessage("Error", new { @class = "text-danger" })
+    </div>
+    <div class="col-lg-8 mx-auto">
         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-lg-8 mx-auto">
         @Html.ValidationMessageFor(model => model.PasswordHash, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-lg-8 mx-auto mb-3">
         @Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger" })
     </div>
     <div class="col-lg-8 mx-auto">

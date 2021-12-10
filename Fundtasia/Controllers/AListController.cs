@@ -237,6 +237,11 @@ namespace Fundtasia.Controllers
 
             var sorted = sortdir == "DESC" ? db.UserMerchandises.Where(s => s.User.FirstName.Contains(keyword)).OrderByDescending(fn) : db.UserMerchandises.Where(s => s.User.FirstName.Contains(keyword)).OrderBy(fn);
 
+            if (sorted == null)
+            {
+                return View();
+            }
+
             //Paging
             if (page < 1)
             {
