@@ -28,7 +28,7 @@ namespace Fundtasia.Models
         public string CardNumber { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "*Expiry Date is required")]
-        [RegularExpression(@"^((0[1-9])|(1[0-2]))\/((21)|([2][1-9]))$", ErrorMessage = "*Invalid Expiry Date format.")]
+        [RegularExpression(@"^((0[1-9])|(1[0-2]))\/((2021)|(20[2-3][0-9]))$", ErrorMessage = "*Invalid Expiry Date format. (MM/YYYY)")]
         public string ExpiryDate { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "*CVV is required")]
@@ -54,7 +54,7 @@ namespace Fundtasia.Models
         public string CardNumber { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "*Expiry Date is required")]
-        [RegularExpression(@"^((0[1-9])|(1[0-2]))\/((2021)|(20[1-2][0-9]))$", ErrorMessage = "Invalid Expiry Date format.")]
+        [RegularExpression(@"^((0[1-9])|(1[0-2]))\/((2021)|(20[2-3][0-9]))$", ErrorMessage = "Invalid Expiry Date format. (MM/YYYY)")]
         public string ExpiryDate { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "*CVV is required")]
