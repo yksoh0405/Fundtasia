@@ -20,6 +20,13 @@ namespace Fundtasia.Controllers
             return View();
         }
 
+        public ActionResult DashboardDonation()
+        {
+            var dt = db.Donations.GroupBy(s => s.EventId).ToList().Select(g => new object[] { g.Key, g.Count() });
+
+            return Json(dt, JsonRequestBehavior.AllowGet);
+        }
+
         [Authorize(Roles = "Admin, Staff")]
         public ActionResult ViewProfile()
         {

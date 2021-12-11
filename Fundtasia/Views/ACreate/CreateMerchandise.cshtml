@@ -19,6 +19,7 @@
 
                 <div class="form-group">
                     <label>Name:</label>
+
                     @Html.TextBoxFor(m => m.Name, new { maxlength = "50", @class = "form-control", autocomplete = "off" })
                     @Html.ValidationMessageFor(m => m.Name, "", new { @class = "error-msg" })
                 </div>

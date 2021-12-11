@@ -4,6 +4,7 @@
 }
 
 <link href="~/Content/eventAdmin.css" rel="stylesheet" />
+<link href="~/Content/donationGraph.css" rel="stylesheet" />
 
 <head>
     <link href="plugins/bower_components/chartist/dist/chartist.min.css" rel="stylesheet">
@@ -77,6 +78,10 @@
                             </li>
                         </ul>
                     </div>
+                    <hr />
+                    <div id="chart" style="width: 600px; height: 400px"></div>
+                    <a href="#" id="reload" class="button-normal btn">Reload</a> 
+                    <a href="#" id="toggle" class="button-normal btn">Toggle Orientation</a>
                     <div id="ct-visits" style="height: 405px;">
                         <div class="chartist-tooltip" style="top: -17px; left: -12px;">
                             <span class="chartist-tooltip-value">6</span>
@@ -299,7 +304,84 @@
     </div>
 </div>
 
-<script src="plugins/bower_components/chartist/dist/chartist.min.js"></script>
-<script src="plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
-<script src="js/pages/dashboards/dashboard1.js"></script>
+@section foot {
+    <script src="plugins/bower_components/chartist/dist/chartist.min.js"></script>
+    <script src="plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+    <script src="js/pages/dashboards/dashboard1.js"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', { packages: ['corechart'] });
+        google.charts.setOnLoadCallback(init);
+
+        let dt, opt, cht;
+
+        function init() {
+            dt = new google.visualization.DataTable();
+
+            dt.addColumn('string', 'Donation');
+            dt.addColumn('number', 'Count');
+
+            let style = { bold: true, italic: false, fontSize: 20, color: '#9D2020' };
+
+            opt = {
+                title: 'Number of Donations Made',
+                fontName: 'calibri',
+                fontSize: 14,
+                titleTextStyle: { fontSize: 20 },
+                chartArea: {
+                    width: '95%',
+                    height: '70%',
+                    top: 60,
+                    left: 80
+                },
+
+                legend: 'none',
+                vAxis: {
+                    title: 'Number of Donations',
+                    titleTextStyle: style,
+                    minValue: 0,
+                },
+                hAxis: {
+                    title: 'Event ID',
+                    titleTextStyle: style,
+                },
+                animation: {
+                    duration: 650,
+                    startup: true
+                },
+                colors: ['#3aa7d6'],
+                orientation: 'horizontal'
+            };
+
+            cht = new google.visualization.ColumnChart($('#chart')[0]);
+
+            $('#reload').click();
+        }
+
+        $('#reload').click(e => {
+            e.preventDefault();
+
+            let url = '/Admin/DashboardDonation';
+            let param = {};
+
+            $.getJSON(url, param, json => {
+                dt.removeRows(0, dt.getNumberOfRows());
+                dt.addRows(json);
+                cht.draw(dt, opt);
+            });
+        });
+
+        $('#toggle').click(e => {
+            e.preventDefault();
+
+            opt.orientation = opt.orientation == 'horizontal' ? 'vertical' : 'horizontal';
+
+            [opt.vAxis, opt.hAxis] = [opt.hAxis, opt.vAxis];
+
+            cht.draw(dt, opt);
+        });
+    </script>
+}
+
+
 
