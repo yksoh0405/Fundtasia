@@ -31,6 +31,7 @@
                 </ul>
             </div>
         </div>
+
         <div class="col-lg-4 col-md-12">
             <div class="white-box analytics-info">
                 <h3 class="box-title">Total Page Views</h3>
@@ -62,243 +63,216 @@
             </div>
         </div>
 
-        <!--Graph-->
+     <!--Graph-->
         <div class="row">
-            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                <div class="white-box">
-                    <h3 class="box-title">Donations and Merchandise Sales</h3>
-                    <div class="d-md-flex">
-                        <ul class="list-inline d-flex ms-auto">
-                            <li class="ps-3">
-                                <h5><i class="fa fa-circle me-1 text-info"></i>Donations</h5>
-                            </li>
-                            <li class="ps-3">
-                                <h5><i class="fa fa-circle me-1 text-inverse"></i>Merchandise</h5>
-                            </li>
-                        </ul>
-                    </div>
-                    <div id="ct-visits" style="height: 405px;">
-                        <div class="chartist-tooltip" style="top: -17px; left: -12px;">
-                            <span class="chartist-tooltip-value">6</span>
+           <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+               <div class="white-box">
+                        <h3 class="box-title">Donations and Merchandise Sales</h3>
+
+                        <div class="d-md-flex">
+                            <ul class="list-inline d-flex ms-auto">
+                                <li class="ps-3">
+                                    <h5><i class="fa fa-circle me-1 text-info"></i>Donations</h5>
+                                </li>
+                                <li class="ps-3">
+                                    <h5><i class="fa fa-circle me-1 text-inverse"></i>Merchandise</h5>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div id="ct-visits" style="height: 405px;">
+                            <div id="chart" style="width: 400px; height: 300px"></div>
+                            <script src="https://www.gstatic.com/charts/loader.js"></script>
+                            <script>
+                                google.charts.load('current', { packages: ['corechart'] });
+                                google.charts.setOnLoadCallback(init);
+
+                                let dt, opt, cht;
+
+                                function init() {
+                                    dt = new google.visualization.DataTable();
+
+                                    dt.addColumn('string', 'Status');
+                                    dt.addColumn('Id', 'Status');
+
+                                    opt = {
+                                        title: '--Mechantdise--',
+                                        fontName: 'calibri',
+                                        fontSize: 16,
+                                        titleTextStyle: { fontSize: 20 },
+                                        chartArea: {
+                                            width: '90%',
+                                            height: '90%',
+                                            top: 50,
+                                            left: 50
+                                        },
+                                        // TODO: colors
+
+                                    };
+
+                                    cht = new google.visualization.PieChart($('#chart')[0]);
+
+                                    $('#filter a').first().click();
+                                }
+
+                                $('#filter a').click(e => {
+                                    e.preventDefault();
+
+                                    // TODO: Set param
+                                    let url = '/Home/Dashboard';
+                                    let param = { EventId: $(e.target).data('Event-id') };
+
+                                    $.getJSON(url, param, json => {
+                                        // TODO: Set title
+                                        opt.title = "Donation Count By Event =";
+                                        if (param.pId) {
+                                            opt.title += param.EventId;
+                                        } else {
+                                            opt.title += 'All Events';
+                                        }
+
+                                        // TODO: Set color
+                                        opt.colors = [];
+                                        for (let row of json) {
+                                            if (row[0] == 'Amount') {
+                                                opt.colors.push('red');
+                                            } else {
+                                                opt.colors.push('blue');
+                                            }
+                                        }
+
+                                        dt.removeRows(0, dt.getNumberOfRows());
+                                        dt.addRows(json);
+                                        cht.draw(dt, opt);
+                                    });
+                                });
+                            </script>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!--Merchandise Sales List-->
-        <div class="row">
-            <div class="col-md-12 col-lg-12 col-sm-12">
-                <div class="white-box">
-                    <div class="d-md-flex mb-3">
-                        <h3 class="box-title mb-0">Recent merchant sales</h3>
-                        <div class="col-md-3 col-sm-4 col-xs-6 ms-auto">
-                            <select class="form-select shadow-none row border-top">
-                                <option>March 2021</option>
-                                <option>April 2021</option>
-                                <option>May 2021</option>
-                                <option>June 2021</option>
-                                <option>July 2021</option>
-                            </select>
+            <!--Merchandise Sales List-->
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="white-box">
+                        <div class="d-md-flex mb-3">
+                            <h3 class="box-title mb-0">Recent merchant sales</h3>
+                            <div class="col-md-3 col-sm-4 col-xs-6 ms-auto">
+                                <select class="form-select shadow-none row border-top">
+                                    <option>March 2021</option>
+                                    <option>April 2021</option>
+                                    <option>May 2021</option>
+                                    <option>June 2021</option>
+                                    <option>July 2021</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table no-wrap">
+                                <thead>
+                                    <tr>
+                                        <th class="border-top-0">#</th>
+                                        <th class="border-top-0">Product Name</th>
+                                        <th class="border-top-0">Status</th>
+                                        <th class="border-top-0">Update Date</th>
+                                        <th class="border-top-0">Total Sales</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td class="txt-oflo">Stop Poverty V1 T-Shirt</td>
+                                        <td>ON STOCK</td>
+                                        <td class="txt-oflo">April 18, 2021</td>
+                                        <td><span class="text-success">$24</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td class="txt-oflo">Stop Poverty V2 T-Shirt</td>
+                                        <td>SOLD OUT</td>
+                                        <td class="txt-oflo">April 19, 2021</td>
+                                        <td><span class="text-info">$1250</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td class="txt-oflo">Stop Poverty V1 T-Shirt</td>
+                                        <td>SOLD OUT</td>
+                                        <td class="txt-oflo">April 19, 2021</td>
+                                        <td><span class="text-info">$1250</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td class="txt-oflo">Stop Poverty V1 T-Shirt</td>
+                                        <td>SOLD OUT</td>
+                                        <td class="txt-oflo">April 20, 2021</td>
+                                        <td><span class="text-danger">-$24</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td class="txt-oflo">Stop Poverty V1 T-Shirt</td>
+                                        <td>ON STOCK</td>
+                                        <td class="txt-oflo">April 21, 2021</td>
+                                        <td><span class="text-success">$24</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td class="txt-oflo">Stop Poverty V1 T-Shirt</td>
+                                        <td>ON STOCK</td>
+                                        <td class="txt-oflo">April 23, 2021</td>
+                                        <td><span class="text-danger">-$14</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td class="txt-oflo">Stop Poverty V1 T-Shirt</td>
+                                        <td>ON STOCK</td>
+                                        <td class="txt-oflo">April 22, 2021</td>
+                                        <td><span class="text-success">$64</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table no-wrap">
-                            <thead>
-                                <tr>
-                                    <th class="border-top-0">#</th>
-                                    <th class="border-top-0">Product Name</th>
-                                    <th class="border-top-0">Status</th>
-                                    <th class="border-top-0">Update Date</th>
-                                    <th class="border-top-0">Total Sales</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td class="txt-oflo">Stop Poverty V1 T-Shirt</td>
-                                    <td>ON STOCK</td>
-                                    <td class="txt-oflo">April 18, 2021</td>
-                                    <td><span class="text-success">$24</span></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td class="txt-oflo">Stop Poverty V2 T-Shirt</td>
-                                    <td>SOLD OUT</td>
-                                    <td class="txt-oflo">April 19, 2021</td>
-                                    <td><span class="text-info">$1250</span></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td class="txt-oflo">Stop Poverty V1 T-Shirt</td>
-                                    <td>SOLD OUT</td>
-                                    <td class="txt-oflo">April 19, 2021</td>
-                                    <td><span class="text-info">$1250</span></td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td class="txt-oflo">Stop Poverty V1 T-Shirt</td>
-                                    <td>SOLD OUT</td>
-                                    <td class="txt-oflo">April 20, 2021</td>
-                                    <td><span class="text-danger">-$24</span></td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td class="txt-oflo">Stop Poverty V1 T-Shirt</td>
-                                    <td>ON STOCK</td>
-                                    <td class="txt-oflo">April 21, 2021</td>
-                                    <td><span class="text-success">$24</span></td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td class="txt-oflo">Stop Poverty V1 T-Shirt</td>
-                                    <td>ON STOCK</td>
-                                    <td class="txt-oflo">April 23, 2021</td>
-                                    <td><span class="text-danger">-$14</span></td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td class="txt-oflo">Stop Poverty V1 T-Shirt</td>
-                                    <td>ON STOCK</td>
-                                    <td class="txt-oflo">April 22, 2021</td>
-                                    <td><span class="text-success">$64</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                </div>
+            </div>
+
+            <!--Covid-19 Tracker-->
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card white-box p-0">
+                    <h2>Covid-19 cases in <span id="country"></span><img src="" 
+                     id="Flag"/></h2>
+                    <div class="board">
+                        <div class="card a"><i class="fa fa-tachometer"></i><h5>Active Cases</h5><span id="active"></span></div>
+                        <div class="card ca"><i class="fa fa-th-list"></i><h5>Total Cases</h5><span id="cases"></span></div>
+                        <div class="card cr"><i class="fa fa-times-circle"></i><h5>Critical Cases</h5><span id="critical"></span></div>
+                        <div class="card d"><i class="fa fa-times"></i><h5>Total Deaths</h5><span id="death"></span></div>
+                        <div class="card r"><i class="fa fa-check-square-o"></i><h5>Recovered Cases</h5><span id="recovered"></span></div>
+                        <div class="card t"><i class="fa fa-eye"></i><h5>Total Testes Done</h5><span id="tests"></span></div>
                     </div>
                 </div>
             </div>
-        </div>
+     </div>
+     
+    <!--Covid-19 api-->
+    <script type="text/javascript">
 
-        <!--Last Login List-->
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="card white-box p-0">
-                <div class="card-heading">
-                    <h3 class="box-title mb-0">Last Login List</h3>
-                </div>
-                <div class="card-body">
-                    <ul class="chatonline">
-                        <li>
-                            <div class="call-chat">
-                                <button class="btn btn-success text-white btn-circle btn" type="button">
-                                    <i class="fas fa-phone"></i>
-                                </button>
-                                <button class="btn btn-info btn-circle btn" type="button">
-                                    <i class="far fa-comments text-white"></i>
-                                </button>
-                            </div>
-                            <a href="javascript:void(0)" class="d-flex align-items-center">
-                                <img src="plugins/images/users/varun.jpg" alt="user-img" class="img-circle">
-                                <div class="ms-2">
-                                    <span class="text-dark">
-                                        Varun Dhavan <small class="d-block text-success d-block">online</small>
-                                    </span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <div class="call-chat">
-                                <button class="btn btn-success text-white btn-circle btn" type="button">
-                                    <i class="fas fa-phone"></i>
-                                </button>
-                                <button class="btn btn-info btn-circle btn" type="button">
-                                    <i class="far fa-comments text-white"></i>
-                                </button>
-                            </div>
-                            <a href="javascript:void(0)" class="d-flex align-items-center">
-                                <img src="plugins/images/users/genu.jpg" alt="user-img" class="img-circle">
-                                <div class="ms-2">
-                                    <span class="text-dark">
-                                        Genelia
-                                        Deshmukh <small class="d-block text-warning">Away</small>
-                                    </span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <div class="call-chat">
-                                <button class="btn btn-success text-white btn-circle btn" type="button">
-                                    <i class="fas fa-phone"></i>
-                                </button>
-                                <button class="btn btn-info btn-circle btn" type="button">
-                                    <i class="far fa-comments text-white"></i>
-                                </button>
-                            </div>
-                            <a href="javascript:void(0)" class="d-flex align-items-center">
-                                <img src="plugins/images/users/ritesh.jpg" alt="user-img" class="img-circle">
-                                <div class="ms-2">
-                                    <span class="text-dark">
-                                        Ritesh
-                                        Deshmukh <small class="d-block text-danger">Busy</small>
-                                    </span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <div class="call-chat">
-                                <button class="btn btn-success text-white btn-circle btn" type="button">
-                                    <i class="fas fa-phone"></i>
-                                </button>
-                                <button class="btn btn-info btn-circle btn" type="button">
-                                    <i class="far fa-comments text-white"></i>
-                                </button>
-                            </div>
-                            <a href="javascript:void(0)" class="d-flex align-items-center">
-                                <img src="plugins/images/users/arijit.jpg" alt="user-img" class="img-circle">
-                                <div class="ms-2">
-                                    <span class="text-dark">
-                                        Arijit
-                                        Sinh <small class="d-block text-muted">Offline</small>
-                                    </span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <div class="call-chat">
-                                <button class="btn btn-success text-white btn-circle btn" type="button">
-                                    <i class="fas fa-phone"></i>
-                                </button>
-                                <button class="btn btn-info btn-circle btn" type="button">
-                                    <i class="far fa-comments text-white"></i>
-                                </button>
-                            </div>
-                            <a href="javascript:void(0)" class="d-flex align-items-center">
-                                <img src="plugins/images/users/govinda.jpg" alt="user-img"
-                                     class="img-circle">
-                                <div class="ms-2">
-                                    <span class="text-dark">
-                                        Govinda
-                                        Star <small class="d-block text-success">online</small>
-                                    </span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <div class="call-chat">
-                                <button class="btn btn-success text-white btn-circle btn" type="button">
-                                    <i class="fas fa-phone"></i>
-                                </button>
-                                <button class="btn btn-info btn-circle btn" type="button">
-                                    <i class="far fa-comments text-white"></i>
-                                </button>
-                            </div>
-                            <a href="javascript:void(0)" class="d-flex align-items-center">
-                                <img src="plugins/images/users/hritik.jpg" alt="user-img" class="img-circle">
-                                <div class="ms-2">
-                                    <span class="text-dark">
-                                        John
-                                        Abraham<small class="d-block text-success">online</small>
-                                    </span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+        fetch('https://corona.lmao.ninja/v2/countries/Malaysia')
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                console.log(data);
+                document.getElementById("country").innerHTML = data.country;
+                document.getElementById("active").innerHTML = data.active.toLocaleString();
+                document.getElementById("cases").innerHTML = data.cases.toLocaleString();
+                document.getElementById("critical").innerHTML = data.critical.toLocaleString();
+                document.getElementById("death").innerHTML = data.deaths.toLocaleString();
+                document.getElementById("recovered").innerHTML = data.recovered.toLocaleString();
+                document.getElementById("tests").innerHTML = data.tests.toLocaleString();
+                document.getElementById("flag").src = data.countryInfo.flag;
+            });
+    </script>
 </div>
-
 <script src="plugins/bower_components/chartist/dist/chartist.min.js"></script>
 <script src="plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
 <script src="js/pages/dashboards/dashboard1.js"></script>
