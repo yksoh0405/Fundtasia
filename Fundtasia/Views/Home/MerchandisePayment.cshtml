@@ -22,18 +22,18 @@
                             <h4 style="color: #9B0909">RM @merchandise.Price.00</h4>
                             @Html.TextBoxFor(d => d.MerchandiseId, new { @Value = merchandise.Id, autocomplete = "off", hidden = "" })
                             <h4 class="card-title" style="min-height:50px;">@merchandise.Name</h4>
-                            <h4>Size : </h4>
-                            <div>
-                                <label>@Html.RadioButtonFor(m => m.Size, "S") S </label>
+                            <h4 class="text-left">Size : </h4>
+                            <div class="text-left">
+                                <label class="w-100">@Html.RadioButtonFor(m => m.Size, "S") S </label>
                             </div>
-                            <div>
-                                <label>@Html.RadioButtonFor(m => m.Size, "M") M </label>
+                            <div class="text-left">
+                                <label class="w-100">@Html.RadioButtonFor(m => m.Size, "M") M </label>
                             </div>
-                            <div>
-                                <label>@Html.RadioButtonFor(m => m.Size, "L") L </label>
+                            <div class="text-left">
+                                <label class="w-100">@Html.RadioButtonFor(m => m.Size, "L") L </label>
                             </div>
-                            <div>
-                                <label>@Html.RadioButtonFor(m => m.Size, "XL") XL </label>
+                            <div class="text-left">
+                                <label class="w-100">@Html.RadioButtonFor(m => m.Size, "XL") XL </label>
                             </div>
                             @Html.ValidationMessageFor(m => m.Size, "", new { @class = "error-msg" })
                         </div>
@@ -41,26 +41,6 @@
                 </div>
             </div>
 
-            <div class="card" style="width: 28rem;">
-                <div class="card-body">
-                    <h2 class="card-title">💳 Card Details 💳</h2>
-                    <h5>Name : </h5>
-                    @Html.TextBoxFor(d => d.Name, new { @class = "form-control", autocomplete = "off", placeholder = "Name here" })
-                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "error-msg" })
-                    <h5>Card Number : </h5>
-                    @Html.TextBoxFor(d => d.CardNumber, new { @class = "form-control", autocomplete = "off", placeholder = "Card Number here" })
-                    @Html.ValidationMessageFor(m => m.CardNumber, "", new { @class = "error-msg" })
-                    <h5>Expiry Date : </h5>
-                    @Html.TextBoxFor(d => d.ExpiryDate, new { @class = "form-control", autocomplete = "off", placeholder = "Expiry Date here" })
-                    @Html.ValidationMessageFor(m => m.ExpiryDate, "", new { @class = "error-msg" })
-                    <h5>CVV : </h5>
-                    @Html.TextBoxFor(d => d.CVV, new { @class = "form-control", autocomplete = "off", placeholder = "CVV here" })
-                    @Html.ValidationMessageFor(m => m.CVV, "", new { @class = "error-msg" })
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
             <div class="card" style="width: 28rem;">
                 <div class="card-body">
                     <h2 class="card-title">📫 Billing Address 📫</h2>
@@ -74,6 +54,7 @@
                     @Html.DropDownListFor(d => d.State,
                                        new List<SelectListItem>
                                                 {
+                                                   new SelectListItem { Value = "" , Text = "- Select Your State -"  },
                                                    new SelectListItem { Value = "JH" , Text = "Johor"  },
                                                    new SelectListItem { Value = "KD" , Text = "Kedah" },
                                                    new SelectListItem { Value = "KT" , Text = "Kelantan"},
@@ -97,16 +78,28 @@
                     @Html.ValidationMessageFor(d => d.PostalCode, "", new { @class = "error-msg" })
                 </div>
             </div>
+        </div>
 
+        <div class="row">
             <div class="card" style="width: 28rem;">
                 <div class="card-body">
-                    <h2 class="card-title">Verification</h2>
-                    <h5>reCAPTCHA </h5>
-                    <p>reCAPTCHA here</p>
-                    <input type="submit" value="Proceed" class="donate-submit" />
+                    <h2 class="card-title">💳 Card Details 💳</h2>
+                    <h5>Name : </h5>
+                    @Html.TextBoxFor(d => d.Name, new { @class = "form-control", autocomplete = "off", placeholder = "Name here" })
+                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "error-msg" })
+                    <h5>Card Number : </h5>
+                    @Html.TextBoxFor(d => d.CardNumber, new { @class = "form-control", autocomplete = "off", placeholder = "Card Number here" })
+                    @Html.ValidationMessageFor(m => m.CardNumber, "", new { @class = "error-msg" })
+                    <h5>Expiry Date : </h5>
+                    @Html.TextBoxFor(d => d.ExpiryDate, new { @class = "form-control", autocomplete = "off", placeholder = "Expiry Date here" })
+                    @Html.ValidationMessageFor(m => m.ExpiryDate, "", new { @class = "error-msg" })
+                    <h5>CVV : </h5>
+                    @Html.TextBoxFor(d => d.CVV, new { @class = "form-control", autocomplete = "off", placeholder = "CVV here" })
+                    @Html.ValidationMessageFor(m => m.CVV, "", new { @class = "error-msg" })
+
+                    <input type="submit" value="Proceed" class="donate-submit" style="margin-top:40px;" />
                 </div>
             </div>
         </div>
     </form>
 </body>
-</html>

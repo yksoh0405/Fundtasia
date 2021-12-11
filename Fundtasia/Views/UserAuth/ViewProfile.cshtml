@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "View Profile";
+    IEnumerable<Donation> donation = ViewBag.Donation;
 }
 
 @section head{
@@ -34,3 +35,23 @@
         @Html.ActionLink("Change Password", "ChangePassword", "UserAuth", null, new { @class = "edit-btn", @type = "button" })
     </div>
 </form>
+
+
+
+@if (donation.Count() > 0)
+{
+    <h2 class="mt-5 mb-3">Donation record</h2>
+    <table class="table">
+        <tr>
+            <th class="text-left">Time donated</th>
+            <th class="text-right">Amount</th>
+        </tr>
+        @foreach (var d in donation)
+        {
+            <tr>
+                <td class="text-left">@d.TimeDonated</td>
+                <td class="text-right">RM @d.Amount.ToString("F")</td>
+            </tr>
+        }
+    </table>
+}

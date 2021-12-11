@@ -128,3 +128,9 @@ input#registerBtn:hover, input#loginBtn:hover {
         border: 2px solid darkred;
         color: white;
     }
+
+.g-recaptcha {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}

@@ -38,15 +38,8 @@
                 <h5>CVV : </h5>
                 @Html.TextBoxFor(d => d.CVV, new { @class = "form-control", autocomplete = "off", placeholder = "CVV here" })
                 @Html.ValidationMessageFor(m => m.CVV, "", new { @class = "error-msg" })
-            </div>
-        </div>
 
-        <div class="card" style="width: 28rem;">
-            <div class="card-body">
-                <h2 class="card-title">Verification</h2>
-                <h5>reCAPTCHA </h5>
-                <p>reCAPTCHA here</p>
-                <input type="submit" value="Proceed" class="donate-submit" />
+                <input type="submit" value="Proceed" class="donate-submit" style="margin-top:40px;"/>
             </div>
         </div>
     </form>

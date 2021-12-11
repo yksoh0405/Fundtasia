@@ -12,6 +12,8 @@ using System.Data.Entity.Validation;
 using System.Security.Claims;
 using Microsoft.Owin.Security;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Fundtasia.Controllers
 {
@@ -19,9 +21,6 @@ namespace Fundtasia.Controllers
     {
         //This controller is used to handle the user authentication
         DBEntities1 db = new DBEntities1();
-
-        // Initialize password hasher
-        PasswordHasher ph = new PasswordHasher();
 
         //Sign Up Action
         [HttpGet]
@@ -44,11 +43,14 @@ namespace Fundtasia.Controllers
                 //The user cannot come to signup page after login
                 return RedirectToAction("Index", "Home");
             }
+
+            CaptchaResponse response = ValidateCaptcha(Request["g-recaptcha-response"]);
+
             bool Status = false;
             string message = "";
 
             //Model Validation
-            if (ModelState.IsValid)
+            if (response.Success && ModelState.IsValid)
             {
                 #region Check confirm password == password
                 if (model.PasswordHash != model.ConfirmPassword)
@@ -91,6 +93,11 @@ namespace Fundtasia.Controllers
                 }
                 #endregion
             }
+            else if(!response.Success)
+            {
+                ModelState.AddModelError("Error", "Please complete the reCAPTCHA.");
+                return View(model);
+            }
             else
             {
                 message = "Invalid Request";
@@ -99,6 +106,14 @@ namespace Fundtasia.Controllers
             ViewBag.Message = message;
             ViewBag.Status = Status;
             return View(model);
+        }
+
+        public static CaptchaResponse ValidateCaptcha(string response)
+        {
+            string secret = System.Web.Configuration.WebConfigurationManager.AppSettings["recaptchaPrivateKey"];
+            var client = new WebClient();
+            var jsonResult = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secret, response));
+            return JsonConvert.DeserializeObject<CaptchaResponse>(jsonResult.ToString());
         }
 
         [HttpGet]
@@ -265,6 +280,8 @@ namespace Fundtasia.Controllers
                 FirstName = loginUser.FirstName,
                 Email = loginUser.Email
             };
+
+            ViewBag.Donation = db.Donations.Where(s => s.UserId == userSession.Id);
 
             return View(model);
         }
@@ -523,19 +540,5 @@ namespace Fundtasia.Controllers
             }
             throw new Exception("No network adapters with an IPv4 address in the system!");
         }
-
-        private string HashPassword(string password)
-        {
-            // Return hashed password
-            return ph.HashPassword(password);
-        }
-
-        private bool ComparePassword(string hash, string password)
-        {
-            // Verify hashed password (true or false)
-            return ph.VerifyHashedPassword(hash, password)
-                   == PasswordVerificationResult.Success;
-        }
-
     }
 }
