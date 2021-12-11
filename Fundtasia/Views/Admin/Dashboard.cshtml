@@ -91,6 +91,15 @@
             </div>
         </div>
 
+        <!-- User Pie Chart -->
+        <div style="width: 45%; height: 400px; text-align: left;">
+            <div id="userPieChart" style="width: 80%; height: 80%"></div>
+            <br />
+            <p>
+                <button id="reload">Reload</button>
+            </p>
+        </div>
+
         <!--Merchandise Sales List-->
         <div class="row">
             <div class="col-md-12 col-lg-12 col-sm-12">
@@ -385,3 +394,49 @@
 
 
 
+@section foot{
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script>
+        google.charts.load('current', { packages: ['corechart'] });
+        google.charts.setOnLoadCallback(init);
+
+        let dt, opt, cht;
+
+        function init() {
+            dt = new google.visualization.DataTable();
+            dt.addColumn('string', 'Role');
+            dt.addColumn('number', 'Count');
+
+            opt = {
+                title: 'Overall Users Amount by Roles',
+                fontName: 'Calibri',
+                fontSize: 16,
+                titleTextStyle: { fontSize: 20 },
+                chartArea: {
+                    width: '90%',
+                    height: '90%',
+                    top: 50,
+                    left: 100
+                },
+                is3D: true,
+                color: ['#FF4AE6', '#13E5F2', '#FDFA1E']
+            };
+
+            cht = new google.visualization.PieChart($('#userPieChart')[0]);
+
+            $('#reload').first().click();
+        }
+
+        $('#reload').click(e => {
+            e.preventDefault();
+            let url = '/Admin/UsersData';
+            let param = {};
+            $.getJSON(url, param, json => {
+                dt.removeRows(0, dt.getNumberOfRows());
+                dt.addRows(json);
+                cht.draw(dt, opt);
+            });
+        });
+    </script>
+}

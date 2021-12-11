@@ -5,7 +5,7 @@
     ViewBag.Title = "Event";
 }
 
-<div class="row">
+<div class="row wow fadeInDown" data-wow-duration="1.5s" data-wow-delay="400ms">
     <div class="col-lg-8 mx-auto">
         <h2 class="section-title text-center">
             <span>Read our</span>
@@ -17,7 +17,7 @@
 <div class="row">
     @foreach (var s in Model)
     {
-        <div class="col-lg-6 col-md-6">
+        <div class="col-lg-6 col-md-6 wow fadeInDown" data-wow-duration="1.5s" data-wow-delay="400ms">
             <div class="post">
                 <div class="post-media post-image">
                     <a href="@Url.Action("EventDetail", "Home", new { id = s.Id })"><img src="~/Images/Uploads/Event/@s.CoverImage" class="img-fluid w-100" /></a>

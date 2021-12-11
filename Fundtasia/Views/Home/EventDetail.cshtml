@@ -20,14 +20,14 @@
     </style>
 }
 
-<div class="row">
+<div class="row wow fadeInDown" data-wow-duration="1.5s" data-wow-delay="400ms">
     <div class="col-lg-8 mx-auto">
         <h2 class="section-title text-center">@Model.Title</h2>
     </div>
 </div>
 
 <!-- YouTube Iframe -->
-<div class="row">
+<div class="row wow fadeInDown" data-wow-duration="1.5s" data-wow-delay="400ms">
     <div class="col-lg-8 mx-auto">
         <iframe width="770" height="433" src="https://www.youtube.com/embed/@Model.YouTubeLink" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
@@ -37,14 +37,14 @@
 </div>
 
 <!-- Target Progress Bar -->
-<div class="row">
+<div class="row wow fadeInDown" data-wow-duration="1.5s" data-wow-delay="400ms">
     <div class="col-lg-12 mx-auto mt-5">
         <div class="row">
             <div class="col">
                 <h3>Target: RM @Model.Target</h3>
             </div>
             <div class="col">
-                <i class="fas fa-eye"></i> @Model.View 
+                <i class="fas fa-eye"></i> @Model.View
             </div>
         </div>
         <div class="progress">
@@ -55,7 +55,7 @@
                 {
                     totalDonation = (double)(ViewBag.TotalDonation / Model.Target) * 100;
                     progress = totalDonation;
-                    if(progress > 100)
+                    if (progress > 100)
                     {
                         progress = 100;
                     }
@@ -63,28 +63,20 @@
             }
             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="@progress" aria-valuemin="0" aria-valuemax="100" style="width: @progress%;"></div>
         </div>
+        @if (totalDonation != 0)
+        {
+            <div class="row mt-3">
+                <div class="col">Total Donated: RM @totalDonation.ToString("F")</div>
+                <div class="col">Total Donor: @ViewBag.TotalDonor <i class="fas fa-user"></i></div>
+            </div>
+        }
     </div>
 </div>
 
+
 <!-- Article -->
-<div class="row mt-5">
+<div class="row mt-5 wow fadeInDown" data-wow-duration="1.5s" data-wow-delay="400ms">
     <div class="col-lg-12">
         @Html.Raw(Model.Article)
     </div>
 </div>
-
-@* If user is not login account *@
-@if (!Request.IsAuthenticated)
-{
-    <div id="popup" class="container ts-speaker-popup mfp-hide">
-        <div class="p-5">
-            <h3 class="text-center">Seems like you havent login your account yet</h3>
-            <div class="row">
-                <div class="d-grid col-6 mx-auto text-center mx-3">
-                    @Html.ActionLink("Sign Up", "SignUp", "UserAuth", null, new { @class = "btn" })
-                    @Html.ActionLink("Log In", "LogIn", "UserAuth", null, new { @class = "btn" })
-                </div>
-            </div>
-        </div>
-    </div>
-}
