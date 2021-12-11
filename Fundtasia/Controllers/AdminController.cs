@@ -17,7 +17,26 @@ namespace Fundtasia.Controllers
         [Authorize(Roles = "Admin, Staff")]
         public ActionResult Dashboard()
         {
+            ViewBag.Users = db.Users;
             return View();
+        }
+
+        public ActionResult DashboardDonation()
+        {
+            var dt = db.Donations.GroupBy(s => s.EventId).ToList().Select(g => new object[] { g.Key, g.Count() });
+
+            return Json(dt, JsonRequestBehavior.AllowGet);
+        }
+
+        [Authorize(Roles = "Admin, Staff")]
+        public ActionResult UsersData()
+        {
+            using (DBEntities1 da = new DBEntities1())
+            {
+                var dt = da.Users.GroupBy(s => s.Role).ToList().Select(g => new object[] { g.Key, g.Count() });
+
+                return Json(dt, JsonRequestBehavior.AllowGet);
+            }
         }
 
         [Authorize(Roles = "Admin, Staff")]

@@ -9,10 +9,10 @@
 
 <div class="row">
     <div class="col-lg-8 mx-auto">
-        <h2 class="section-title text-center">
+        <h2 class="section-title text-center wow fadeInDown" data-wow-duration="2s" data-wow-delay="400ms">
             <b>WHY DONATE TO US?</b>
         </h2>
-        <p>
+        <p class="wow fadeInDown" data-wow-duration="2.5s" data-wow-delay="600ms">
             Your donation creates hope and opportunity within our community by empowering us to minister to people’s physical, social and spiritual needs.
             When a child is born into an impoverished family, they enter the first phase of a long and challenging cycle that can run for generations. When a
             family lives in poverty, they usually have very limited or no access to resources. But you are able to change that by contributing!
@@ -20,10 +20,10 @@
     </div>
 </div>
 
-<img src="~/Images/Background/poverty-eradication.jpg" class="mt-5" style="display:block; margin-left:auto; margin-right:auto; width:70%;" />
-<p><i>Image of a child facing poverty in Mumbai, India.</i></p>
+<img src="~/Images/Background/poverty-eradication.jpg" class="mt-5 d-block mx-auto wow fadeInDown" style="width:70%;" data-wow-duration="2s" data-wow-delay="800ms"/>
+<p class="wow fadeInDown" data-wow-duration="2s" data-wow-delay="800ms"><i>Image of a child facing poverty in Mumbai, India.</i></p>
 
-<div class="row">
+<div class="row wow fadeInDown" data-wow-duration="1.5s" data-wow-delay="400ms">
     <div class="col-lg-8 mx-auto mt-5">
         <h2 class="section-title text-center" id="donate">
             <b>TAKE PART!</b>
@@ -36,24 +36,31 @@
     </div>
 </div>
 
-<h2 class="mt-5"><b>DONATE</b></h2>
-<div class="card" style="width: 30rem; margin-bottom:100px">
-    <img src="~/Images/Logos/donate icon.png" class="card-img-top">
-    <div class="card-body">
-        <!-- For index page purpose -->
-        <span id="merchandise"></span>
-        <form action="~/Home/DonationPayment">
-            <input type="submit" value="Click Here to Donate" class="donate-submit" />
-        </form>
+<div class="wow fadeInDown" data-wow-duration="1.5s" data-wow-delay="400ms">
+    <div>
+        <h2 class="mt-5"><b>DONATE</b></h2>
+    </div>
+    <div class="card" style="width: 30rem; margin-bottom:100px">
+        <div class="card-title">
+            <img src="~/Images/Logos/donate icon.png" class="card-img-top">
+        </div>
+        <div class="card-body">
+            <!-- For index page purpose -->
+            <span id="merchandise"></span>
+            <form action="~/Home/DonationPayment">
+                <input type="submit" value="Click Here to Donate" class="donate-submit" />
+            </form>
+        </div>
     </div>
 </div>
 
 <div class="container">
+    <div class="wow fadeInDown" data-wow-duration="1.5s" data-wow-delay="400ms">
+        <h2><b>MERCHANDISE</b></h2>
+        <p>*All of the funds will directly contribute to the fundraising event.</p>
+    </div>
 
-    <h2><b>MERCHANDISE</b></h2>
-    <p>*All of the funds will directly contribute to the fundraising event.</p>
-
-    <div class="row">
+    <div class="row wow fadeInDown" data-wow-duration="1.5s" data-wow-delay="400ms">
 
         @foreach (var m in Model) //will display data from Admin Merchandise
         {
@@ -75,7 +82,3 @@
         }
     </div>
 </div>
-
-@section foot{
-
-}

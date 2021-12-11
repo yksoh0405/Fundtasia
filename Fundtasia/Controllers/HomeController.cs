@@ -169,6 +169,7 @@ namespace Fundtasia.Controllers
             if (db.Donations.FirstOrDefault(s => s.EventId.Contains(id)) != null)
             {
                 ViewBag.TotalDonation = donation.Select(s => s.Amount).Sum();
+                ViewBag.TotalDonor = donation.Select(s => s.UserId).Distinct().Count();
             }
 
             return View(model);

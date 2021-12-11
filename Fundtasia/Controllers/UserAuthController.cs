@@ -326,6 +326,7 @@ namespace Fundtasia.Controllers
                     {
                         s.Email = model.NewEmail;
                         da.SaveChanges();
+                        TempData["Info"] = "Email Changed Successful";
                     }
 
 
@@ -359,6 +360,7 @@ namespace Fundtasia.Controllers
                     {
                         s.PasswordHash = Crypto.Hash(model.New);
                         da.SaveChanges();
+                        TempData["Info"] = "Passsword Changed Successful";
                     }
                     else
                     {
@@ -393,7 +395,6 @@ namespace Fundtasia.Controllers
             string message = "";
             if (ModelState.IsValid)
             {
-
                 #region Check confirm password == password
                 if (model.New != model.Confirm)
                 {
@@ -413,7 +414,7 @@ namespace Fundtasia.Controllers
                     da.SaveChanges();
                     message = "You have complete to reset your password!";
                     Status = true;
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("LogIn", "Home");
                 }
                 #endregion
             }
