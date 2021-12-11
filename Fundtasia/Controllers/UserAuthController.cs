@@ -376,7 +376,6 @@ namespace Fundtasia.Controllers
             string message = "";
             if (ModelState.IsValid)
             {
-
                 #region Check confirm password == password
                 if (model.New != model.Confirm)
                 {
@@ -396,7 +395,7 @@ namespace Fundtasia.Controllers
                     da.SaveChanges();
                     message = "You have complete to reset your password!";
                     Status = true;
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("ViewProfile", "Home");
                 }
                 #endregion
             }
@@ -461,18 +460,6 @@ namespace Fundtasia.Controllers
 
             }
         }
-
-        //public ActionResult ResetPassword(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return RedirectToAction("Index", "Home");
-        //    }
-
-
-
-        //    return View();
-        //}
 
         [NonAction]
         public bool IsEmailExist(string email)
