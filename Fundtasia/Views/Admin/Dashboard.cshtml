@@ -72,71 +72,72 @@
                 </div>
             </div>
 
+            <!-- Merchandise Pie Chart -->
+            <div class="col-lg-6 col-md-12">
+                <div class="white-box">
+                    <div style="width: 600px; height: 400px; text-align: left;">
+                        <div id="merchantdisePieChart" style="width: 80%; height: 80%"></div>
+                        <a href="#" id="merchantReload" class="button-normal btn" hidden="">Reload</a>
+                        <a href="#" id="m-save-pdf" class="button-normal btn" disabled>Save as PDF</a>
+                    </div>
+                </div>
+            </div>
+
             <!-- Save All Graph as PDF Button -->
             <div style="text-align: right;">
                 <a href="#" id="all-save-pdf" class="button-normal btn" disabled>Save All as PDF</a>
             </div>
         </div>
 
-            <!-- Merchantdise Pie Chart -->
-            <div class="col-lg-6 col-md-12">
-                <div class="white-box">
-                    <div style="width: 600px; height: 400px; text-align: left;">
-                        <div id="merchantdisePieChart" style="width: 80%; height: 80%"></div>
-                        <a href="#" id="merchantReload" class="button-normal btn" hidden="">Reload</a>
+    </div>
+
+    <!--Covid-19 Tracker-->
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h2 class="mb-3">
+            Covid-19 cases in <span id="country"></span>
+        </h2>
+        <div class="mt-3 board">
+            <div class="row">
+                <div class="col-2">
+                    <div class="card a">
+                        <h2>Active Cases</h2>
+                        <br /><br />
+                        <h4 id="active"></h4>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!--Covid-19 Tracker-->
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <h2 class="mb-3">
-                Covid-19 cases in <span id="country"></span>
-            </h2>
-            <div class="mt-3 board">
-                <div class="row">
-                    <div class="col-2">
-                        <div class="card a">
-                            <h2>Active Cases</h2>
-                            <br /><br />
-                            <h4 id="active"></h4>
-                        </div>
+                <div class="col-2">
+                    <div class="card ca">
+                        <h2>Total Cases</h2>
+                        <br /><br />
+                        <h4 id="cases"></h4>
                     </div>
-                    <div class="col-2">
-                        <div class="card ca">
-                            <h2>Total Cases</h2>
-                            <br /><br />
-                            <h4 id="cases"></h4>
-                        </div>
+                </div>
+                <div class="col-2">
+                    <div class="card cr">
+                        <h2>Critical Cases</h2>
+                        <br /><br />
+                        <h4 id="critical"></h4>
                     </div>
-                    <div class="col-2">
-                        <div class="card cr">
-                            <h2>Critical Cases</h2>
-                            <br /><br />
-                            <h4 id="critical"></h4>
-                        </div>
+                </div>
+                <div class="col-2">
+                    <div class="card d">
+                        <h2>Total Deaths</h2>
+                        <br /><br />
+                        <h4 id="death"></h4>
                     </div>
-                    <div class="col-2">
-                        <div class="card d">
-                            <h2>Total Deaths</h2>
-                            <br /><br />
-                            <h4 id="death"></h4>
-                        </div>
+                </div>
+                <div class="col-2">
+                    <div class="card r">
+                        <h2>Recovered Cases</h2>
+                        <br /><br />
+                        <h4 id="recovered"></h4>
                     </div>
-                    <div class="col-2">
-                        <div class="card r">
-                            <h2>Recovered Cases</h2>
-                            <br /><br />
-                            <h4 id="recovered"></h4>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="card t">
-                            <h2>Testes Done</h2>
-                            <br /><br />
-                            <h4 id="tests"></h4>
-                        </div>
+                </div>
+                <div class="col-2">
+                    <div class="card t">
+                        <h2>Testes Done</h2>
+                        <br /><br />
+                        <h4 id="tests"></h4>
                     </div>
                 </div>
             </div>
@@ -213,6 +214,7 @@
             });
         });
         // End of User Pie Chart
+
 
         // Donation & Merchandise Graph
         let dt, opt, cht;
@@ -299,21 +301,6 @@
         // End of Donation & Merchandise Graph
 
 
-        // Save All as PDF Function
-        var allbtnSave = document.getElementById('all-save-pdf');
-
-        allbtnSave.addEventListener('click', function () {
-            var doc = new jsPDF();
-            doc.addImage(ucht.getImageURI(), 0, 0);
-            doc.save('UsersPieChart.pdf');
-
-            var dmsDoc = new jsPDF();
-            dmsDoc.addImage(cht.getImageURI(), 0, 0);
-            dmsDoc.save('Donation&MerchandiseChart.pdf');
-        }, false);
-        // End of Save All as PDF
-
-
         //Mechandise Pie Chart
         let mdt, mopt, mcht;
 
@@ -323,7 +310,7 @@
             mdt.addColumn('number', 'Count');
 
             mopt = {
-                title: 'Merchantdise Status',
+                title: 'Merchandise Status',
                 fontName: 'Calibri',
                 fontSize: 16,
                 titleTextStyle: { fontSize: 20 },
@@ -333,10 +320,24 @@
                     top: 50,
                     left: 100
                 },
-                piehole:0.2
+                piehole: 0.2
             }
 
-            mcht = new google.visualization.PieChart($('#merchantdisePieChart')[0]);
+            // Save as PDF Function
+            var mcontainer = document.getElementById('merchantdisePieChart');
+            mcht = new google.visualization.PieChart(mcontainer);
+            var mbtnSave = document.getElementById('m-save-pdf');
+
+            google.visualization.events.addListener(mcht, 'ready', function () {
+                mbtnSave.disabled = false;
+            });
+
+            mbtnSave.addEventListener('click', function () {
+                var doc = new jsPDF();
+                doc.addImage(mcht.getImageURI(), 0, 0);
+                doc.save('MerchandisePieChart.pdf');
+            }, false);
+            // End of Save as PDF
 
             $('#merchantReload').click();
         }
@@ -352,6 +353,26 @@
             });
         });
         //End of merchantdise pie chart
+
+
+        // Save All as PDF Function
+        var allbtnSave = document.getElementById('all-save-pdf');
+
+        allbtnSave.addEventListener('click', function () {
+            var doc = new jsPDF();
+            doc.addImage(ucht.getImageURI(), 0, 0);
+            doc.save('UsersPieChart.pdf');
+
+            var dmsDoc = new jsPDF();
+            dmsDoc.addImage(cht.getImageURI(), 0, 0);
+            dmsDoc.save('Donation&MerchandiseChart.pdf');
+
+            var mdoc = new jsPDF();
+            mdoc.addImage(mcht.getImageURI(), 0, 0);
+            mdoc.save('MerchandisePieChart.pdf');
+        }, false);
+        // End of Save All as PDF
+
 
         //Covid-19 API
         fetch('https://corona.lmao.ninja/v2/countries/Malaysia')
