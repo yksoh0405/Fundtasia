@@ -33,9 +33,9 @@ namespace Fundtasia.Controllers
         {
             using (DBEntities1 da = new DBEntities1())
             {
-                var dt = da.Users.GroupBy(s => s.Role).ToList().Select(g => new object[] { g.Key, g.Count() });
+                var udt = da.Users.GroupBy(s => s.Role).ToList().Select(g => new object[] { g.Key, g.Count() });
 
-                return Json(dt, JsonRequestBehavior.AllowGet);
+                return Json(udt, JsonRequestBehavior.AllowGet);
             }
         }
 
