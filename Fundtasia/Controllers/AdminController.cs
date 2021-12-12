@@ -17,7 +17,9 @@ namespace Fundtasia.Controllers
         [Authorize(Roles = "Admin, Staff")]
         public ActionResult Dashboard()
         {
-            ViewBag.Users = db.Users;
+            ViewBag.TotalEventCreated = db.Events.Count();
+            ViewBag.TotalEventViews = db.Events.Sum(s => s.View);
+            ViewBag.TotalDonationEarned = db.Donations.Sum(s => s.Amount);
             return View();
         }
 

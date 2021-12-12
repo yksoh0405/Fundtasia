@@ -3,85 +3,51 @@
     ViewBag.Title = "Dashboard";
 }
 
-<link href="~/Content/eventAdmin.css" rel="stylesheet" />
-<link href="~/Content/donationGraph.css" rel="stylesheet" />
-
-<head>
+@section head{
+    <link href="~/Content/eventAdmin.css" rel="stylesheet" />
+    <link href="~/Content/donationGraph.css" rel="stylesheet" />
     <link href="plugins/bower_components/chartist/dist/chartist.min.css" rel="stylesheet">
     <link rel="stylesheet" href="plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css">
-    <meta name="viewport" content="width=device-width" />
-    <title>Dashboard</title>
-</head>
+}
 
 <h2>Dashboard</h2>
 
 <div class="container-fluid">
-    <!--Number Count Display-->
+
     <div class="row justify-content-center">
+        <!--Number Count Display-->
         <div class="col-lg-4 col-md-12">
             <div class="white-box analytics-info">
-                <h3 class="box-title">Total Visitors</h3>
-                <ul class="list-inline two-part d-flex align-items-center mb-0">
-                    <li>
-                        <div id="sparklinedash">
-                            <canvas width="67" height="30"
-                                    style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
-                        </div>
-                    </li>
-                    <li class="ms-auto"><span class="counter text-success">100</span></li>
-                </ul>
+                <h2 class="box-title">Total Event Created</h2>
+                <div class="text-right">
+                    <h3 class="counter text-success fw-bold">@ViewBag.TotalEventCreated</h3>
+                </div>
             </div>
         </div>
 
         <div class="col-lg-4 col-md-12">
             <div class="white-box analytics-info">
-                <h3 class="box-title">Total Page Views</h3>
-                <ul class="list-inline two-part d-flex align-items-center mb-0">
-                    <li>
-                        <div id="sparklinedash2">
-                            <canvas width="67" height="30"
-                                    style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
-                        </div>
-                    </li>
-                    <li class="ms-auto"><span class="counter text-purple">200</span></li>
-                </ul>
+                <h3 class="box-title">Total Event Views</h3>
+                <div class="text-right">
+                    <h3 class="counter text-warning fw-bold">@ViewBag.TotalEventViews</h3>
+                </div>
             </div>
         </div>
 
         <div class="col-lg-4 col-md-12">
             <div class="white-box analytics-info">
-                <h3 class="box-title">New Visitor</h3>
-                <ul class="list-inline two-part d-flex align-items-center mb-0">
-                    <li>
-                        <div id="sparklinedash3">
-                            <canvas width="67" height="30"
-                                    style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
-                        </div>
-                    </li>
-                    <li class="ms-auto">
-                        <span class="counter text-info">300</span>
-                    </li>
-                </ul>
+                <h3 class="box-title">Total Donation Earned</h3>
+                <div class="text-right">
+                    <h3 class="counter text-info fw-bold">RM @ViewBag.TotalDonationEarned.ToString("F")</h3>
+                </div>
             </div>
         </div>
 
         <!--Graph-->
-        <!-- Donation & Merchandise Graph -->
         <div class="row">
-            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+            <!-- Donation & Merchandise Graph -->
+            <div class="col-lg-6 col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title">Donations and Merchandise Sales</h3>
-                    <div class="d-md-flex">
-                        <ul class="list-inline d-flex ms-auto">
-                            <li class="ps-3">
-                                <h5><i class="fa fa-circle me-1 text-info"></i>Donations</h5>
-                            </li>
-                            <li class="ps-3">
-                                <h5><i class="fa fa-circle me-1 text-inverse"></i>Merchandise</h5>
-                            </li>
-                        </ul>
-                    </div>
-                    <hr />
                     <div id="DM_Chart" style="width: 600px; height: 400px"></div>
                     <a href="#" id="dmsReload" class="button-normal btn" hidden="">Reload</a>
                     <a href="#" id="dmsToggle" class="button-normal btn">Toggle Orientation</a>
@@ -92,52 +58,70 @@
                     </div>
                 </div>
             </div>
-
             <!-- User Pie Chart -->
-            <div style="width: 45%; height: 400px; text-align: left;">
-                <div id="userPieChart" style="width: 80%; height: 80%"></div>
-                <a href="#" id="userReload" class="button-normal btn" hidden="">Reload</a>
+            <div class="col-lg-6 col-md-12">
+                <div class="white-box">
+                    <div style="width: 600px; height: 400px; text-align: left;">
+                        <div id="userPieChart" style="width: 80%; height: 80%"></div>
+                        <a href="#" id="userReload" class="button-normal btn" hidden="">Reload</a>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!--Covid-19 Tracker-->
         <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="card white-box p-0">
-                <h2>
-                    Covid-19 cases in <span id="country"></span><img src=""
-                                                                     id="Flag" />
-                </h2>
-                <div class="board">
-                    <div class="card a"><i class="fa fa-tachometer"></i><h5>Active Cases</h5><span id="active"></span></div>
-                    <div class="card ca"><i class="fa fa-th-list"></i><h5>Total Cases</h5><span id="cases"></span></div>
-                    <div class="card cr"><i class="fa fa-times-circle"></i><h5>Critical Cases</h5><span id="critical"></span></div>
-                    <div class="card d"><i class="fa fa-times"></i><h5>Total Deaths</h5><span id="death"></span></div>
-                    <div class="card r"><i class="fa fa-check-square-o"></i><h5>Recovered Cases</h5><span id="recovered"></span></div>
-                    <div class="card t"><i class="fa fa-eye"></i><h5>Total Testes Done</h5><span id="tests"></span></div>
+            <h2 class="mb-3">
+                Covid-19 cases in <span id="country"></span>
+            </h2>
+            <div class="mt-3 board">
+                <div class="row">
+                    <div class="col-2">
+                        <div class="card a">
+                            <h2>Active Cases</h2>
+                            <br /><br />
+                            <h4 id="active"></h4>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="card ca">
+                            <h2>Total Cases</h2>
+                            <br /><br />
+                            <h4 id="cases"></h4>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="card cr">
+                            <h2>Critical Cases</h2>
+                            <br /><br />
+                            <h4 id="critical"></h4>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="card d">
+                            <h2>Total Deaths</h2>
+                            <br /><br />
+                            <h4 id="death"></h4>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="card r">
+                            <h2>Recovered Cases</h2>
+                            <br /><br />
+                            <h4 id="recovered"></h4>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="card t">
+                            <h2>Testes Done</h2>
+                            <br /><br />
+                            <h4 id="tests"></h4>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!--Covid-19 api-->
-    <script type="text/javascript">
-
-        fetch('https://corona.lmao.ninja/v2/countries/Malaysia')
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                console.log(data);
-                document.getElementById("country").innerHTML = data.country;
-                document.getElementById("active").innerHTML = data.active.toLocaleString();
-                document.getElementById("cases").innerHTML = data.cases.toLocaleString();
-                document.getElementById("critical").innerHTML = data.critical.toLocaleString();
-                document.getElementById("death").innerHTML = data.deaths.toLocaleString();
-                document.getElementById("recovered").innerHTML = data.recovered.toLocaleString();
-                document.getElementById("tests").innerHTML = data.tests.toLocaleString();
-                document.getElementById("flag").src = data.countryInfo.flag;
-            });
-    </script>
 </div>
 
 
@@ -262,5 +246,21 @@
             cht.draw(dt, opt);
         });
         // End of Donation & Merchandise Graph
+
+        //Covid-19 API
+        fetch('https://corona.lmao.ninja/v2/countries/Malaysia')
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                console.log(data);
+                document.getElementById("country").innerHTML = data.country;
+                document.getElementById("active").innerHTML = data.active.toLocaleString();
+                document.getElementById("cases").innerHTML = data.cases.toLocaleString();
+                document.getElementById("critical").innerHTML = data.critical.toLocaleString();
+                document.getElementById("death").innerHTML = data.deaths.toLocaleString();
+                document.getElementById("recovered").innerHTML = data.recovered.toLocaleString();
+                document.getElementById("tests").innerHTML = data.tests.toLocaleString();
+            });
     </script>
 }
