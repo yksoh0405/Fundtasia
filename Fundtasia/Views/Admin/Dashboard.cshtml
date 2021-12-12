@@ -67,6 +67,16 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Merchantdise Pie Chart -->
+            <div class="col-lg-6 col-md-12">
+                <div class="white-box">
+                    <div style="width: 600px; height: 400px; text-align: left;">
+                        <div id="merchantdisePieChart" style="width: 80%; height: 80%"></div>
+                        <a href="#" id="merchantReload" class="button-normal btn" hidden="">Reload</a>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!--Covid-19 Tracker-->
@@ -136,6 +146,7 @@
         google.charts.load('current', { packages: ['corechart'] });
         google.charts.setOnLoadCallback(usersChart);
         google.charts.setOnLoadCallback(dmsChart);
+        google.charts.setOnLoadCallback(merchantdiseChart);
 
         // Users Pie Chart
         let udt, uopt, ucht;
@@ -246,6 +257,45 @@
             cht.draw(dt, opt);
         });
         // End of Donation & Merchandise Graph
+
+        //Mechandise Pie Chart
+        let mdt, mopt, mcht;
+
+        function merchantdiseChart() {
+            mdt = new google.visualization.DataTable();
+            mdt.addColumn('string', 'Status');
+            mdt.addColumn('number', 'Count');
+
+            mopt = {
+                title: 'Merchantdise Status',
+                fontName: 'Calibri',
+                fontSize: 16,
+                titleTextStyle: { fontSize: 20 },
+                chartArea: {
+                    width: '90%',
+                    height: '90%',
+                    top: 50,
+                    left: 100
+                },
+                piehole:0.2
+            }
+
+            mcht = new google.visualization.PieChart($('#merchantdisePieChart')[0]);
+
+            $('#merchantReload').click();
+        }
+
+        $('#merchantReload').click(e => {
+            e.preventDefault();
+            let url = '/Admin/MerchandiseData';
+            let param = {};
+            $.getJSON(url, param, json => {
+                mdt.removeRows(0, mdt.getNumberOfRows());
+                mdt.addRows(json);
+                mcht.draw(mdt, mopt);
+            });
+        });
+        //End of merchantdise pie chart
 
         //Covid-19 API
         fetch('https://corona.lmao.ninja/v2/countries/Malaysia')
