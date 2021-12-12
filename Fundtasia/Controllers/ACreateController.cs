@@ -140,6 +140,8 @@ namespace Fundtasia.Controllers
             {
                 ModelState.AddModelError("CoverImage", err);
             }
+            
+            User loginUser = (User)Session["UserSession"];
 
             if (ModelState.IsValid)
             {
@@ -154,7 +156,7 @@ namespace Fundtasia.Controllers
                 var e = new Event
                 {
                     Id = id,
-                    UserId = model.UserId,
+                    UserId = loginUser.Id,
                     Title = model.Title,
                     View = 0,
                     CoverImage = SaveEventPhoto(model.CoverImage),
@@ -267,7 +269,6 @@ namespace Fundtasia.Controllers
 
             return name;
         }
-
 
         [NonAction]
         public bool IsEmailExist(string email)

@@ -30,7 +30,6 @@ namespace Fundtasia.Controllers
             return Json(dt, JsonRequestBehavior.AllowGet);
         }
 
-        [Authorize(Roles = "Admin, Staff")]
         public ActionResult UsersData()
         {
             using (DBEntities1 da = new DBEntities1())
@@ -41,7 +40,6 @@ namespace Fundtasia.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin, Staff")]
         public ActionResult MerchandiseData()
         {
             using (DBEntities1 da = new DBEntities1())
@@ -50,6 +48,13 @@ namespace Fundtasia.Controllers
 
                 return Json(dt, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        public ActionResult EventData()
+        {
+            var dt = db.Events.ToList().OrderBy(g => g.View).Select(g => new object[] { g.View, g.Id }).Take(3);
+
+            return Json(dt, JsonRequestBehavior.AllowGet);
         }
 
         [Authorize(Roles = "Admin, Staff")]

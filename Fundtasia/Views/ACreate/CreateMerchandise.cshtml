@@ -33,10 +33,10 @@
                 <div class="form-group">
                     <label>Status:</label>
                     <div>
-                        <label>@Html.RadioButtonFor(m => m.Status, "Available") Available </label>
+                        <label class="w-100">@Html.RadioButtonFor(m => m.Status, "Available") Available </label>
                     </div>
                     <div>
-                        <label>@Html.RadioButtonFor(m => m.Status, "Unavailable") Unavailable </label>
+                        <label class="w-100">@Html.RadioButtonFor(m => m.Status, "Unavailable") Unavailable </label>
                     </div>
                     @Html.ValidationMessageFor(m => m.Status, "", new { @class = "error-msg" })
                 </div>
