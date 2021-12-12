@@ -51,6 +51,7 @@
                     <div id="DM_Chart" style="width: 600px; height: 400px"></div>
                     <a href="#" id="dmsReload" class="button-normal btn" hidden="">Reload</a>
                     <a href="#" id="dmsToggle" class="button-normal btn">Toggle Orientation</a>
+                    <a href="#" id="dms-save-pdf" class="button-normal btn" disabled>Save as PDF</a>
                     <div id="ct-visits">
                         <div class="chartist-tooltip" style="top: -17px; left: -12px;">
                             <span class="chartist-tooltip-value">6</span>
@@ -58,15 +59,24 @@
                     </div>
                 </div>
             </div>
+
             <!-- User Pie Chart -->
             <div class="col-lg-6 col-md-12">
                 <div class="white-box">
                     <div style="width: 600px; height: 400px; text-align: left;">
                         <div id="userPieChart" style="width: 80%; height: 80%"></div>
+                        <br /><br /><br /><br />
                         <a href="#" id="userReload" class="button-normal btn" hidden="">Reload</a>
+                        <a href="#" id="save-pdf" class="button-normal btn" disabled>Save as PDF</a>
                     </div>
                 </div>
             </div>
+
+            <!-- Save All Graph as PDF Button -->
+            <div style="text-align: right;">
+                <a href="#" id="all-save-pdf" class="button-normal btn" disabled>Save All as PDF</a>
+            </div>
+        </div>
 
             <!-- Merchantdise Pie Chart -->
             <div class="col-lg-6 col-md-12">
@@ -138,6 +148,7 @@
 <!-- Script for Graphs -->
 @section foot {
     <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
     <script src="plugins/bower_components/chartist/dist/chartist.min.js"></script>
     <script src="plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
     <script src="js/pages/dashboards/dashboard1.js"></script>
@@ -171,9 +182,24 @@
                 color: ['#FF4AE6', '#13E5F2', '#FDFA1E']
             };
 
-            ucht = new google.visualization.PieChart($('#userPieChart')[0]);
+            // Save as PDF Function
+            var ucontainer = document.getElementById('userPieChart');
+            ucht = new google.visualization.PieChart(ucontainer);
+            var ubtnSave = document.getElementById('save-pdf');
+
+            google.visualization.events.addListener(ucht, 'ready', function () {
+                ubtnSave.disabled = false;
+            });
+
+            ubtnSave.addEventListener('click', function () {
+                var doc = new jsPDF();
+                doc.addImage(ucht.getImageURI(), 0, 0);
+                doc.save('UsersPieChart.pdf');
+            }, false);
+            // End of Save as PDF
 
             $('#userReload').click();
+
         }
 
         $('#userReload').click(e => {
@@ -229,7 +255,21 @@
                 orientation: 'horizontal'
             };
 
-            cht = new google.visualization.ColumnChart($('#DM_Chart')[0]);
+            // Save as PDF Function
+            var dmscontainer = document.getElementById('DM_Chart');
+            cht = new google.visualization.ColumnChart(dmscontainer);
+            var dmsbtnSave = document.getElementById('dms-save-pdf');
+
+            google.visualization.events.addListener(cht, 'ready', function () {
+                dmsbtnSave.disabled = false;
+            });
+
+            dmsbtnSave.addEventListener('click', function () {
+                var doc = new jsPDF();
+                doc.addImage(cht.getImageURI(), 0, 0);
+                doc.save('Donation&MerchandiseChart.pdf');
+            }, false);
+            // End of Save as PDF
 
             $('#dmsReload').click();
         }
@@ -257,6 +297,22 @@
             cht.draw(dt, opt);
         });
         // End of Donation & Merchandise Graph
+
+
+        // Save All as PDF Function
+        var allbtnSave = document.getElementById('all-save-pdf');
+
+        allbtnSave.addEventListener('click', function () {
+            var doc = new jsPDF();
+            doc.addImage(ucht.getImageURI(), 0, 0);
+            doc.save('UsersPieChart.pdf');
+
+            var dmsDoc = new jsPDF();
+            dmsDoc.addImage(cht.getImageURI(), 0, 0);
+            dmsDoc.save('Donation&MerchandiseChart.pdf');
+        }, false);
+        // End of Save All as PDF
+
 
         //Mechandise Pie Chart
         let mdt, mopt, mcht;
