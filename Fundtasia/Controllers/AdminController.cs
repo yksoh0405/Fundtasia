@@ -25,7 +25,7 @@ namespace Fundtasia.Controllers
 
         public ActionResult DashboardDonation()
         {
-            var dt = db.Donations.GroupBy(s => s.EventId).ToList().Select(g => new object[] { g.Key, g.Count() });
+            var dt = db.Donations.GroupBy(s => s.EventId).ToList().Select(g => new object[] { g.Key, g.Count() }).Take(3);
 
             return Json(dt, JsonRequestBehavior.AllowGet);
         }
@@ -44,17 +44,21 @@ namespace Fundtasia.Controllers
         {
             using (DBEntities1 da = new DBEntities1())
             {
-                var dt = da.Merchandises.GroupBy(s => s.Status).ToList().Select(g => new object[] { g.Key, g.Count() });
+                var edt = da.Merchandises.GroupBy(s => s.Status).ToList().Select(g => new object[] { g.Key, g.Count() });
 
-                return Json(dt, JsonRequestBehavior.AllowGet);
+                return Json(edt, JsonRequestBehavior.AllowGet);
             }
         }
 
-        public ActionResult EventData()
+        public ActionResult UserMerchandiseData()
         {
-            var dt = db.Events.ToList().OrderBy(g => g.View).Select(g => new object[] { g.View, g.Id }).Take(3);
+            using (DBEntities1 da = new DBEntities1())
+            {
+                var dt = da.UserMerchandises.GroupBy(s => s.MerchandiseId).ToList().Select(g => new object[] { g.Key, g.Count() }).Take(3);
 
-            return Json(dt, JsonRequestBehavior.AllowGet);
+                return Json(dt, JsonRequestBehavior.AllowGet);
+            }
+
         }
 
         [Authorize(Roles = "Admin, Staff")]

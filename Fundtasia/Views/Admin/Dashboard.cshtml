@@ -77,6 +77,7 @@
                 <div class="white-box">
                     <div style="width: 600px; height: 400px; text-align: left;">
                         <div id="merchantdisePieChart" style="width: 80%; height: 80%"></div>
+                        <br /><br /><br /><br />
                         <a href="#" id="merchantReload" class="button-normal btn" hidden="">Reload</a>
                         <a href="#" id="m-save-pdf" class="button-normal btn" disabled>Save as PDF</a>
                     </div>
@@ -84,6 +85,14 @@
             </div>
 
             <!-- Event Views Graph -->
+            <div class="col-lg-6 col-md-12">
+                <div class="white-box">
+                    <div id="eventGraphChart" style="width: 600px; height: 400px;"></div>
+                    <a href="#" id="eventReload" class="button-normal btn" hidden="">Reload</a>
+                    <a href="#" id="eventToggle" class="button-normal btn">Toggle Orientation</a>
+                    <a href="#" id="e-save-pdf" class="button-normal btn" disabled>Save as PDF</a>
+                </div>
+            </div>
 
             <!-- Save All Graph as PDF Button -->
             <div style="text-align: right;">
@@ -161,6 +170,7 @@
         google.charts.setOnLoadCallback(usersChart);
         google.charts.setOnLoadCallback(dmsChart);
         google.charts.setOnLoadCallback(merchantdiseChart);
+        google.charts.setOnLoadCallback(eventChart);
 
         // Users Pie Chart
         let udt, uopt, ucht;
@@ -356,6 +366,88 @@
         });
         //End of merchantdise pie chart
 
+        //Event Graph Chart
+        let edt, eopt, echt;
+
+        function eventChart() {
+            edt = new google.visualization.DataTable();
+
+            edt.addColumn('string', 'Event');
+            edt.addColumn('number', 'Count');
+
+            let style = { bold: true, italic: false, fontSize: 20, color: '#9D2020' };
+
+            eopt = {
+                title: 'Merchandise Sales',
+                fontName: 'calibri',
+                fontSize: 14,
+                titleTextStyle: { fontSize: 20 },
+                chartArea: {
+                    width: '95%',
+                    height: '70%',
+                    top: 60,
+                    left: 80
+                },
+
+                legend: 'none',
+                vAxis: {
+                    title: 'Number of Sales',
+                    titleTextStyle: style,
+                    minValue: 0,
+                },
+                hAxis: {
+                    title: 'Merchandise ID',
+                    titleTextStyle: style,
+                },
+                animation: {
+                    duration: 650,
+                    startup: true
+                },
+                colors: ['#3aa7d6'],
+                orientation: 'horizontal'
+            };
+
+            // Save as PDF Function
+            var econtainer = document.getElementById('eventGraphChart');
+            echt = new google.visualization.ColumnChart(econtainer);
+            var ebtnSave = document.getElementById('e-save-pdf');
+
+            google.visualization.events.addListener(echt, 'ready', function () {
+                ebtnSave.disabled = false;
+            });
+
+            ebtnSave.addEventListener('click', function () {
+                var doc = new jsPDF();
+                doc.addImage(echt.getImageURI(), 0, 0);
+                doc.save('Merchandise_Sales_Chart.pdf');
+            }, false);
+            // End of Save as PDF
+            $('#eventReload').click();
+        };
+
+        $('#eventReload').click(e => {
+            e.preventDefault();
+
+            let url = '/Admin/UserMerchandiseData';
+            let param = {};
+
+            $.getJSON(url, param, json => {
+                edt.removeRows(0, edt.getNumberOfRows());
+                edt.addRows(json);
+                echt.draw(edt, eopt);
+            });
+        });
+
+        $('#eventToggle').click(e => {
+            e.preventDefault();
+
+            eopt.orientation = eopt.orientation == 'horizontal' ? 'vertical' : 'horizontal';
+
+            [eopt.vAxis, eopt.hAxis] = [eopt.hAxis, eopt.vAxis];
+
+            echt.draw(edt, eopt);
+        });
+        //End of Event Graph Chart
 
         // Save All as PDF Function
         var allbtnSave = document.getElementById('all-save-pdf');
@@ -372,6 +464,10 @@
             var mdoc = new jsPDF();
             mdoc.addImage(mcht.getImageURI(), 0, 0);
             mdoc.save('MerchandisePieChart.pdf');
+
+            var edoc = new jsPDF();
+            edoc.addImage(echt.getImageURI(), 0, 0);
+            edoc.save('Merchandise_Sales.pdf');
         }, false);
         // End of Save All as PDF
 
