@@ -42,6 +42,17 @@ namespace Fundtasia.Controllers
         }
 
         [Authorize(Roles = "Admin, Staff")]
+        public ActionResult MerchandiseData()
+        {
+            using (DBEntities1 da = new DBEntities1())
+            {
+                var dt = da.Merchandises.GroupBy(s => s.Status).ToList().Select(g => new object[] { g.Key, g.Count() });
+
+                return Json(dt, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult ViewProfile()
         {
             User userSession = (User)Session["UserSession"];
