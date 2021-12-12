@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="d69245650e6f4004b1f45fbd49d4cee1" Name="Diagram1">
-        <EntityTypeShape EntityType="DBModel.Donation" Width="1.5" PointX="11.375" PointY="0.5" />
+        <EntityTypeShape EntityType="DBModel.Donation" Width="1.5" PointX="10.625" PointY="0.875" />
         <EntityTypeShape EntityType="DBModel.Event" Width="1.5" PointX="8" PointY="0.5" />
         <EntityTypeShape EntityType="DBModel.Merchandise" Width="1.5" PointX="0.5" PointY="0.5" />
         <EntityTypeShape EntityType="DBModel.PasswordReset" Width="1.5" PointX="0.5" PointY="3.625" />
