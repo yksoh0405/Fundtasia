@@ -414,7 +414,7 @@ namespace Fundtasia.Controllers
                     da.SaveChanges();
                     message = "You have complete to reset your password!";
                     Status = true;
-                    return RedirectToAction("LogIn", "Home");
+                    return RedirectToAction("LogIn", "UserAuth");
                 }
                 #endregion
             }

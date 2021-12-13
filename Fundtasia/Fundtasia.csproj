@@ -133,6 +133,16 @@
     <Content Include="App_Data\DB_log.ldf">
       <DependentUpon>DB.mdf</DependentUpon>
     </Content>
+    <Content Include="Azure.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Azure.edmx</DependentUpon>
+      <LastGenOutput>Azure.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Azure.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Azure.edmx</DependentUpon>
+      <LastGenOutput>Azure.cs</LastGenOutput>
+    </Content>
     <Content Include="Content\all.css" />
     <Content Include="Content\all.min.css" />
     <Content Include="Content\animate.css" />
@@ -494,6 +504,13 @@
     <Content Include="Scripts\ckeditor\README.md" />
     <Content Include="Scripts\ckeditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
     <Content Include="Scripts\ckeditor\skins\moono\readme.md" />
+    <EntityDeploy Include="Azure.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Azure.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Azure.edmx.diagram">
+      <DependentUpon>Azure.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\Fundtasia2021 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\app.js" />
@@ -542,10 +559,34 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Azure.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Azure.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Azure.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Azure.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Azure.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Azure.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\ACreateController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AEditController.cs" />
     <Compile Include="Controllers\AListController.cs" />
+    <Compile Include="Donation.cs">
+      <DependentUpon>Azure.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Event.cs">
+      <DependentUpon>Azure.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Merchandise.cs">
+      <DependentUpon>Azure.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Extended\CaptchaResponse.cs" />
     <Compile Include="Models\Donation.cs">
       <DependentUpon>DB.tt</DependentUpon>
@@ -593,8 +634,17 @@
     <Compile Include="Models\UserMerchandise.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="PasswordReset.cs">
+      <DependentUpon>Azure.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="User.cs">
+      <DependentUpon>Azure.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserMerchandise.cs">
+      <DependentUpon>Azure.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />

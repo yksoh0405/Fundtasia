@@ -63,14 +63,12 @@
     <table class="table">
         <tr>
             <th class="text-left">Purchase Time</th>
-            <th class="text-left">Merchandise Name</th>
             <th class="text-right">Amount</th>
         </tr>
         @foreach (var um in userMerchandise)
         {
             <tr>
                 <td class="text-left">@um.PurchaseTime</td>
-                <td class="text-left">@um.Merchandise.Name</td>
                 <td class="text-right">RM @um.Price.ToString("F")</td>
             </tr>
         }
