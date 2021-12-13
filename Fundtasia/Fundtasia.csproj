@@ -185,7 +185,6 @@
     <Content Include="Images\Logos\logo-white.png" />
     <Content Include="Images\Logos\logo-icon.png" />
     <Content Include="Images\Uploads\Event\83d1ea6cdc4c4e7ab333e129964c854c.jpg" />
-    <Content Include="Images\Uploads\Event\b8553108668f49bda9e56dd9aa9d427f.jpg" />
     <Content Include="Images\Uploads\Merchandise\shirt1.jpg" />
     <Content Include="Images\Uploads\Merchandise\shirt2.jpg" />
     <Content Include="Images\Uploads\Merchandise\shirt3.jpg" />
@@ -500,6 +499,7 @@
     <Content Include="Scripts\ckeditor\README.md" />
     <Content Include="Scripts\ckeditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
     <Content Include="Scripts\ckeditor\skins\moono\readme.md" />
+    <None Include="Properties\PublishProfiles\Fundtasia2021 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
