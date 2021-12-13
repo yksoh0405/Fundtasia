@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "View Profile";
     IEnumerable<Donation> donation = ViewBag.Donation;
+    IEnumerable<UserMerchandise> userMerchandise = ViewBag.UserMerchandise;
 }
 
 @section head{
@@ -51,6 +52,26 @@
             <tr>
                 <td class="text-left">@d.TimeDonated</td>
                 <td class="text-right">RM @d.Amount.ToString("F")</td>
+            </tr>
+        }
+    </table>
+}
+
+@if (userMerchandise.Count() > 0)
+{
+    <h2 class="mt-5 mb-3">Merchandise record</h2>
+    <table class="table">
+        <tr>
+            <th class="text-left">Purchase Time</th>
+            <th class="text-left">Merchandise Name</th>
+            <th class="text-right">Amount</th>
+        </tr>
+        @foreach (var um in userMerchandise)
+        {
+            <tr>
+                <td class="text-left">@um.PurchaseTime</td>
+                <td class="text-left">@um.Merchandise.Name</td>
+                <td class="text-right">RM @um.Price.ToString("F")</td>
             </tr>
         }
     </table>

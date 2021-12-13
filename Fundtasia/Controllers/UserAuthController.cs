@@ -282,7 +282,7 @@ namespace Fundtasia.Controllers
             };
 
             ViewBag.Donation = db.Donations.Where(s => s.UserId == userSession.Id);
-
+            ViewBag.UserMerchandise = db.UserMerchandises.Where(s => s.UserId == userSession.Id);
             return View(model);
         }
 

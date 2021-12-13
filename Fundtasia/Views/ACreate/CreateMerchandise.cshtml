@@ -4,73 +4,64 @@
     ViewBag.Title = "Add Merchandise";
 }
 
-<!DOCTYPE html>
-<link href="~/Content/createMerch.css" rel="stylesheet" />
+@section head{
+    <link href="~/Content/createMerch.css" rel="stylesheet" />
+}
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Create Merchandise</title>
-</head>
-<body>
+<form action="" method="post" enctype="multipart/form-data">
+    @Html.ValidationSummary(true)
 
-    <form action="" method="post" enctype="multipart/form-data">
-        @Html.ValidationSummary(true)
+    <div class="form-group">
+        <label>Name:</label>
 
-        <div class="form-group">
-            <label>Name:</label>
+        @Html.TextBoxFor(m => m.Name, new { maxlength = "50", @class = "form-control", autocomplete = "off" })
+        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "error-msg" })
+    </div>
 
-            @Html.TextBoxFor(m => m.Name, new { maxlength = "50", @class = "form-control", autocomplete = "off" })
-            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "error-msg" })
+    <div class="form-group">
+        <label>Price:</label>
+        @Html.TextBoxFor(m => m.Price, new { @class = "form-control", autocomplete = "off" })
+        @Html.ValidationMessageFor(m => m.Price, "", new { @class = "error-msg" })
+    </div>
+
+    <div class="form-group">
+        <label>Status:</label>
+        <div>
+            <label class="w-100">@Html.RadioButtonFor(m => m.Status, "Available") Available </label>
         </div>
-
-        <div class="form-group">
-            <label>Price:</label>
-            @Html.TextBoxFor(m => m.Price, new { @class = "form-control", autocomplete = "off" })
-            @Html.ValidationMessageFor(m => m.Price, "", new { @class = "error-msg" })
+        <div>
+            <label class="w-100">@Html.RadioButtonFor(m => m.Status, "Unavailable") Unavailable </label>
         </div>
+        @Html.ValidationMessageFor(m => m.Status, "", new { @class = "error-msg" })
+    </div>
 
-        <div class="form-group">
-            <label>Status:</label>
-            <div>
-                <label class="w-100">@Html.RadioButtonFor(m => m.Status, "Available") Available </label>
-            </div>
-            <div>
-                <label class="w-100">@Html.RadioButtonFor(m => m.Status, "Unavailable") Unavailable </label>
-            </div>
-            @Html.ValidationMessageFor(m => m.Status, "", new { @class = "error-msg" })
-        </div>
-
-        <br />
-        <label>Image:</label>
-        <div class="image-insert">
-            <div class="image-insert-first">
-                <input type="file" name="ImageURL" id="ImageURL" class="image-insert-accept" accept="image/jpeg,image/png" onchange="readURL(this);" required />
-                <div class="titlecenter">
-                    <h6>Click / Drag to Insert Image</h6>
-                </div>
-            </div>
-
-            <div class="image-insert-content">
-                <img class="image-insert-true" src="#" />
-                <div class="image-title-first mt-3">
-                    <button type="button" onclick="ResetImage()" class="reset-image">Reset Image</button>
-                </div>
+    <br />
+    <label>Image:</label>
+    <div class="image-insert">
+        <div class="image-insert-first">
+            <input type="file" name="ImageURL" id="ImageURL" class="image-insert-accept" accept="image/jpeg,image/png" onchange="readURL(this);" required />
+            <div class="titlecenter">
+                <h6>Click / Drag to Insert Image</h6>
             </div>
         </div>
 
-        <br />
-        <br />
-        <section>
-            <button class="edit-btn">Add</button>
-            <button type="reset" class="create-btn">Reset</button>
-        </section>
-    </form>
+        <div class="image-insert-content">
+            <img class="image-insert-true" src="#" />
+            <div class="image-title-first mt-3">
+                <button type="button" onclick="ResetImage()" class="reset-image">Reset Image</button>
+            </div>
+        </div>
+    </div>
+
     <br />
     <br />
-
-</body>
-</html>
+    <section>
+        <button class="edit-btn">Add</button>
+        <button type="reset" class="create-btn">Reset</button>
+    </section>
+</form>
+<br />
+<br />
 
 @section foot {
     <script>
@@ -93,20 +84,17 @@
             }
         }
 
-        function ResetImage()
-        {
+        function ResetImage() {
             $(".image-insert-accept").replaceWith($(".image-insert-accept").clone());
             $(".image-insert-content").hide();
             $(".image-insert-first").show();
         }
 
-        $(".image-insert-first").bind("dragover", function ()
-        {
+        $(".image-insert-first").bind("dragover", function () {
             $(".image-insert-first").addClass("image-dropping");
         });
 
-        $(".image-insert-first").bind("dragleave", function ()
-        {
+        $(".image-insert-first").bind("dragleave", function () {
             $(".image-insert-first").removeClass("image-dropping");
         });
 
@@ -136,8 +124,7 @@
             if (validatePhoto(f)) {
                 img.src = URL.createObjectURL(f);
             }
-            else
-            {
+            else {
                 img.src = src;
                 e.target.value = '';
             }

@@ -54,7 +54,7 @@ namespace Fundtasia.Controllers
         {
             using (DBEntities1 da = new DBEntities1())
             {
-                var dt = da.UserMerchandises.GroupBy(s => s.MerchandiseId).ToList().Select(g => new object[] { g.Key, g.Count() }).Take(3);
+                var dt = da.UserMerchandises.GroupBy(s => s.MerchandiseId).ToList().Select(g => new object[] { g.Key, g.Count() }).Take(5);
 
                 return Json(dt, JsonRequestBehavior.AllowGet);
             }
@@ -78,7 +78,8 @@ namespace Fundtasia.Controllers
                 LastLoginTime = loginUser.LastLoginTime,
                 LastLoginIP = loginUser.LastLoginIP
             };
-
+            ViewBag.Donation = db.Donations.Where(s => s.UserId == userSession.Id);
+            ViewBag.UserMerchandise = db.UserMerchandises.Where(s => s.UserId == userSession.Id);
             return View(model);
         }
 

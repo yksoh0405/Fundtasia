@@ -35,7 +35,12 @@ namespace Fundtasia.Controllers
         [Authorize]
         public ActionResult DonationPayment()
         {
-            ViewBag.EventList = new SelectList(db.Events, "Id", "Title");
+            //Retrieve the event list order by to the least amount donation of the event
+            //SELECT e.Id, e.Title, SUM(d.Amount)
+            //FROM Event e JOIN Donation d ON e.Id = d.EventId
+            //GROUP BY e.Id
+            //ORDER BY SUM(d.Amount)
+            ViewBag.EventList = new SelectList(db.Events.OrderBy(e => e.Donations.Count()), "Id", "Title");
             return View();
         }
 

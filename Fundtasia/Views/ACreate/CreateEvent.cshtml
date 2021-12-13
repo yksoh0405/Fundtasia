@@ -16,14 +16,15 @@
             object-fit: cover;
         }
     </style>
+    <link href="~/Content/createMerch.css" rel="stylesheet" />
 }
 
 <div class="row">
     <!-- Column -->
     <div class="col-12">
-        <div class="card">
+        <div>
             <div class="card-body">
-                @using (Html.BeginForm(null, null, FormMethod.Post,new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     <div class="form-group mb-4">
                         @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "col-lg-6 col-md-12 p-0" })
@@ -35,10 +36,22 @@
                     <div class="form-group mb-4">
                         @Html.LabelFor(model => model.CoverImage, htmlAttributes: new { @class = "col-lg-6 col-md-12 p-0" })
                         @Html.ValidationMessageFor(model => model.CoverImage, "", new { @class = "col-lg-6 col-md-12 text-danger text-justify" })
-                        <label class="upload">
-                            @Html.TextBoxFor(model => model.CoverImage, new { @class = "form-control p-0 border-0 w-100", required = "", type = "file", accept = "image/jpeg,image/png" })
-                            <img src="~/Images/Background/insert-image.png" id="uploadCoverImage" />
-                        </label>
+                        <div class="image-insert">
+                            <div class="image-insert-first">
+                                @Html.TextBoxFor(model => model.CoverImage, new { @class = "form-control p-0 border-0 image-insert-accept", required = "", type = "file", accept = "image/jpeg,image/png", onchange = "readURL(this);" })
+                                @*<input type="file" name="ImageURL" id="ImageURL" class="image-insert-accept" accept="image/jpeg,image/png" onchange="readURL(this);" required />*@
+                                <div class="titlecenter">
+                                    <h6>Click / Drag to Insert Image</h6>
+                                </div>
+                            </div>
+
+                            <div class="image-insert-content">
+                                <img class="image-insert-true" src="#" />
+                                <div class="image-title-first mt-3">
+                                    <button type="button" onclick="ResetImage()" class="reset-image">Reset Image</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group mb-4">
                         @Html.LabelFor(model => model.Target, htmlAttributes: new { @class = "col-lg-6 col-md-12 p-0" })
@@ -79,6 +92,41 @@
 @section foot{
     <script src="~/Scripts/ckeditor/ckeditor.js"></script>
     <script src="~/Scripts/ckeditor/adapters/jquery.js"></script>
+    <script>
+        function readURL(image) {
+            if (image.files && image.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $(".image-insert-first").hide();
+
+                    $(".image-insert-true").attr("src", e.target.result);
+                    $(".image-insert-content").show();
+
+                    $(".image-title").html(image.files[0].name);
+                };
+
+                reader.readAsDataURL(image.files[0]);
+            } else {
+                removeUpload();
+            }
+        }
+
+        function ResetImage() {
+            $(".image-insert-accept").replaceWith($(".image-insert-accept").clone());
+            $(".image-insert-content").hide();
+            $(".image-insert-first").show();
+        }
+
+        $(".image-insert-first").bind("dragover", function () {
+            $(".image-insert-first").addClass("image-dropping");
+        });
+
+        $(".image-insert-first").bind("dragleave", function () {
+            $(".image-insert-first").removeClass("image-dropping");
+        });
+
+    </script>
     <script>
 
         function validatePhoto(f) {
